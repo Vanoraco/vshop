@@ -1,39 +1,54 @@
 <template>
-    <div class="font-serif mt-12 flex justify-center font-medium mx-auto">
-       <ul class="flex flex-row gap-12 text-xl mx-auto">
-        <li>
+  <div class="flex flex-row">
+    <div class="mt-9 ml-20">
+      <img src="../assets/images/logo.png" alt="" class="h-12">
+    </div>
+    <div class="font-serif mt-12 flex justify-center font-medium mx-auto mr-96 header-main">
+       <ul class="flex flex-row gap-20 text-xl mx-auto">
+         <li class="text-2xl">
+          Home
+         </li>
+        <li class="text-2xl">
           Shops
         </li>
-        <li>
+        <li class="text-2xl">
           SignUp
         </li>
-        <li>
+        <li class="text-2xl">
           SignIn
         </li>
        </ul>
+      </div>
+
+      <div class="mt-11 mr-36">
        
-       <ul>
+       <ul class="mr-36 flex flex-row">
          <li>
-          <IconField iconPosition="left">
-            <InputIcon class="pi pi-search"> </InputIcon>
-            <InputText placeholder="Search" />
-          </IconField>
+            <span class="mr-4 mt-3 "><i class="pi pi-search text-xl mt-3"></i></span><input type="text"  class="border-black bg-slate-100 rounded-full h-10 placeholder:pl-[45px] placeholder:text-xl p-3" placeholder="Search">
+         </li>
+         <li>
+            <span class="mt-12"><i class="pi pi-shopping-cart mt-3 ml-3 text-xl"></i></span>
          </li>
        </ul>
+      </div>
     </div>
+
+    
   </template>
 
   <script>
-     import IconField from 'primevue/iconfield';
-     import InputIcon from 'primevue/inputicon';
-     import InputText from 'primevue/inputtext';
-
-     export default {
-      name: 'appheader',
+    
+    export default {
+      name: 'AppHeader',
       components: {
-        IconField,
-        InputIcon,
-        InputText
+        
       }
-     }
+    }
    </script>
+
+   <style scoped>
+      @import url('https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9+Charted&family=Marcellus&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+   .header-main {
+    font-family: "Marcellus", sans-serif;
+   }
+  </style>

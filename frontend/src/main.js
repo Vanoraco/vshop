@@ -1,10 +1,20 @@
 import { createApp } from 'vue'
 import './assets/base.css'
 import App from './App.vue'
+import 'primevue/resources/primevue.min.css';
 
-import PrimeVuePlugin from './plugins/primevue';
+import 'primeicons/primeicons.css';
 
-createApp(App).mount('#app')
 
-app.config.globalProperties.$primevue = PrimeVue;
-app.use(PrimeVuePlugin);
+//import PrimeVuePlugin from './plugins/primevue';
+import PrimeVue from "primevue/config";
+import vuetify from './plugins/vuetify';
+
+const app = createApp(App)
+
+
+//app.config.globalProperties.$primevue = PrimeVue;
+app.use(PrimeVue);
+app.use(vuetify)
+
+app.mount('#app')

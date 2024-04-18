@@ -1,15 +1,19 @@
 
 
 <template>
-  
   <AppHeader />
+  <br>
+  <br>
+  <Home />
 </template>
 
 <script>
   import AppHeader from './components/AppHeader.vue'
+  import Home from './views/Home.vue'
   export default {
     components: {
-      AppHeader
+      AppHeader,
+      Home
     }
   }
 </script>
