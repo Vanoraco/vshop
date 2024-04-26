@@ -2,20 +2,20 @@
 
 <template>
   <AppHeader />
-  <br>
-  <br>
-  <Home />
+  <br />
+  <br />
+  <router-view />
 </template>
 
 <script>
-  import AppHeader from './components/AppHeader.vue'
-  import Home from './views/Home.vue'
-  export default {
-    components: {
-      AppHeader,
-      Home
-    }
-  }
+import AppHeader from "./components/AppHeader.vue";
+import Home from "./views/Home.vue";
+export default {
+  components: {
+    AppHeader,
+    Home,
+  },
+};
 </script>
 
 <style scoped>
