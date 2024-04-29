@@ -1,20 +1,29 @@
 <template>
   <div class="container">
+    <div class="left-section">
+      <img
+        src="../assets/images/ecommerce.jpg"
+        alt="Other Image"
+        class="other-image"
+      />
+    </div>
     <div class="content">
-      <div>
-        <img src="../assets/images/logo.png" alt="" class="logo" />
+      <div class="right-section">
+        <img src="../assets/images/logo.png" alt="Logo" class="logo" />
       </div>
       <h2>Sign in to view your shop</h2>
       <form>
         <div class="form-group">
           <label for="email" class="label">Username</label>
-          <input type="email" id="email" name="email" required />
+          <input v-model="username" type="email" id="email" name="email" required />
         </div>
         <div class="form-group">
           <label for="password" class="label">Password</label>
-          <input type="password" id="password" name="password" required />
+          <input v-model="password" type="password" id="password" name="password" required />
         </div>
-        <button type="submit" class="signin-btn">Sign In</button>
+        <button @click="signIn" type="submit" class="signin-btn">
+          Sign In
+        </button>
       </form>
       <div class="alternative-signin">
         <p>Or sign in with:</p>
@@ -33,38 +42,63 @@
     </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
   methods: {
     signInWithGoogle() {
-      // Implement your Google Sign In logic here
+      // Implement Google sign-in functionality
+    },
+    signIn() {
+      // Implement sign-in functionality
+      if (this.username !== "" && this.password !== "") {
+        this.$router.push("/manage-space");
+      }
     },
   },
 };
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
   height: 100vh;
-  background-color: #f1f1f1;
+  background-color: #91c499;
+}
+
+.left-section,
+.content {
+  /* flex: 1; */
+}
+
+.left-section {
+  display: flex;
+  justify-content: center;
+}
+
+.other-image {
+  max-width: 100%;
+  max-height: 100vh;
 }
 
 .logo {
-  height: 40px;
-  margin-bottom: 20px;
+  max-width: 100%;
+  height: auto;
 }
 
 .content {
-  width: 400px;
-  background-color: #fff;
-  border-radius: 4px;
-  padding: 30px;
-  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h2 {
@@ -74,11 +108,14 @@ h2 {
 
 .form-group {
   margin-bottom: 20px;
+  border: 1px solid #dfe1e5;
+  padding: 10px;
 }
 
 .label {
   color: #555;
   font-size: 14px;
+  font-weight: bold;
 }
 
 input {
@@ -98,6 +135,11 @@ input {
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signin-btn:hover {
+  background-color: #3367d6;
 }
 
 .google-btn {
@@ -111,6 +153,11 @@ input {
   cursor: pointer;
   display: flex;
   align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.google-btn:hover {
+  background-color: #f2f2f2;
 }
 
 .google-icon {
