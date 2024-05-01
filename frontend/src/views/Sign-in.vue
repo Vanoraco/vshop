@@ -72,7 +72,7 @@ export default {
   align-items: center;
   align-content: center;
   height: 100vh;
-  background-color: #91c499;
+  background-color: #F2F3F8;
 }
 
 .left-section,
