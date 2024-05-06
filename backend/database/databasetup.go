@@ -52,3 +52,8 @@ func ShopData(client *mongo.Client, CollectionName string) *mongo.Collection {
 	var shopcollection *mongo.Collection = client.Database("VShop").Collection(CollectionName)
 	return shopcollection
 }
+
+func OwnerData(client *mongo.Client, CollectionName string) *mongo.Collection {
+	var ownerCollection *mongo.Collection = client.Database("VShop").Collection(CollectionName)
+	return ownerCollection
+}

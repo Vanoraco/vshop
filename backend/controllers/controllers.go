@@ -16,11 +16,14 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang.org/x/crypto/bcrypt"
 )
 
 var UserCollection *mongo.Collection = database.UserData(database.Client, "Users")
+var OwnerCollection *mongo.Collection = database.UserData(database.Client, "Owners")
 var ProductCollection *mongo.Collection = database.ProductData(database.Client, "Products")
+var ShopCollection *mongo.Collection = database.ShopData(database.Client, "Shops")
 var Validate = validator.New()
 
 func HashPassword(password string) string {
@@ -42,7 +45,7 @@ func VerifyPassword(userpassword string, givenpassword string) (bool, string) {
 	return valid, msg
 }
 
-func SignUp() gin.HandlerFunc {
+func SignUpUsers() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		defer cancel()
@@ -86,6 +89,56 @@ func SignUp() gin.HandlerFunc {
 		user.Address_Details = make([]models.Address, 0)
 		user.Order_Status = make([]models.Order, 0)
 		_, inserterr := UserCollection.InsertOne(ctx, user)
+		if inserterr != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "not created"})
+			return
+		}
+		defer cancel()
+		c.JSON(http.StatusCreated, "Successfully Signed Up!!")
+	}
+}
+
+func SignUpOwners() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+		var owner models.Owner
+		if err := c.BindJSON(&owner); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		count, err := OwnerCollection.CountDocuments(ctx, bson.M{"email": owner.Owner_Email})
+		if err != nil {
+			log.Panic(err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
+		}
+		if count > 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "User already exists"})
+		}
+		count, err = OwnerCollection.CountDocuments(ctx, bson.M{"phone": owner.Owner_Phone})
+		defer cancel()
+		if err != nil {
+			log.Panic(err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
+		}
+		if count > 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Phone is already in use"})
+			return
+		}
+		password := HashPassword(*owner.Owner_Password)
+		owner.Owner_Password = &password
+
+		owner.Created_At, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		owner.Updated_At, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		owner.ID = primitive.NewObjectID()
+		owner.Owner_ID = owner.ID.Hex()
+		token, refreshtoken, _ := generate.TokenGenerator(*owner.Owner_Email, *owner.Owner_FirstName, *owner.Owner_LastName, owner.Owner_ID)
+		owner.Token = &token
+		owner.Refresh_Token = &refreshtoken
+		_, inserterr := OwnerCollection.InsertOne(ctx, owner)
 		if inserterr != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "not created"})
 			return
@@ -143,6 +196,45 @@ func ProductViewerAdmin() gin.HandlerFunc {
 		}
 		defer cancel()
 		c.JSON(http.StatusOK, "Successfully added our Product Admin!!")
+	}
+}
+
+func AddShop() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+		var shop models.Shop
+		defer cancel()
+		if err := c.BindJSON(&shop); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		ownerQueryId := c.Query("ownerID")
+		shop.Shop_ID = &ownerQueryId
+
+		ownerID, err := primitive.ObjectIDFromHex(ownerQueryId)
+		if err != nil {
+			log.Fatal(err)
+		}
+		filter := bson.M{"_id": ownerID}
+
+		// Define options to include only the "Owner_FirstName" field
+		options := options.FindOne().SetProjection(bson.M{"Owner_FirstName": 1})
+
+		// Find the owner document based on ID and apply projection
+		var result bson.M
+		if err := OwnerCollection.FindOne(context.Background(), filter, options).Decode(&result); err != nil {
+			log.Fatal(err)
+		}
+
+		shop.Shop_Owner = result["owner_firstname"].(string)
+		_, anyerr := ShopCollection.InsertOne(ctx, shop)
+		if anyerr != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Not Created"})
+			return
+		}
+		defer cancel()
+		c.JSON(http.StatusOK, "Shop Successfully Added")
 	}
 }
 

@@ -1,5 +1,5 @@
-<template>
-  <div class="container">
+<template class="w-full bg-cyan-400">
+  <div class="container ">
     <div class="content">
       <div>
         <img src="../assets/images/logo.png" alt="" class="logo" />
@@ -68,7 +68,7 @@ export default {
 }
 
 .content {
-  width: 400px;
+
   background-color: #fff;
   border-radius: 4px;
   padding: 30px;

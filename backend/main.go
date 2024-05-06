@@ -20,6 +20,8 @@ func main() {
 
 	app := controllers.NewApplication(database.ProductData(database.Client, "Products"), database.UserData(database.Client, "Users"))
 
+	shopApp := controllers.ShopNewApplication(database.ProductData(database.Client, "Products"), database.OwnerData(database.Client, "Owners"))
+
 	router := gin.New()
 
 	router.Use(gin.Logger())
@@ -29,6 +31,7 @@ func main() {
 	router.Use(middleware.Authentication())
 
 	router.GET("/addtocart", app.AddToCart())
+	router.POST("/addtoshop", shopApp.AddToShop())
 	router.GET("removeitem", app.RemoveItem())
 	router.GET("/cartcheckout", app.BuyFromCart())
 	router.GET("/instantbuy", app.InstantBuy())
