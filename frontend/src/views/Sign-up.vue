@@ -14,6 +14,10 @@
           <label for="lastName" class="label">Last name</label>
           <input type="text" id="lastName" name="lastName" required />
         </div>
+        <div class="form-group">
+          <label for="password" class="label">Username</label>
+          <input type="Username" id="Username" name="Username" required />
+        </div>
 
         <div class="form-group">
           <label for="password" class="label">Password</label>
