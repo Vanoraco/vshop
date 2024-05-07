@@ -1,49 +1,43 @@
 <template>
   <div class="container">
+    <div class="left-section">
+      <img
+        src="../assets/images/isolated-shipping 1.jpg"
+        alt="Other Image"
+        class="other-image"
+      />
+    </div>
     <div class="content">
-      <div>
-        <img src="../assets/images/logo.png" alt="" class="logo" />
+      <div class="right-section">
+        <img src="../assets/images/logo.png" alt="Logo" class="logo" />
       </div>
-      <h2>Create accunt to become shop owner</h2>
-      <form>
+      <h2 class="fade-in">Create account and become a shop owner</h2>
+      <form class="fade-in">
         <div class="form-group">
-          <label for="firstName" class="label">First name</label>
-          <input type="text" id="firstName" name="firstName" required />
+          <label for="email" class="label">Username</label>
+          <input v-model="username" type="email" id="email" name="email" required />
         </div>
-        <div class="form-group">
-          <label for="lastName" class="label">Last name</label>
-          <input type="text" id="lastName" name="lastName" required />
-        </div>
-        <div class="form-group">
-          <label for="password" class="label">Username</label>
-          <input type="Username" id="Username" name="Username" required />
-        </div>
-
         <div class="form-group">
           <label for="password" class="label">Password</label>
-          <input type="password" id="password" name="password" required />
+          <input v-model="password" type="password" id="password" name="password" required />
         </div>
-        <div class="form-group">
-          <label for="confirmPassword" class="label">Confirm password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            required
-          />
-        </div>
-        <button type="submit" class="signup-btn">Next</button>
+        <button @click="signIn" type="submit" class="signin-btn">
+          Sign In
+        </button>
       </form>
-      <div class="alternative-signup">
-        <p>Or sign up with:</p>
-        <button @click="signUpWithGoogle" class="google-btn">
+      <div class="alternative-signin fade-in">
+        <p>Or sign in with:</p>
+        <button @click="signInWithGoogle" class="google-btn">
           <img
             src="../assets/images/google.png"
             alt="Google Icon"
             class="google-icon"
           />
-          Sign up with Google
+          Sign in with Google
         </button>
+      </div>
+      <div class="forgot-password fade-in">
+        <a href="#" class="forgot-password-link">Forgot password?</a>
       </div>
     </div>
   </div>
@@ -51,8 +45,22 @@
 
 <script>
 export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
   methods: {
-    signUpWithGoogle() {},
+    signInWithGoogle() {
+      // Implement Google sign-in functionality
+    },
+    signIn() {
+      // Implement sign-in functionality
+      if (this.username !== "" && this.password !== "") {
+        this.$router.push("/manage-space");
+      }
+    },
   },
 };
 </script>
@@ -62,38 +70,52 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  align-content: center;
   height: 100vh;
-  background-color: #f1f1f1;
+  background-color: #C9F8F7;
+}
+
+.left-section,
+.content {
+  /* flex: 1; */
+}
+
+.left-section {
+  display: flex;
+  justify-content: center;
+}
+
+.other-image {
+  max-width: 100%;
+  max-height: 100vh;
 }
 
 .logo {
-  height: 40px;
-  margin-bottom: 20px;
+  max-width: 100%;
+  height: auto;
 }
 
 .content {
-  width: 400px;
-  background-color: #fff;
-  border-radius: 4px;
-  padding: 30px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h2 {
   margin-bottom: 20px;
   font-size: 24px;
-  color: #333; /* Customize the font color */
-  font-family: Arial, sans-serif; /* Customize the font family */
 }
 
 .form-group {
   margin-bottom: 20px;
+  border: 1px solid #dfe1e5;
+  padding: 10px;
 }
 
 .label {
-  color: #555; /* Customize the label color */
+  color: #555;
   font-size: 14px;
-  font-family: Arial, sans-serif; /* Customize the font family */
+  font-weight: bold;
 }
 
 input {
@@ -102,11 +124,9 @@ input {
   border: 1px solid #dfe1e5;
   border-radius: 4px;
   font-size: 14px;
-  font-family: Arial, sans-serif; /* Customize the font family */
-  color: #333; /* Customize the input text color */
 }
 
-.signup-btn {
+.signin-btn {
   width: 100%;
   padding: 10px;
   background-color: #4285f4;
@@ -114,22 +134,30 @@ input {
   border: none;
   border-radius: 4px;
   font-size: 14px;
-  font-family: Arial, sans-serif; /* Customize the font family */
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signin-btn:hover {
+  background-color: #3367d6;
 }
 
 .google-btn {
   width: 100%;
   padding: 10px;
   background-color: #fff;
-  color: #555; /* Customize the button text color */
+  color: #555;
   border: 1px solid #dfe1e5;
   border-radius: 4px;
   font-size: 14px;
-  font-family: Arial, sans-serif; /* Customize the font family */
   cursor: pointer;
   display: flex;
   align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.google-btn:hover {
+  background-color: #f2f2f2;
 }
 
 .google-icon {
@@ -137,11 +165,37 @@ input {
   margin-right: 8px;
 }
 
-.alternative-signup {
+.alternative-signin {
   margin-top: 20px;
   text-align: center;
   font-size: 14px;
-  color: #555; /* Customize the alternative signup text color */
-  font-family: Arial, sans-serif; /* Customize the font family */
+  color: #555;
+}
+
+.forgot-password {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.forgot-password-link {
+  color: #4285f4;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

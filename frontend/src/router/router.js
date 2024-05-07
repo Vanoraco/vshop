@@ -4,6 +4,7 @@ import SignIn from "../views/Sign-in.vue"
 import HomePage from "../views/Home.vue"
 import Shops from "../components/Shops.vue"
 import ManageSpace from "../views/owner/ManageSpace.vue"
+import productDetail from "../views/product_detail.vue"
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,10 @@ const router = createRouter({
      {
         path:"/manage-space",
         component:ManageSpace
+     },
+     {
+      path:"/product-detail-page",
+      component:productDetail
      }
     ]
 })

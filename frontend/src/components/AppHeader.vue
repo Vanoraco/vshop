@@ -18,10 +18,6 @@
         <router-link to="/sign-up">
           <li class="text-2xl">Sign Up</li>
         </router-link>
-
-        <router-link to="/sign-in">
-          <li class="text-2xl">SignIn</li>
-        </router-link>
       </ul>
     </div>
 
