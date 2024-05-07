@@ -4,7 +4,7 @@
   <AppHeader />
   <br />
   <br />
-  <router-view />
+  <router-view class="block"/>
 </template>
 
 <script>

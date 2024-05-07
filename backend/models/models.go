@@ -32,20 +32,29 @@ type Product struct {
 }
 
 type Shop struct {
-	Shop_ID       primitive.ObjectID `json:"shop_id"`
+	ID            primitive.ObjectID `json:"_id"`
 	Shop_Name     *string            `json:"shop_name"`
 	Shop_Owner    Owner              `json:"shop_owner"`
 	Shop_Category *string            `json:"shop_category"`
 	Image         *string            `json:"image"`
 	Rating        *uint8             `json:"rating"`
+	Shop_ID       *string            `json:"shop_id"`
 }
 
 type Owner struct {
-	Owner_ID    primitive.ObjectID `json:"owner_id"`
-	Owner_Name  *string            `json:"owner_name"`
-	Owner_Img   *string            `json:"owner_img"`
-	Owner_Email *string            `json:"owner_email"`
-	Owner_Phone *string            `json:"owner_phone"`
+	ID              primitive.ObjectID `json:"_id" bson:"_id"`
+	Owner_FirstName *string            `json:"owner_firstname"`
+	Owner_LastName  *string            `json:"owner_lastname"`
+	Owner_Img       *string            `json:"owner_img"`
+	Owner_Email     *string            `json:"owner_email"`
+	Owner_Password  *string            `json:"owner_password"`
+	Owner_Phone     *string            `json:"owner_phone"`
+	Owner_Products  []Product          `json:"owner_products" bson:"owner_products"`
+	Token           *string            `json:"token"`
+	Refresh_Token   *string            `json:"refresh_token"`
+	Created_At      time.Time          `json:"created_at"`
+	Updated_At      time.Time          `json:"updated_at"`
+	Owner_ID        string             `json:"owner_id"`
 }
 
 type ProductUser struct {

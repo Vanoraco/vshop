@@ -1,12 +1,5 @@
-<template>
-  <div class="container">
-    <div class="left-section">
-      <img
-        src="../assets/images/isolated-shipping 1.jpg"
-        alt="Other Image"
-        class="other-image"
-      />
-    </div>
+<template class="w-full bg-cyan-400">
+  <div class="container ">
     <div class="content">
       <div class="right-section">
         <img src="../assets/images/logo.png" alt="Logo" class="logo" />
@@ -72,22 +65,7 @@ export default {
   align-items: center;
   align-content: center;
   height: 100vh;
-  background-color: #C9F8F7;
-}
-
-.left-section,
-.content {
-  /* flex: 1; */
-}
-
-.left-section {
-  display: flex;
-  justify-content: center;
-}
-
-.other-image {
-  max-width: 100%;
-  max-height: 100vh;
+  background-color: #f1f1f1;
 }
 
 .logo {
@@ -96,9 +74,11 @@ export default {
 }
 
 .content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
