@@ -21,9 +21,7 @@ defineProps({
         <div class="my-4 overflow-hidden text-sm font-normal text-white">
           Try our Premium plan to get amaizing experience
         </div>
-        <button class="rounded-2xl bg-blue-700 px-4 py-2">
-          Premium Plan
-        </button>
+        <button class="rounded-2xl bg-blue-700 px-4 py-2">Premium Plan</button>
       </div>
       <img
         class="w-24 object-cover object-center md:w-44"
@@ -31,6 +29,34 @@ defineProps({
         alt=""
       />
     </div>
+    <div class="buttons flex justify-end">
+      <button
+        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full shadow-md flex items-center mt-2 mr-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 mr-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        ></svg>
+        Add Product
+      </button>
+
+      <button
+        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full shadow-md flex items-center mt-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 mr-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        ></svg>
+        Pay monthly rent
+      </button>
+    </div>
+
     <div class="mx-auto flex justify-center font-extrabold">
       <h1>BOKACHA PHONE SALES</h1>
     </div>
@@ -47,9 +73,8 @@ defineProps({
             class="mr-4 h-7 w-7 rounded"
             style="border: 1px solid #3291b8"
             src=""
-         />
-           
-          
+          />
+
           Iphone 14 pro max
         </div>
         <div class="mx-auto flex">
@@ -78,7 +103,7 @@ defineProps({
             class="mr-4 h-7 w-7 rounded"
             style="border: 1px solid #3291b8"
             src=""
-         />
+          />
           Illustrator
         </div>
         <div class="mx-auto flex">
@@ -107,7 +132,7 @@ defineProps({
             class="mr-4 h-7 w-7 rounded"
             style="border: 1px solid #3291b8"
             src=""
-         />
+          />
           After Effects
         </div>
         <div class="mx-auto flex">
@@ -130,9 +155,8 @@ defineProps({
         </div>
       </div>
     </div>
-    
-    <div class="mb-3 mt-6 text-gray-400">Request</div>
 
+    <div class="mb-3 mt-6 text-gray-400">Request</div>
 
     <div class="mt-8 rounded-2xl" style="background: rgb(146 151 179 / 13%)">
       <div class="container mx-auto">
@@ -154,7 +178,7 @@ defineProps({
                     >
                       Product
                     </th>
-                 
+
                     <th
                       scope="col"
                       class="border-b border-gray-200 px-5 py-3 text-left text-sm font-normal uppercase"
@@ -177,7 +201,7 @@ defineProps({
                       scope="col"
                       class="border-b border-gray-200 px-5 py-3 text-left text-sm font-normal uppercase"
                     >
-                   quantity
+                      quantity
                     </th>
                     <th
                       scope="col"
@@ -185,7 +209,7 @@ defineProps({
                     />
                   </tr>
                 </thead>
-                <tbody >
+                <tbody>
                   <tr>
                     <td class="border-b border-gray-200 p-5 text-sm">
                       <div class="flex items-center">
