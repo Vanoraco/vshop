@@ -15,8 +15,12 @@
           <li class="text-2xl">Shops</li>
         </router-link>
 
+        <router-link to="/sign-in">
+          <li class="text-2xl">Sign in</li>
+        </router-link>
+
         <router-link to="/sign-up">
-          <li class="text-2xl">Sign Up</li>
+          <li class="text-2xl">create a shop</li>
         </router-link>
       </ul>
     </div>

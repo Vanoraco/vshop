@@ -11,11 +11,6 @@ import PrimeVue from "primevue/config";
 import vuetify from './plugins/vuetify';
 import router from './router/router'; 
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 17052d91ba353f7bab75c3e64e4f3598ad30f44b
 const app = createApp(App)
 
 

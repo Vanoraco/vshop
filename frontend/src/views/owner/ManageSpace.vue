@@ -199,7 +199,7 @@ defineProps({
                           </a>
                         </div>
                         <div class="ml-3">
-                          <p class="whitespace-nowrap">Jean marc</p>
+                          <p class="whitespace-nowrap">seare hagos</p>
                         </div>
                       </div>
                     </td>
