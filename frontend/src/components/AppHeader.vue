@@ -13,10 +13,6 @@
           <li :class="{ 'text-xl': $route.path === '/shops' }">Shops</li>
         </router-link>
 
-        <router-link to="/sign-in">
-          <li :class="{ 'text-xl': $route.path === '/sign-in' }">Sign in</li>
-        </router-link>
-
         <router-link to="/sign-up">
           <li :class="{ 'text-xl': $route.path === '/sign-up' }">
             Create a shop

@@ -56,16 +56,22 @@
                   <option value="Ethiopia">Ethiopia</option>
                 </select>
               </div>
-              <div class="text-center color-white">
-                <button type="submit" class="btn btn-primary">Sign Up</button>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
               </div>
             </form>
             <hr />
             <div class="text-center">
               <p>Already have an account? <a href="#">Log In</a></p>
               <p>Or sign up with:</p>
-              <button class="btn btn-primary btn-sm m-3">Google</button>
-              <button class="btn btn-primary btn-sm m-3">Twitter</button>
+              <div>
+                <button class="btn btn-google btn-block">
+                  <i class="fab fa-google"></i> Sign up with Google
+                </button>
+                <button class="btn btn-twitter btn-block">
+                  <i class="fab fa-twitter"></i> Sign up with Twitter
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -106,38 +112,74 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .card {
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   padding: 20px;
 }
+
 .card-body {
   padding: 0;
 }
+
 .form-group {
   margin-bottom: 20px;
 }
+
 .form-label {
   font-weight: bold;
 }
+
 .form-control {
   border-radius: 5px;
+  border: none;
+  background-color: #f4f4f4;
+  padding: 12px;
+  font-size: 16px;
+  box-shadow: none;
 }
+
 .btn-primary {
   background-color: #4285f4;
   border-color: #4285f4;
+  border-radius: 5px;
+  padding: 12px;
+  font-size: 16px;
+  width: 100%;
 }
+
 .btn-primary:hover {
   background-color: #357ae8;
   border-color: #357ae8;
 }
-.btn-outline-primary {
-  color: #4285f4;
-  border-color: #4285f4;
+
+.btn-google {
+  background-color: #dd4b39;
+  border-color: #dd4b39;
+  border-radius: 5px;
+  padding: 12px;
+ font-size: 16px;
+  width: 100%;
 }
-.btn-outline-primary:hover {
-  color: #ffffff;
-  background-color: #4285f4;
-  border-color: #4285f4;
+
+.btn-google:hover {
+  background-color: #c23321;
+  border-color: #c23321;
 }
+
+.btn-twitter {
+  background-color: #1da1f2;
+  border-color: #1da1f2;
+  border-radius: 5px;
+  padding: 12px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.btn-twitter:hover {
+  background-color: #0c85d0;
+  border-color: #0c85d0;
+}
+
 </style>
