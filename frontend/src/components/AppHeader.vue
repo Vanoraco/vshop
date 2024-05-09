@@ -1,60 +1,61 @@
 <template>
-  <div class="flex flex-row">
-    <div class="mt-9 ml-20">
-      <img src="../assets/images/logo.png" alt="" class="h-12" />
+  <div class="flex flex-row items-center">
+    <div class="ml-4">
+      <img src="../assets/images/logo.png" alt="Logo" class="h-12" />
     </div>
-    <div
-      class="font-serif mt-12 flex justify-center font-medium mx-auto mr-96 header-main"
-    >
-      <ul class="flex flex-row gap-20 text-xl mx-auto">
+    <div class="font-serif ml-8">
+      <ul class="flex flex-row gap-8 text-lg">
         <router-link to="/">
-          <li class="text-2xl">Home</li>
+          <li :class="{ 'text-xl': $route.path === '/' }">Home</li>
         </router-link>
 
         <router-link to="/shops">
-          <li class="text-2xl">Shops</li>
+          <li :class="{ 'text-xl': $route.path === '/shops' }">Shops</li>
         </router-link>
 
         <router-link to="/sign-in">
-          <li class="text-2xl">Sign in</li>
+          <li :class="{ 'text-xl': $route.path === '/sign-in' }">Sign in</li>
         </router-link>
 
         <router-link to="/sign-up">
-          <li class="text-2xl">create a shop</li>
+          <li :class="{ 'text-xl': $route.path === '/sign-up' }">
+            Create a shop
+          </li>
         </router-link>
       </ul>
     </div>
 
-    <div class="mt-11 mr-36">
-      <ul class="mr-36 flex flex-row">
-        <li>
-          <span class="mr-4 mt-3"
-            ><i class="pi pi-search text-xl mt-3"></i></span
-          ><input
-            type="text"
-            class="border-black bg-slate-100 rounded-full h-10 placeholder:pl-[45px] placeholder:text-xl p-3"
-            placeholder="Search"
-          />
-        </li>
-        <li>
-          <span class="mt-12"
-            ><i class="pi pi-shopping-cart mt-3 ml-3 text-xl"></i
-          ></span>
-        </li>
-      </ul>
+    <div class="flex-grow"></div>
+
+    <div class="mr-4 flex items-center relative">
+      <input
+        type="text"
+        class="border border-gray-400 rounded-full h-10 pl-8 pr-4 py-1 placeholder-gray-400 text-sm"
+        placeholder="Search"
+      />
+      <span class="absolute inset-y-0 left-0 flex items-center pl-3"
+        ><i class="pi pi-search text-xl"></i
+      ></span>
+      <span class="text-xl cursor-pointer ml-2"
+        ><i class="pi pi-shopping-cart"></i
+      ></span>
+      <span class="text-xl cursor-pointer ml-2"
+        ><i class="pi pi-user"></i
+      ></span>
     </div>
   </div>
 </template>
 
-  <script>
+<script>
 export default {
   name: "AppHeader",
   components: {},
 };
 </script>
 
-   <style scoped>
+<style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9+Charted&family=Marcellus&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+
 .header-main {
   font-family: "Marcellus", sans-serif;
 }

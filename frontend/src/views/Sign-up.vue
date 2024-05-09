@@ -1,36 +1,74 @@
-<template class="w-full bg-cyan-400">
-  <div class="container ">
-    <div class="content">
-      <div class="right-section">
-        <img src="../assets/images/logo.png" alt="Logo" class="logo" />
-      </div>
-      <h2 class="fade-in">Create account and become a shop owner</h2>
-      <form class="fade-in">
-        <div class="form-group">
-          <label for="email" class="label">Username</label>
-          <input v-model="username" type="email" id="email" name="email" required />
+<template>
+  <div class="container-fluid py-5 signup-page">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2 class="text-center mb-4">Sign Up</h2>
+            <form @submit.prevent="submitForm">
+              <div class="form-group">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  v-model="name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email" class="form-label">Email address</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  v-model="email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  class="form-control"
+                  v-model="phone"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="role" class="form-label">Role</label>
+                <select id="role" class="form-control" v-model="role" required>
+                  <option value="">Select Role</option>
+                  <option value="buyer">Buyer</option>
+                  <option value="shopowner">Shop Owner</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="country" class="form-label">Country</label>
+                <select
+                  id="country"
+                  class="form-control"
+                  v-model="country"
+                  required
+                >
+                  <option value="">Select Country</option>
+                  <option value="Ethiopia">Ethiopia</option>
+                </select>
+              </div>
+              <div class="text-center color-white">
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+              </div>
+            </form>
+            <hr />
+            <div class="text-center">
+              <p>Already have an account? <a href="#">Log In</a></p>
+              <p>Or sign up with:</p>
+              <button class="btn btn-primary btn-sm m-3">Google</button>
+              <button class="btn btn-primary btn-sm m-3">Twitter</button>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="password" class="label">Password</label>
-          <input v-model="password" type="password" id="password" name="password" required />
-        </div>
-        <button @click="signIn" type="submit" class="signin-btn">
-          Sign In
-        </button>
-      </form>
-      <div class="alternative-signin fade-in">
-        <p>Or sign in with:</p>
-        <button @click="signInWithGoogle" class="google-btn">
-          <img
-            src="../assets/images/google.png"
-            alt="Google Icon"
-            class="google-icon"
-          />
-          Sign in with Google
-        </button>
-      </div>
-      <div class="forgot-password fade-in">
-        <a href="#" class="forgot-password-link">Forgot password?</a>
       </div>
     </div>
   </div>
@@ -40,17 +78,18 @@
 export default {
   data() {
     return {
-      username: "",
-      password: "",
+      name: "",
+      email: "",
+      phone: "",
+      role: "",
+      country: "",
     };
   },
   methods: {
-    signInWithGoogle() {
-      // Implement Google sign-in functionality
-    },
-    signIn() {
-      // Implement sign-in functionality
-      if (this.username !== "" && this.password !== "") {
+    submitForm() {
+      if (this.role === "buyer") {
+        this.$router.push("/");
+      } else if (this.role === "shopowner") {
         this.$router.push("/manage-space");
       }
     },
@@ -59,123 +98,46 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.signup-page {
+  background-image: url("https://source.unsplash.com/1600x900/?ecommerce");
+  background-size: cover;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  align-content: center;
-  height: 100vh;
-  background-color: #f1f1f1;
 }
-
-.logo {
-  max-width: 100%;
-  height: auto;
+.card {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 20px;
 }
-
-.content {
-
-  background-color: #fff;
-  border-radius: 4px;
-  padding: 30px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.card-body {
+  padding: 0;
 }
-
-h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-}
-
 .form-group {
   margin-bottom: 20px;
-  border: 1px solid #dfe1e5;
-  padding: 10px;
 }
-
-.label {
-  color: #555;
-  font-size: 14px;
+.form-label {
   font-weight: bold;
 }
-
-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #dfe1e5;
-  border-radius: 4px;
-  font-size: 14px;
+.form-control {
+  border-radius: 5px;
 }
-
-.signin-btn {
-  width: 100%;
-  padding: 10px;
+.btn-primary {
   background-color: #4285f4;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  border-color: #4285f4;
 }
-
-.signin-btn:hover {
-  background-color: #3367d6;
+.btn-primary:hover {
+  background-color: #357ae8;
+  border-color: #357ae8;
 }
-
-.google-btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #fff;
-  color: #555;
-  border: 1px solid #dfe1e5;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  transition: background-color 0.3s ease;
-}
-
-.google-btn:hover {
-  background-color: #f2f2f2;
-}
-
-.google-icon {
-  height: 16px;
-  margin-right: 8px;
-}
-
-.alternative-signin {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 14px;
-  color: #555;
-}
-
-.forgot-password {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.forgot-password-link {
+.btn-outline-primary {
   color: #4285f4;
-  text-decoration: none;
-  font-size: 14px;
+  border-color: #4285f4;
 }
-
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 1s forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.btn-outline-primary:hover {
+  color: #ffffff;
+  background-color: #4285f4;
+  border-color: #4285f4;
 }
 </style>
