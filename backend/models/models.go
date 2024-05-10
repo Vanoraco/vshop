@@ -12,7 +12,7 @@ type User struct {
 	Last_Name       *string            `json:"last_name"`
 	Password        *string            `json:"password"`
 	Email           *string            `json:"email"`
-	Phone           *string            `json:"phone"`
+	Phone           *int               `json:"phone"`
 	Token           *string            `json:"token"`
 	Refresh_Token   *string            `json:"refresh_token"`
 	Created_At      time.Time          `json:"created_at"`

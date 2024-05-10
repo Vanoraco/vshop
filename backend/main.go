@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
 	"github.com/vanoraco/vshop/controllers"
 	"github.com/vanoraco/vshop/database"
 	"github.com/vanoraco/vshop/middleware"
@@ -25,6 +26,12 @@ func main() {
 	router := gin.New()
 
 	router.Use(gin.Logger())
+
+	router.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"http://localhost:5173"}, // Replace with your frontend origin
+		AllowMethods: []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders: []string{"Origin", "Content-Type", "Authorization"},
+	}))
 
 	routes.UserRoutes(router)
 

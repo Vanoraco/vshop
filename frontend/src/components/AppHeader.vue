@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row items-center">
+  <div class="flex flex-row items-center mt-6 text-6xl">
     <div class="ml-4">
       <img src="../assets/images/logo.png" alt="Logo" class="h-12" />
     </div>
@@ -15,7 +15,7 @@
 
         <router-link to="/sign-up">
           <li :class="{ 'text-xl': $route.path === '/sign-up' }">
-            Create Account
+            Sign Up
           </li>
         </router-link>
       </ul>
