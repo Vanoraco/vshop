@@ -15,7 +15,7 @@
 
         <router-link to="/sign-up">
           <li :class="{ 'text-xl': $route.path === '/sign-up' }">
-            Create a shop
+            Create Account
           </li>
         </router-link>
       </ul>

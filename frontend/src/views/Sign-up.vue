@@ -56,8 +56,30 @@
                   <option value="Ethiopia">Ethiopia</option>
                 </select>
               </div>
+              <div class="form-group">
+                <label for="phone" class="form-label">Password</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  class="form-control"
+                  v-model="Password.password"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="phone" class="form-label">Confirm Password</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  class="form-control"
+                  v-model="Password.confirm"
+                  required
+                />
+              </div>
               <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                <button type="submit" class="btn btn-primary btn-block">
+                  Sign Up
+                </button>
               </div>
             </form>
             <hr />
@@ -81,18 +103,41 @@
 </template>
 
 <script>
+import { useVuelidate } from '@vuelidate/core'
+import { required, email } from '@vuelidate/validators'
 export default {
+  
   data() {
     return {
+      v$:useVuelidate(),
       name: "",
       email: "",
       phone: "",
       role: "",
       country: "",
+      Password:{
+        password:"",
+        confirm:""
+      }
     };
   },
+  validations(){
+    return{
+      name: {required},
+      email: {required},
+      phone: {required},
+      role: {required},
+      country: {required},
+      Password:{
+        password:{required},
+        confirm:{required}
+    }
+   
+  }},
   methods: {
+    
     submitForm() {
+      console.log(this.v$)
       if (this.role === "buyer") {
         this.$router.push("/");
       } else if (this.role === "shopowner") {
@@ -159,7 +204,7 @@ export default {
   border-color: #dd4b39;
   border-radius: 5px;
   padding: 12px;
- font-size: 16px;
+  font-size: 16px;
   width: 100%;
 }
 
@@ -181,5 +226,4 @@ export default {
   background-color: #0c85d0;
   border-color: #0c85d0;
 }
-
 </style>
