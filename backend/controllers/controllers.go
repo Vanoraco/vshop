@@ -16,7 +16,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -199,7 +198,7 @@ func ProductViewerAdmin() gin.HandlerFunc {
 	}
 }
 
-func AddShop() gin.HandlerFunc {
+/* func AddShop() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		var shop models.Shop
@@ -236,7 +235,7 @@ func AddShop() gin.HandlerFunc {
 		defer cancel()
 		c.JSON(http.StatusOK, "Shop Successfully Added")
 	}
-}
+} */
 
 func SearchProduct() gin.HandlerFunc {
 	return func(c *gin.Context) {
