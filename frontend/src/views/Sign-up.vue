@@ -1,147 +1,110 @@
 <template>
-  <div class="container-fluid py-5 signup-page">
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow">
-          <div class="card-body">
+  <v-container fluid py-5 class="signup-page">
+    <v-row justify="center" align="center">
+      <v-col cols="12" sm="8" md="6" lg="4">
+        <v-card class="shadow">
+          <v-card-text>
             <h2 class="text-center mb-4">Sign Up</h2>
-            <form @submit.prevent="submitForm">
-              <div class="form-group">
-                <label for="name" class="form-label">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  class="form-control"
-                  v-model="name"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="email" class="form-label">Email address</label>
-                <input
-                  type="email"
-                  id="email"
-                  class="form-control"
-                  v-model="email"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="phone" class="form-label">Phone Number</label>
-                <input
-                  type="tel"
-                  id="phone"
-                  class="form-control"
-                  v-model="phone"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="role" class="form-label">Role</label>
-                <select id="role" class="form-control" v-model="role" required>
-                  <option value="">Select Role</option>
-                  <option value="buyer">Buyer</option>
-                  <option value="shopowner">Shop Owner</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="country" class="form-label">Country</label>
-                <select
-                  id="country"
-                  class="form-control"
-                  v-model="country"
-                  required
-                >
-                  <option value="">Select Country</option>
-                  <option value="Ethiopia">Ethiopia</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="phone" class="form-label">Password</label>
-                <input
-                  type="tel"
-                  id="phone"
-                  class="form-control"
-                  v-model="Password.password"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="phone" class="form-label">Confirm Password</label>
-                <input
-                  type="tel"
-                  id="phone"
-                  class="form-control"
-                  v-model="Password.confirm"
-                  required
-                />
-              </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-block">
-                  Sign Up
-                </button>
-              </div>
-            </form>
+            <v-form @submit.prevent="submitForm">
+              <v-text-field v-model="name" label="Name" required></v-text-field>
+              <v-text-field
+                v-model="email"
+                label="Email address"
+                type="email"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="phone"
+                label="Phone Number"
+                type="tel"
+                required
+              ></v-text-field>
+              <v-select
+                v-model="role"
+                label="Role"
+                :items="roleItems"
+                required
+              ></v-select>
+              <v-select
+                v-model="country"
+                label="Country"
+                :items="countryItems"
+                required
+              ></v-select>
+              <v-text-field
+                v-model="password"
+                label="Password"
+                type="password"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                required
+              ></v-text-field>
+              <v-btn type="submit" color="primary" block> Sign Up </v-btn>
+            </v-form>
             <hr />
             <div class="text-center">
               <p>Already have an account? <a href="#">Log In</a></p>
               <p>Or sign up with:</p>
               <div>
-                <button class="btn btn-google btn-block">
-                  <i class="fab fa-google"></i> Sign up with Google
-                </button>
-                <button class="btn btn-twitter btn-block">
-                  <i class="fab fa-twitter"></i> Sign up with Twitter
-                </button>
+                <v-btn color="google" block>
+                  <v-icon left>mdi-google</v-icon> Sign up with Google
+                </v-btn>
+                <v-btn color="twitter" block>
+                  <v-icon left>mdi-twitter</v-icon> Sign up with Twitter
+                </v-btn>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import { useVuelidate } from '@vuelidate/core'
-import { required, email } from '@vuelidate/validators'
+import { useVuelidate } from "@vuelidate/core";
+import { required, email } from "@vuelidate/validators";
 export default {
-  
   data() {
     return {
-      v$:useVuelidate(),
+      v$: useVuelidate(),
       name: "",
       email: "",
       phone: "",
       role: "",
       country: "",
-      Password:{
-        password:"",
-        confirm:""
-      }
+      Password: {
+        password: "",
+        confirm: "",
+      },
+      roleItems: ["Buyer", "Shop Owner"],
+      countryItems: ["Ethiopia", "Djibouti", "Eritrea", "Somalia", "Kenya"],
     };
   },
-  validations(){
-    return{
-      name: {required},
-      email: {required},
-      phone: {required},
-      role: {required},
-      country: {required},
-      Password:{
-        password:{required},
-        confirm:{required}
-    }
-   
-  }},
+  validations() {
+    return {
+      name: { required },
+      email: { required },
+      phone: { required },
+      role: { required },
+      country: { required },
+      Password: {
+        password: { required },
+        confirm: { required },
+      },
+    };
+  },
   methods: {
-    
     submitForm() {
-      console.log(this.v$)
+      console.log(this.v$);
       if (this.role === "buyer") {
         this.$router.push("/");
-      } else if (this.role === "shopowner") {
-        this.$router.push("/manage-space");
+      } else if (this.role === "Shop Owner") {
+        this.$router.push("/DetailForm");
       }
     },
   },
