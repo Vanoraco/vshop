@@ -5,72 +5,57 @@
         <div class="card shadow">
           <div class="card-body">
             <h2 class="text-center mb-4">Sign Up</h2>
-            <form @submit.prevent="submitForm">
-              <div class="form-group">
-                <label for="name" class="form-label">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  class="form-control"
-                  v-model="name"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="email" class="form-label">Email address</label>
-                <input
-                  type="email"
-                  id="email"
-                  class="form-control"
-                  v-model="email"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="phone" class="form-label">Phone Number</label>
-                <input
-                  type="tel"
-                  id="phone"
-                  class="form-control"
-                  v-model="phone"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="role" class="form-label">Role</label>
-                <select id="role" class="form-control" v-model="role" required>
-                  <option value="">Select Role</option>
-                  <option value="buyer">Buyer</option>
-                  <option value="shopowner">Shop Owner</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="country" class="form-label">Country</label>
-                <select
-                  id="country"
-                  class="form-control"
-                  v-model="country"
-                  required
-                >
-                  <option value="">Select Country</option>
-                  <option value="Ethiopia">Ethiopia</option>
-                </select>
-              </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
-              </div>
-            </form>
+            <v-form @submit.prevent="submitForm">
+              <v-text-field v-model="name" label="Name" required></v-text-field>
+              <v-text-field
+                v-model="email"
+                label="Email address"
+                type="email"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="phone"
+                label="Phone Number"
+                type="tel"
+                required
+              ></v-text-field>
+              <v-select
+                v-model="role"
+                label="Role"
+                :items="roleItems"
+                required
+              ></v-select>
+              <v-select
+                v-model="country"
+                label="Country"
+                :items="countryItems"
+                required
+              ></v-select>
+              <v-text-field
+                v-model="password"
+                label="Password"
+                type="password"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                required
+              ></v-text-field>
+              <v-btn type="submit" color="primary" block> Sign Up </v-btn>
+            </v-form>
             <hr />
             <div class="text-center">
               <p>Already have an account? <a href="#">Log In</a></p>
               <p>Or sign up with:</p>
               <div>
-                <button class="btn btn-google btn-block">
-                  <i class="fab fa-google"></i> Sign up with Google
-                </button>
-                <button class="btn btn-twitter btn-block">
-                  <i class="fab fa-twitter"></i> Sign up with Twitter
-                </button>
+                <v-btn color="google" block>
+                  <v-icon left>mdi-google</v-icon> Sign up with Google
+                </v-btn>
+                <v-btn color="twitter" block>
+                  <v-icon left>mdi-twitter</v-icon> Sign up with Twitter
+                </v-btn>
               </div>
             </div>
           </div>
@@ -346,10 +331,19 @@ export default {
  
   data() {
     return {
+
       reg_in_submission: false,
       reg_alert_message: 'Please Wait! Your Account is being created',
       reg_alert_variant: 'bg-blue-500',
       reg_show_alert: false,
+
+      v$: useVuelidate(),
+      name: "",
+      email: "",
+      phone: "",
+      role: "",
+      country: "",
+
       selectedRole: '',
       selectedForm: '',
       schema: {
@@ -375,6 +369,7 @@ export default {
   methods: {
 
     submitForm() {
+      console.log(this.v$);
       if (this.role === "buyer") {
         this.$router.push("/");
       } else if (this.role === "shopowner") {
@@ -495,7 +490,7 @@ export default {
   border-color: #dd4b39;
   border-radius: 5px;
   padding: 12px;
- font-size: 16px;
+  font-size: 16px;
   width: 100%;
 }
 

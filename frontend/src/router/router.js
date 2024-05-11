@@ -5,6 +5,8 @@ import HomePage from "../views/Home.vue"
 import Shops from "../components/Shops.vue"
 import ManageSpace from "../views/owner/ManageSpace.vue"
 import productDetail from "../views/product_detail.vue"
+import DetailForm from "../views/owner/DetailForm.vue"
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +35,10 @@ const router = createRouter({
      {
       path:"/product-detail-page",
       component:productDetail
+     },
+     {
+      path:"/DetailForm",
+      component:DetailForm
      }
     ]
 })
