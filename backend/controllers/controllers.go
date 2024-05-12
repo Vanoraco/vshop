@@ -173,7 +173,7 @@ func Login() gin.HandlerFunc {
 		token, refreshToken, _ := generate.TokenGenerator(*founduser.Email, *founduser.First_Name, *founduser.Last_Name, founduser.User_ID)
 		defer cancel()
 		generate.UpdateAllTokens(token, refreshToken, founduser.User_ID)
-		c.JSON(http.StatusFound, founduser)
+		c.JSON(http.StatusOK, founduser)
 
 	}
 }

@@ -105,13 +105,17 @@
           <button class="mt-12 bg-black font-style text-xl px-4 py-2" v-else-if="selectedRole === 'seller'" @click="selectForm('seller')"> {{ buttonText }} </button>
           <button class="mt-12 bg-grey font-style text-xl px-4 py-2 " v-else @click="selectForm('seller')" disabled> {{ buttonText }} </button>
         </div>
+
+        <div class="flex justify-center mt-9 font-style ">
+          Already have an account ? <router-link to="/login" class="ml-2 text-green"> Log in</router-link>  
+        </div>
       </div>
 
       <div class=" flex justify-center gap-9 font-style text-2xl">
        
         
         
-        <vee-form :validation-schema="userschema" @submit="registerUser" :initial-values="userData" v-if="selectedForm == 'buyer'">
+        <vee-form :validation-schema="userschema" @submit="registerUser" :initial-values="userData" v-if="selectedForm == 'buyer'" class="shadow-2xl py-9 px-9">
           <p class="text-5xl">Sign up to buy products</p>
           <br>
           
@@ -214,7 +218,7 @@
          </vee-form>
       </div>
       <div class="flex justify-center font-style text-xl">
-         <vee-form :validation-schema="ownerschema" @submit="registerOwner" :initial-values="userData" v-if="selectedForm == 'seller'">
+         <vee-form :validation-schema="ownerschema" @submit="registerOwner" :initial-values="userData" v-if="selectedForm == 'seller'" class="shadow-2xl py-9 px-9">
           <p class="text-5xl">Sign up to sell products</p>
           <br>
     <!-- Name -->
@@ -337,7 +341,7 @@ export default {
       reg_alert_variant: 'bg-blue-500',
       reg_show_alert: false,
 
-      v$: useVuelidate(),
+     
       name: "",
       email: "",
       phone: "",
@@ -382,7 +386,7 @@ export default {
 
     async registerUser(formdata) {
       console.log(formdata)
-      const toast = useToast();
+     
       try {
         this.reg_show_alert = true
         this.reg_alert_variant = 'bg-blue-500'
@@ -391,10 +395,7 @@ export default {
         const response = await axios.post('http://localhost:8000/users/signup', formdata);
         this.reg_in_submission = true
       
-       
-        
-        
-        
+        this.$router.push('login' );
         console.log('User registered successfully:', response.data);
         // Optionally, you can redirect the user to another page or display a success message
       } catch (error) {
@@ -402,13 +403,20 @@ export default {
         this.reg_alert_variant = 'bg-red-500'
         this.reg_alert_message = 'An unexpected error occurred. Please try again Later'
         //this.$toast.error('An unexpected error occurred. Please try again Later');
-       
+        this.reg_alert_message = 'Redirecting you to shops...'
+        
+        setTimeout(() =>  {
+         
+          this.$router.push( '/shops' )
+        }, 2000
+      )
         console.error('Error registering user:', error.response ? error.response.data : error.message);
         return
         // Optionally, you can display an error message to the user
       }
       this.reg_alert_variant = 'bg-green-500'
       this.reg_alert_message = 'Success! Your Account is created'
+      window.location.reload()
     }
   }
 ,
