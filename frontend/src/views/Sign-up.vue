@@ -327,8 +327,12 @@
 
 import { mapActions } from 'pinia'
 import axios from 'axios'
+
+// import { Vuelidate } from 'vuelidate';
+
 import 'vue-toast-notification/dist/theme-bootstrap.css'
 import { useToast } from 'vue-toastification'
+
 
 
 export default {
@@ -336,12 +340,13 @@ export default {
   data() {
     return {
 
+      // v$: Vuelidate(),
+
+
       reg_in_submission: false,
       reg_alert_message: 'Please Wait! Your Account is being created',
       reg_alert_variant: 'bg-blue-500',
       reg_show_alert: false,
-
-     
       name: "",
       email: "",
       phone: "",
@@ -372,14 +377,14 @@ export default {
   },
   methods: {
 
-    submitForm() {
-      console.log(this.v$);
-      if (this.role === "buyer") {
-        this.$router.push("/");
-      } else if (this.role === "shopowner") {
-        this.$router.push("/manage-space");
-      }
-    },
+    // submitForm() {
+    //   console.log(this.v$);
+    //   if (this.role === "buyer") {
+    //     this.$router.push("/");
+    //   } else if (this.role === "shopowner") {
+    //     this.$router.push("/manage-space");
+    //   }
+    // },
     selectForm(role) {
       this.selectedForm = role;
     },

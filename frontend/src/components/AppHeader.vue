@@ -14,9 +14,13 @@
         </router-link>
 
         <router-link to="/sign-up">
+
           <li :class="{ 'text-xl': $route.path === '/sign-up' }" v-if="!isUserLoggedIn">
             Sign Up
           </li>
+
+          <li :class="{ 'text-xl': $route.path === '/sign-up' }">Sign Up</li>
+
         </router-link>
       </ul>
     </div>
@@ -83,10 +87,20 @@ pi-user-edit text-xl"> Update Profile</i>
       <!-- <span class="text-xl cursor-pointer ml-2 "
         ><i class="pi pi-shopping-cart"></i
       ></span>
+
       <span class="text-xl cursor-pointer ml-2"
         ><i class="pi pi-user"></i -->
         
       <!-- ></span> -->
+
+     
+        <span class="text-xl cursor-pointer ml-2">
+         <router-link>
+          <i class="pi pi-user"></i>
+         </router-link> 
+        </span>
+      
+
     </div>
   </div>
 </template>
