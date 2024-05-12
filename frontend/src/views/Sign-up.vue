@@ -315,11 +315,11 @@
 
 import { mapActions } from 'pinia'
 import axios from 'axios'
-
+// import { Vuelidate } from 'vuelidate';
 export default {
   data() {
     return {
-      v$: useVuelidate(),
+      // v$: Vuelidate(),
       name: "",
       email: "",
       phone: "",
@@ -349,14 +349,14 @@ export default {
   },
   methods: {
 
-    submitForm() {
-      console.log(this.v$);
-      if (this.role === "buyer") {
-        this.$router.push("/");
-      } else if (this.role === "shopowner") {
-        this.$router.push("/manage-space");
-      }
-    },
+    // submitForm() {
+    //   console.log(this.v$);
+    //   if (this.role === "buyer") {
+    //     this.$router.push("/");
+    //   } else if (this.role === "shopowner") {
+    //     this.$router.push("/manage-space");
+    //   }
+    // },
     selectForm(role) {
       this.selectedForm = role;
     },
