@@ -109,11 +109,19 @@
 
       <div class=" flex justify-center gap-9 font-style text-2xl">
        
-       
+        
         
         <vee-form :validation-schema="userschema" @submit="registerUser" :initial-values="userData" v-if="selectedForm == 'buyer'">
           <p class="text-5xl">Sign up to buy products</p>
           <br>
+          
+          <div
+    class="text-white  font-bold p-4 rounded mb-4"
+    v-if="reg_show_alert"
+    :class="reg_alert_variant"
+  >
+    {{ reg_alert_message }}
+  </div>
     <!-- Name -->
     <div class="mb-3">
       <label class="inline-block mb-2">First Name</label>
@@ -201,7 +209,7 @@
       class="block w-full bg-black text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
       :disabled="reg_in_submission"
     >
-      Submit
+      Create my account
     </button>
          </vee-form>
       </div>
@@ -303,7 +311,7 @@
       class="block w-full bg-black text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
       :disabled="reg_in_submission"
     >
-      Submit
+      Create my account
     </button>
          </vee-form>
         </div>
@@ -315,16 +323,35 @@
 
 import { mapActions } from 'pinia'
 import axios from 'axios'
+<<<<<<< HEAD
 // import { Vuelidate } from 'vuelidate';
+=======
+import 'vue-toast-notification/dist/theme-bootstrap.css'
+import { useToast } from 'vue-toastification'
+
+
+>>>>>>> 68751b5debd70febab7bddf12cc03f48080e771a
 export default {
+ 
   data() {
     return {
+<<<<<<< HEAD
       // v$: Vuelidate(),
+=======
+
+      reg_in_submission: false,
+      reg_alert_message: 'Please Wait! Your Account is being created',
+      reg_alert_variant: 'bg-blue-500',
+      reg_show_alert: false,
+
+      v$: useVuelidate(),
+>>>>>>> 68751b5debd70febab7bddf12cc03f48080e771a
       name: "",
       email: "",
       phone: "",
       role: "",
       country: "",
+
       selectedRole: '',
       selectedForm: '',
       schema: {
@@ -363,15 +390,33 @@ export default {
 
     async registerUser(formdata) {
       console.log(formdata)
+      const toast = useToast();
       try {
+        this.reg_show_alert = true
+        this.reg_alert_variant = 'bg-blue-500'
+        this.reg_alert_message = 'Please Wait! Your Account is being created'
         // Make a POST request to your Golang backend API endpoint
         const response = await axios.post('http://localhost:8000/users/signup', formdata);
+        this.reg_in_submission = true
+      
+       
+        
+        
+        
         console.log('User registered successfully:', response.data);
         // Optionally, you can redirect the user to another page or display a success message
       } catch (error) {
+        this.reg_in_submission = false 
+        this.reg_alert_variant = 'bg-red-500'
+        this.reg_alert_message = 'An unexpected error occurred. Please try again Later'
+        //this.$toast.error('An unexpected error occurred. Please try again Later');
+       
         console.error('Error registering user:', error.response ? error.response.data : error.message);
+        return
         // Optionally, you can display an error message to the user
       }
+      this.reg_alert_variant = 'bg-green-500'
+      this.reg_alert_message = 'Success! Your Account is created'
     }
   }
 ,

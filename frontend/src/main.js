@@ -13,6 +13,7 @@ import vuetify from './plugins/vuetify';
 import router from './router/router'; 
 import VeeValidateplugin from './includes/validation'
 
+
 const app = createApp(App)
 
 
@@ -20,6 +21,8 @@ const app = createApp(App)
 app.use(PrimeVue);
 
 app.use(vuetify);
+
+
 
 app.use(router)
 
