@@ -6,7 +6,11 @@ import Shops from "../components/Shops.vue"
 import ManageSpace from "../views/owner/ManageSpace.vue"
 import productDetail from "../views/product_detail.vue"
 import DetailForm from "../views/owner/DetailForm.vue"
+
+import Login from "../views/Login.vue"
+=======
 import BuyerProfile from "../components/BuyerProfileCard.Vue"
+
 
 
 const router = createRouter({
@@ -42,8 +46,13 @@ const router = createRouter({
       component:DetailForm
      },
      {
+
+      path: "/login",
+      component: Login
+
       path:"/BuyerProfile",
       component:BuyerProfile
+
      }
     ]
 })
