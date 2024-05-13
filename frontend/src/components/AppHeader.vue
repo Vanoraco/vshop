@@ -35,9 +35,9 @@
       ></span>
      
         <span class="text-xl cursor-pointer ml-2">
-         <router-link>
+        
           <i class="pi pi-user"></i>
-         </router-link> 
+        
         </span>
       
     </div>

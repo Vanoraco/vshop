@@ -1,68 +1,4 @@
 <template>
-  <!-- <div class="container-fluid py-5 signup-page">
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow">
-          <div class="card-body">
-            <h2 class="text-center mb-4">Sign Up</h2>
-            <v-form @submit.prevent="submitForm">
-              <v-text-field v-model="name" label="Name" required></v-text-field>
-              <v-text-field
-                v-model="email"
-                label="Email address"
-                type="email"
-                required
-              ></v-text-field>
-              <v-text-field
-                v-model="phone"
-                label="Phone Number"
-                type="tel"
-                required
-              ></v-text-field>
-              <v-select
-                v-model="role"
-                label="Role"
-                :items="roleItems"
-                required
-              ></v-select>
-              <v-select
-                v-model="country"
-                label="Country"
-                :items="countryItems"
-                required
-              ></v-select>
-              <v-text-field
-                v-model="password"
-                label="Password"
-                type="password"
-                required
-              ></v-text-field>
-              <v-text-field
-                v-model="confirmPassword"
-                label="Confirm Password"
-                type="password"
-                required
-              ></v-text-field>
-              <v-btn type="submit" color="primary" block> Sign Up </v-btn>
-            </v-form>
-            <hr />
-            <div class="text-center">
-              <p>Already have an account? <a href="#">Log In</a></p>
-              <p>Or sign up with:</p>
-              <div>
-                <v-btn color="google" block>
-                  <v-icon left>mdi-google</v-icon> Sign up with Google
-                </v-btn>
-                <v-btn color="twitter" block>
-                  <v-icon left>mdi-twitter</v-icon> Sign up with Twitter
-                </v-btn>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
   <div>
   <div class="container" v-if="selectedForm == ''">
         <div class="top-text-wrapper flex justify-center font-style text-3xl ">
@@ -323,21 +259,14 @@
 
 import { mapActions } from 'pinia'
 import axios from 'axios'
-<<<<<<< HEAD
-// import { Vuelidate } from 'vuelidate';
-=======
 import 'vue-toast-notification/dist/theme-bootstrap.css'
 import { useToast } from 'vue-toastification'
 
 
->>>>>>> 68751b5debd70febab7bddf12cc03f48080e771a
 export default {
  
   data() {
     return {
-<<<<<<< HEAD
-      // v$: Vuelidate(),
-=======
 
       reg_in_submission: false,
       reg_alert_message: 'Please Wait! Your Account is being created',
@@ -345,7 +274,6 @@ export default {
       reg_show_alert: false,
 
       v$: useVuelidate(),
->>>>>>> 68751b5debd70febab7bddf12cc03f48080e771a
       name: "",
       email: "",
       phone: "",

@@ -6,8 +6,7 @@ import Shops from "../components/Shops.vue"
 import ManageSpace from "../views/owner/ManageSpace.vue"
 import productDetail from "../views/product_detail.vue"
 import DetailForm from "../views/owner/DetailForm.vue"
-import BuyerProfile from "../components/BuyerProfileCard.Vue"
-
+// import Profile from "../components/Profile.vue"
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,10 +40,10 @@ const router = createRouter({
       path:"/DetailForm",
       component:DetailForm
      },
-     {
-      path:"/BuyerProfile",
-      component:BuyerProfile
-     }
+   //   {
+   //    path:"/Profile",
+   //    component:Profile
+   //   }
     ]
 })
 
