@@ -9,8 +9,8 @@
           <li :class="{ 'text-xl': $route.path === '/' }">Home</li>
         </router-link>
 
-        <router-link to="/shops">
-          <li :class="{ 'text-xl': $route.path === '/shops' }">Shops</li>
+        <router-link to="/ShopCard">
+          <li :class="{ 'text-xl': $route.path === '/ShopCard' }">Shops</li>
         </router-link>
 
         <router-link to="/sign-up">
@@ -19,7 +19,6 @@
             Sign Up
           </li>
 
-          <li :class="{ 'text-xl': $route.path === '/sign-up' }">Sign Up</li>
 
         </router-link>
       </ul>
@@ -40,12 +39,9 @@
 
     <div class="mr-4 flex items-center relative gap-6 ">
      
-     <!--  <span class="absolute inset-y-0 left-0 flex items-center pl-3"
-        ><i class="pi pi-search text-xl"></i
-      ></span> -->
     <ul class="flex flex-row gap-9 mb-6 mr-4" v-if="isUserLoggedIn">
      <li>
-      <router-link to="/cart">
+      <router-link to="/Cart">
         <i class="pi pi-shopping-cart text-xl"></i>
       </router-link>
      </li>
@@ -53,13 +49,13 @@
      <li>
       <router-link to="/profile">
         <i class="pi 
-pi-user-edit text-xl"> Update Profile</i>
+        pi-user-edit text-xl"> Update Profile</i>
       </router-link>
      </li>
       <li>
       <router-link @click="logout()">
         <i class="
-   pi pi-sign-out text-xl"> Sign out</i>
+      pi pi-sign-out text-xl"> Sign out</i>
       </router-link>
      </li>
      <li>

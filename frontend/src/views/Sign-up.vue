@@ -264,7 +264,6 @@
 import { mapActions } from 'pinia'
 import axios from 'axios'
 
-// import { Vuelidate } from 'vuelidate';
 
 import 'vue-toast-notification/dist/theme-bootstrap.css'
 import { useToast } from 'vue-toastification'
@@ -275,7 +274,6 @@ export default {
   data() {
     return {
 
-      // v$: Vuelidate(),
 
 
       reg_in_submission: false,
