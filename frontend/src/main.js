@@ -13,6 +13,8 @@ import PrimeVue from "primevue/config";
 import vuetify from './plugins/vuetify';
 import router from './router/router'; 
 import VeeValidateplugin from './includes/validation'
+import '@fortawesome/fontawesome-free/css/all.css';
+
 
 
 const pinia = createPinia()

@@ -14,6 +14,7 @@ import ShopDetail from "../components/ShopDetail.vue"
 import AdminMedias from "../views/Admin/pages/admin/medias.vue"
 import AdminBin from "../views/Admin/pages/admin/recycle-bin.vue"
 import AdminApp from "../views/Admin/AdminApp.vue"
+import Profile from "../components/Profile.vue"
 
 // import BuyerProfile from "../components/BuyerProfileCard.Vue"
 
@@ -90,6 +91,10 @@ const router = createRouter({
       path:"/admin/recycle-bin",
       component: AdminBin
      },
+     {
+      path:'/user/profile',
+      component:Profile
+     }
     ]
 })
 

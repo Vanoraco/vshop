@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row items-center mt-6 text-6xl">
+  <div v-if="!isUserLoggedIn" class="flex flex-row items-center mt-6 text-6xl">
     <div class="ml-4">
       <img src="../assets/images/logo.png" alt="Logo" class="h-12" />
     </div>
@@ -9,8 +9,8 @@
           <li :class="{ 'text-xl': $route.path === '/' }">Home</li>
         </router-link>
 
-        <router-link to="/ShopCard">
-          <li :class="{ 'text-xl': $route.path === '/ShopCard' }">Shops</li>
+        <router-link to="/shops">
+          <li :class="{ 'text-xl': $route.path === '/shops' }">Shops</li>
         </router-link>
 
         <router-link to="/sign-up">
@@ -80,14 +80,6 @@
       </li>
     </ul>
      
-      <!-- <span class="text-xl cursor-pointer ml-2 "
-        ><i class="pi pi-shopping-cart"></i
-      ></span>
-
-      <span class="text-xl cursor-pointer ml-2"
-        ><i class="pi pi-user"></i -->
-        
-      <!-- ></span> -->
 
     </div>
   </div>
@@ -101,6 +93,9 @@ export default {
     isUserLoggedIn() {
       // Check if the user's email exists in localStorage
       return localStorage.getItem('email') !== null;
+   
+
+      
     },
   },
   methods: {

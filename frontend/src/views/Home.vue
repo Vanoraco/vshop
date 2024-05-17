@@ -7,6 +7,7 @@
     <div class="ml-3 shop-header">
       <p class="text-3xl font-extrabold">Top Shops</p>
     </div>
+    
     <ShopCard />
     <div class="flex justify-center mt-9 ">
       <p class="bg-[#DB4444] text-white px-5 py-1 shop-header">View All Shops</p>
