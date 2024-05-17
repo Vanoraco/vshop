@@ -89,14 +89,6 @@
         
       <!-- ></span> -->
 
-     
-        <span class="text-xl cursor-pointer ml-2">
-        
-          <i class="pi pi-user"></i>
-        
-        </span>
-      
-
     </div>
   </div>
 </template>
