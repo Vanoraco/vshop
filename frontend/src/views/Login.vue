@@ -81,10 +81,11 @@
                       localStorage.setItem('firstname', response.data.first_name)
                       //console.log(response.data)
                       this.$router.push('/' );
+
                     
                })
         
-       
+          
         
         // Optionally, you can redirect the user to another page or display a success message
        .catch ((error) => {
@@ -93,7 +94,6 @@
         this.reg_alert_message = 'An unexpected error occurred. Please try again Later'
         //this.$toast.error('An unexpected error occurred. Please try again Later');
         //this.reg_alert_message = 'Redirecting you to shops...'
-        
         
         console.error('Error Loggin In:', error);
         return

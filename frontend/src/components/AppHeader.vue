@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row items-center mt-6 text-6xl">
+  <div v-if="!isUserLoggedIn" class="flex flex-row items-center mt-6 text-6xl">
     <div class="ml-4">
       <img src="../assets/images/logo.png" alt="Logo" class="h-12" />
     </div>
@@ -14,9 +14,12 @@
         </router-link>
 
         <router-link to="/sign-up">
+
           <li :class="{ 'text-xl': $route.path === '/sign-up' }" v-if="!isUserLoggedIn">
             Sign Up
           </li>
+
+
         </router-link>
       </ul>
     </div>
@@ -36,12 +39,9 @@
 
     <div class="mr-4 flex items-center relative gap-6 ">
      
-     <!--  <span class="absolute inset-y-0 left-0 flex items-center pl-3"
-        ><i class="pi pi-search text-xl"></i
-      ></span> -->
     <ul class="flex flex-row gap-9 mb-6 mr-4" v-if="isUserLoggedIn">
      <li>
-      <router-link to="/cart">
+      <router-link to="/Cart">
         <i class="pi pi-shopping-cart text-xl"></i>
       </router-link>
      </li>
@@ -49,13 +49,13 @@
      <li>
       <router-link to="/profile">
         <i class="pi 
-pi-user-edit text-xl"> Update Profile</i>
+        pi-user-edit text-xl"> Update Profile</i>
       </router-link>
      </li>
       <li>
       <router-link @click="logout()">
         <i class="
-   pi pi-sign-out text-xl"> Sign out</i>
+      pi pi-sign-out text-xl"> Sign out</i>
       </router-link>
      </li>
      <li>
@@ -80,13 +80,7 @@ pi-user-edit text-xl"> Update Profile</i>
       </li>
     </ul>
      
-      <!-- <span class="text-xl cursor-pointer ml-2 "
-        ><i class="pi pi-shopping-cart"></i
-      ></span>
-      <span class="text-xl cursor-pointer ml-2"
-        ><i class="pi pi-user"></i -->
-        
-      <!-- ></span> -->
+
     </div>
   </div>
 </template>
@@ -99,6 +93,9 @@ export default {
     isUserLoggedIn() {
       // Check if the user's email exists in localStorage
       return localStorage.getItem('email') !== null;
+   
+
+      
     },
   },
   methods: {

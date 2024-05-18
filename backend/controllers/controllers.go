@@ -41,7 +41,7 @@ func VerifyPassword(userpassword string, givenpassword string) (bool, string) {
 	valid := true
 	msg := ""
 	if err != nil {
-		msg = "Login Or Passowrd is Incorerct"
+		msg = "Login Or Password is Incorrect"
 		valid = false
 	}
 	return valid, msg
