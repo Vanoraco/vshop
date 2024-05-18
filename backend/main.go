@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 	"github.com/vanoraco/vshop/controllers"
 	"github.com/vanoraco/vshop/database"
 	"github.com/vanoraco/vshop/middleware"
@@ -42,6 +42,7 @@ func main() {
 	router.GET("removeitem", app.RemoveItem())
 	router.GET("/cartcheckout", app.BuyFromCart())
 	router.GET("/instantbuy", app.InstantBuy())
+	//router.POST("/initialize-transaction", controllers.InitializeTransaction())
 
 	log.Fatal(router.Run(":" + port))
 }
