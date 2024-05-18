@@ -666,6 +666,35 @@ func AddProductsToShop() gin.HandlerFunc {
 	return imgBBRes.Data.URL, nil
 } */
 
+func ViewShops() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var shoplist []models.Shop
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+		cursor, err := ShopCollection.Find(ctx, bson.D{{}})
+		if err != nil {
+			c.IndentedJSON(http.StatusInternalServerError, "Someting Went Wrong Please Try After Some Time")
+			return
+		}
+		err = cursor.All(ctx, &shoplist)
+		if err != nil {
+			log.Println(err)
+			c.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
+		defer cursor.Close(ctx)
+		if err := cursor.Err(); err != nil {
+
+			log.Println(err)
+			c.IndentedJSON(400, "invalid")
+			return
+		}
+		defer cancel()
+		c.IndentedJSON(200, shoplist)
+
+	}
+}
+
 func SearchProduct() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var productlist []models.Product

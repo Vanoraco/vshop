@@ -14,4 +14,6 @@ func UserRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.GET("/users/search", controllers.SearchProductByQuery())
 	incomingRoutes.POST("/owners/addshop", controllers.AddShop())
 	incomingRoutes.POST("/owners/addproducttoshop", controllers.AddProductsToShop())
+	incomingRoutes.POST("/intialize", controllers.InitializeTransaction())
+	incomingRoutes.GET("/users/viewshops", controllers.ViewShops())
 }
