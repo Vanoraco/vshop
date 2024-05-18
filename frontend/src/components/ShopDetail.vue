@@ -1,72 +1,74 @@
 <template>
-  <ul class="grid grid-cols-4 gap-5">
-    <li  v-for="shop in shops" class="rounded-lg shadow-2xl mt-9 ml-20 shop-list">
-      <img :src="shop.ShopImg" alt="" class="rounded lg w-[100%] h-[250px]"/>
-          <p class="flex justify-center font-bold">Shop-Name -  {{ shop.ShopName }} </p>
-          <p class="flex justify-center font-bold"> Categories - {{ shop.Categories }} </p>
-          <p class="flex justify-center font-bold text-gold">Owner - {{ shop.ShopOwner }} </p>
-           <p class="flex justify-center text-amber-600">Rating {{ shop.Rating }} </p>
+  <div>
+    <h1 class="text-4xl font-bold mb-6">{{ shop.name }}</h1>
+    <p class="text-lg mb-6">{{ shop.description }}</p>
 
-    </li>
-  </ul>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div
+        v-for="product in products"
+        :key="product.id"
+        class="bg-white rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300"
+      >
+        <img :src="product.image" :alt="product.name" class="w-full h-48 object-cover rounded-md mb-4" />
+        <h2 class="text-xl font-semibold mb-2">{{ product.name }}</h2>
+        <p class="text-gray-500">{{ product.description }}</p>
+        <p class="text-gray-800 font-semibold mt-2">{{ product.price }}</p>
+        <button class="mr-2">3D</button>
+        <button>Add to cart</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-  export default {
-    data() {
-        return {
-            shops: [
-              {
-                ShopName: 'Siqala',
-                ShopOwner: 'Abebe',
-                Rating: 5,
-                Categories: 'Electronics',
-                ShopImg: 'https://www.suninternational.com/content/dam/suninternational/sun-city-resort/shopping/SCR5r0250-sun-city-sun-central-retail-billabong-XS_5072-1.jpg.sunimage.800.400.jpg'
-              },
-              {
-                ShopName: 'Emaye',
-                ShopOwner: 'Mola',
-                Rating: 4,
-                Categories: 'Clothes',
-                ShopImg: 'https://images.squarespace-cdn.com/content/v1/62b85870cef97862d6324f88/51e920da-a832-4290-960e-f5b051ef0cae/Labour+and+Wait+london+interior.jpg?format=2500w'
-              },
-              {
-                ShopName: 'Siqala',
-                ShopOwner: 'Abebe',
-                Rating: 5,
-                Categories: 'Electronics',
-                ShopImg: 'https://www.suninternational.com/content/dam/suninternational/sun-city-resort/shopping/SCR5r0250-sun-city-sun-central-retail-billabong-XS_5072-1.jpg.sunimage.800.400.jpg'
-              },
-              {
-                ShopName: 'Emaye',
-                ShopOwner: 'Mola',
-                Rating: 4,
-                Categories: 'Clothes',
-                ShopImg: 'https://images.squarespace-cdn.com/content/v1/62b85870cef97862d6324f88/51e920da-a832-4290-960e-f5b051ef0cae/Labour+and+Wait+london+interior.jpg?format=2500w'
-              },
-              {
-                ShopName: 'Siqala',
-                ShopOwner: 'Abebe',
-                Rating: 5,
-                Categories: 'Electronics',
-                ShopImg: 'https://www.suninternational.com/content/dam/suninternational/sun-city-resort/shopping/SCR5r0250-sun-city-sun-central-retail-billabong-XS_5072-1.jpg.sunimage.800.400.jpg'
-              },
-              {
-                ShopName: 'Emaye',
-                ShopOwner: 'Mola',
-                Rating: 4,
-                Categories: 'Clothes',
-                ShopImg: 'https://images.squarespace-cdn.com/content/v1/62b85870cef97862d6324f88/51e920da-a832-4290-960e-f5b051ef0cae/Labour+and+Wait+london+interior.jpg?format=2500w'
-              }
-          ]
-        }
-    }
-  }
+export default {
+  data() {
+    return {
+      shop: {
+        name: 'Phina Electronics',
+        description: 'Latest and greatest technologies Phina electronics',
+      },
+      products: [
+        {
+          id: 1,
+          name: 'samsung edge 10',
+          description: 'latest samsung edge',
+          price: '$400.99',
+          image: 'https://cdn.pixabay.com/photo/2017/08/15/10/14/samsung-galaxy-s8-2643381_640.jpg',
+        },
+        {
+          id: 1,
+          name: 'samsung edge 10',
+          description: 'latest samsung edge',
+          price: '$400.99',
+          image: 'https://cdn.pixabay.com/photo/2017/08/15/10/14/samsung-galaxy-s8-2643381_640.jpg',
+        },
+        {
+          id: 1,
+          name: 'samsung edge 10',
+          description: 'latest samsung edge',
+          price: '$400.99',
+          image: 'https://cdn.pixabay.com/photo/2017/08/15/10/14/samsung-galaxy-s8-2643381_640.jpg',
+        },
+        {
+          id: 1,
+          name: 'samsung edge 10',
+          description: 'latest samsung edge',
+          price: '$400.99',
+          image: 'https://cdn.pixabay.com/photo/2017/08/15/10/14/samsung-galaxy-s8-2643381_640.jpg',
+        },
+        {
+          id: 1,
+          name: 'samsung edge 10',
+          description: 'latest samsung edge',
+          price: '$400.99',
+          image: 'https://cdn.pixabay.com/photo/2017/08/15/10/14/samsung-galaxy-s8-2643381_640.jpg',
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style>
- @import url('https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9+Charted&family=Marcellus&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
-   .shop-list {
-    font-family: "Marcellus", sans-serif;
-   }
 </style>

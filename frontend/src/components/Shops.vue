@@ -1,15 +1,16 @@
 <template>
-    <ul class="grid grid-cols-4 gap-5">
-      <li  v-for="shop in shops" class="rounded-lg shadow-2xl mt-9 ml-20 shop-list">
-        <img :src="shop.ShopImg" alt="" class="rounded lg w-[100%] h-[250px]"/>
-            <p class="flex justify-center font-bold">{{ shop.name }} </p>
-            <p class="flex justify-center font-bold"> Categories - {{ shop.Categories }} </p>
-            <p class="flex justify-center font-bold text-gold">Owner phone number- {{ shop.phone_number}} </p>
-             <p class="flex justify-center text-amber-600">Rating {{ shop.Rating }} </p>
-  
+  <ul class="grid grid-cols-4 gap-5">
+    <router-link v-for="shop in shops" :key="shop.name" :to="'/shop/' + shop.name" class="rounded-lg shadow-2xl mt-9 ml-20 shop-list">
+      <li>
+        <img :src="shop.ShopImg" alt="" class="rounded lg w-[100%] h-[250px]" />
+        <p class="flex justify-center font-bold">{{ shop.name }} </p>
+        <p class="flex justify-center font-bold"> Categories - {{ shop.Categories }} </p>
+        <p class="flex justify-center font-bold text-gold">Owner phone number- {{ shop.phone_number}} </p>
+        <p class="flex justify-center text-amber-600">Rating {{ shop.Rating }} </p>
       </li>
-    </ul>
-  </template>
+    </router-link>
+  </ul>
+</template>
   
   <script>
     export default {

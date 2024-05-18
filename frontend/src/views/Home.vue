@@ -8,7 +8,7 @@
       <p class="text-3xl font-extrabold">Top Shops</p>
     </div>
     
-    <ShopCard />
+    <shop/>
     <div class="flex justify-center mt-9 ">
       <p class="bg-[#DB4444] text-white px-5 py-1 shop-header">View All Shops</p>
     </div>
@@ -86,12 +86,13 @@
 
 <script>
   import Carousels from '../components/Carousels.vue';
-  import ShopCard from '../components/ShopCard.vue'
+  // import ShopCard from '../components/ShopCard.vue'
+  import shop from '../components/Shops.vue'
   export default {
     name: 'home',
     components: {
         Carousels,
-        ShopCard
+        shop
     }
   }
 </script>
