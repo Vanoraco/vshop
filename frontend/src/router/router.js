@@ -98,4 +98,23 @@ const router = createRouter({
     ]
 })
 
+router.beforeEach((to, from, next) => {
+   const isAuthenticated =  localStorage.getItem('token')/* Logic to check if user is authenticated */;
+ 
+   if (to.matched.some(record => record.meta.requiresAuth)) {
+     // Route requires authentication
+     if (isAuthenticated) {
+       // User is authenticated, allow access
+       next('/');
+     } else {
+       // User is not authenticated, redirect to login page
+       next('/login');
+     }
+   } else {
+     // Route does not require authentication, allow access
+     next();
+   }
+ });
+ 
+
 export default router;

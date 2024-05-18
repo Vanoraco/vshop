@@ -17,6 +17,9 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
+
+	"github.com/cloudinary/cloudinary-go/v2"
+	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 )
 
 var UserCollection *mongo.Collection = database.UserData(database.Client, "Users")
@@ -101,13 +104,17 @@ func SignUpOwners() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		defer cancel()
+
 		var owner models.Owner
-		if err := c.BindJSON(&owner); err != nil {
+
+		// Bind form data to the owner struct
+		if err := c.ShouldBind(&owner); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
-		count, err := OwnerCollection.CountDocuments(ctx, bson.M{"email": owner.Owner_Email})
+		// Check if the user already exists by email
+		count, err := OwnerCollection.CountDocuments(ctx, bson.M{"owner_email": owner.Owner_Email})
 		if err != nil {
 			log.Panic(err)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
@@ -115,9 +122,11 @@ func SignUpOwners() gin.HandlerFunc {
 		}
 		if count > 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "User already exists"})
+			return
 		}
-		count, err = OwnerCollection.CountDocuments(ctx, bson.M{"phone": owner.Owner_Phone})
-		defer cancel()
+
+		// Check if the user already exists by phone
+		count, err = OwnerCollection.CountDocuments(ctx, bson.M{"owner_phone": owner.Owner_Phone})
 		if err != nil {
 			log.Panic(err)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
@@ -127,22 +136,54 @@ func SignUpOwners() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Phone is already in use"})
 			return
 		}
-		password := HashPassword(*owner.Owner_Password)
-		owner.Owner_Password = &password
 
-		owner.Created_At, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-		owner.Updated_At, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		// Hash the password
+		hashedPassword := HashPassword(*owner.Owner_Password)
+		owner.Owner_Password = &hashedPassword
+
+		// Set additional fields
+		owner.Created_At = time.Now()
+		owner.Updated_At = time.Now()
 		owner.ID = primitive.NewObjectID()
 		owner.Owner_ID = owner.ID.Hex()
+
+		// Generate tokens
 		token, refreshtoken, _ := generate.TokenGenerator(*owner.Owner_Email, *owner.Owner_FirstName, *owner.Owner_LastName, owner.Owner_ID)
 		owner.Token = &token
 		owner.Refresh_Token = &refreshtoken
-		_, inserterr := OwnerCollection.InsertOne(ctx, owner)
-		if inserterr != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "not created"})
+
+		// Handle file upload to Cloudinary
+		file, _, err := c.Request.FormFile("file")
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to get file"})
 			return
 		}
-		defer cancel()
+		defer file.Close()
+
+		// Create Cloudinary instance
+		cld, err := cloudinary.NewFromParams("djwh3jl5j", "547786729594556", "hEZvcmeQ3nFN6IKtPsqpHoFlSK0")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to initialize Cloudinary"})
+			return
+		}
+
+		// Upload file to Cloudinary
+		uploadResult, err := cld.Upload.Upload(ctx, file, uploader.UploadParams{Folder: "shop_images"})
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload image to Cloudinary"})
+			return
+		}
+
+		// Set the image URL to the owner
+		owner.Owner_Img = uploadResult.SecureURL
+
+		// Insert owner into the database
+		_, inserterr := OwnerCollection.InsertOne(ctx, owner)
+		if inserterr != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Not created"})
+			return
+		}
+
 		c.JSON(http.StatusCreated, "Successfully Signed Up!!")
 	}
 }
@@ -198,8 +239,85 @@ func ProductViewerAdmin() gin.HandlerFunc {
 	}
 }
 
-/* func AddShop() gin.HandlerFunc {
+func AddShop() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// Create context with timeout
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		ownerID := c.Query("owner_id")
+		if ownerID == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing owner_id parameter"})
+			return
+		}
+
+		var owner models.Owner
+		err := OwnerCollection.FindOne(ctx, bson.M{"owner_id": ownerID}).Decode(&owner)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to find owner"})
+			return
+		}
+
+		var shop models.Shop
+		if err := c.ShouldBind(&shop); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		count, err := ShopCollection.CountDocuments(ctx, bson.M{"shop_id": ownerID})
+
+		if err != nil {
+			log.Panic(err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
+		}
+		if count > 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "You Have Opened Shop already"})
+			return
+		}
+
+		// Bind JSON request body to Shop struct
+
+		shop.Shop_ID = &ownerID
+
+		shop.Shop_Owner = owner.Owner_FirstName
+		file, _, err := c.Request.FormFile("file")
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to get file"})
+			return
+		}
+		defer file.Close()
+
+		// Create Cloudinary instance
+		cld, err := cloudinary.NewFromParams("djwh3jl5j", "547786729594556", "hEZvcmeQ3nFN6IKtPsqpHoFlSK0")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to initialize Cloudinary"})
+			return
+		}
+
+		// Upload file to Cloudinary
+		uploadResult, err := cld.Upload.Upload(ctx, file, uploader.UploadParams{Folder: "shop_images"})
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload image to Cloudinary"})
+			return
+		}
+
+		// Set the image URL to the product
+		shop.Image = uploadResult.SecureURL
+
+		// Generate a new ObjectID for the shop
+
+		// Insert the shop into the database
+		_, err = ShopCollection.InsertOne(ctx, shop)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to add shop"})
+			return
+		}
+
+		// Respond with success message
+		c.JSON(http.StatusOK, "Shop added successfully")
+	}
+	/* return func(c *gin.Context) {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		var shop models.Shop
 		defer cancel()
@@ -234,7 +352,318 @@ func ProductViewerAdmin() gin.HandlerFunc {
 		}
 		defer cancel()
 		c.JSON(http.StatusOK, "Shop Successfully Added")
+	} */
+}
+
+/* func AddProductsToShop() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Create context with timeout
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		// Get shop ID from query parameter
+		shopID := c.Query("owner_id")
+		if shopID == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing shop_id parameter"})
+			return
+		}
+
+		// Fetch shop details from the shop collection
+		var shop models.Shop
+		err := ShopCollection.FindOne(ctx, bson.M{"shop_id": shopID}).Decode(&shop)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to find shop"})
+			return
+		}
+
+		// Bind JSON request body to []ProductUser
+		var products models.Product
+		if err := c.BindJSON(&products); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		imageURL, err := uploadImageToImgBB(c, "image")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload image to ImgBB"})
+			return
+		}
+
+		// Set the image URL to the product
+		products.Image = imageURL
+		// Append the new products to the existing shop products
+		shop.Shop_Products = append(shop.Shop_Products, products)
+
+		// Update the shop document in the MongoDB collection
+		update := bson.M{"$set": bson.M{"shop_products": shop.Shop_Products}}
+		_, err = ShopCollection.UpdateOne(ctx, bson.M{"shop_id": shopID}, update)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update shop"})
+			return
+		}
+
+		// Respond with success message
+		c.JSON(http.StatusOK, "Products added to shop successfully")
 	}
+} */
+
+/* func AddProductsToShop() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Create context with timeout
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		// Get shop ID from query parameter
+		shopID := c.Query("owner_id")
+		if shopID == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing shop_id parameter"})
+			return
+		}
+
+		// Fetch shop details from the shop collection
+		var shop models.Shop
+		err := ShopCollection.FindOne(ctx, bson.M{"shop_id": shopID}).Decode(&shop)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to find shop"})
+			return
+		}
+
+		// Bind form file to Product struct
+		var product models.Product
+		if err := c.Bind(&product); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		// Upload image to ImgBB and get the URL
+		imageURL, err := uploadImageToImgBB(c, product.Image)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
+		}
+
+		// Set the image URL to the product
+		product.Image = imageURL
+
+		// Append the new product to the existing shop products
+		shop.Shop_Products = append(shop.Shop_Products, product)
+
+		// Update the shop document in the MongoDB collection
+		update := bson.M{"$set": bson.M{"shop_products": shop.Shop_Products}}
+		_, err = ShopCollection.UpdateOne(ctx, bson.M{"shop_id": shopID}, update)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update shop"})
+			return
+		}
+
+		// Respond with success message
+		c.JSON(http.StatusOK, "Products added to shop successfully")
+	}
+} */
+
+/*
+	 func AddProductsToShop() gin.HandlerFunc {
+		return func(c *gin.Context) {
+			// Create context with timeout
+			ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+			defer cancel()
+
+			// Get shop ID from query parameter
+			shopID := c.Query("owner_id")
+			if shopID == "" {
+				c.JSON(http.StatusBadRequest, gin.H{"error": "Missing shop_id parameter"})
+				return
+			}
+
+			// Fetch shop details from the shop collection
+			var shop models.Shop
+			err := ShopCollection.FindOne(ctx, bson.M{"shop_id": shopID}).Decode(&shop)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to find shop"})
+				return
+			}
+
+			// Bind form file to Product struct
+			var product models.Product
+			if err := c.Bind(&product); err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
+
+			// Get the file from the form data
+			file, _, err := c.Request.FormFile("file")
+			if err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to get file"})
+				return
+			}
+			defer file.Close()
+
+			// Create Cloudinary instance
+			cld, err := cloudinary.NewFromParams("djwh3jl5j", "547786729594556", "hEZvcmeQ3nFN6IKtPsqpHoFlSK0")
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to initialize Cloudinary"})
+				return
+			}
+
+			// Upload file to Cloudinary
+			uploadResult, err := cld.Upload.Upload(ctx, file, uploader.UploadParams{Folder: "product_images"})
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload image to Cloudinary"})
+				return
+			}
+
+			// Set the image URL to the product
+			product.Image = uploadResult.SecureURL
+
+			// Append the new product to the existing shop products
+			shop.Shop_Products = append(shop.Shop_Products, product)
+
+			// Update the shop document in the MongoDB collection
+			update := bson.M{"$set": bson.M{"shop_products": shop.Shop_Products}}
+			_, err = ShopCollection.UpdateOne(ctx, bson.M{"shop_id": shopID}, update)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update shop"})
+				return
+			}
+
+			// Respond with success message
+			c.JSON(http.StatusOK, "Products added to shop successfully")
+		}
+	}
+*/
+func AddProductsToShop() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Create context with timeout
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		// Get shop ID from query parameter
+		shopID := c.Query("owner_id")
+		if shopID == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing shop_id parameter"})
+			return
+		}
+
+		// Fetch shop details from the shop collection
+		var shop models.Shop
+		err := ShopCollection.FindOne(ctx, bson.M{"shop_id": shopID}).Decode(&shop)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to find shop"})
+			return
+		}
+
+		// Bind form data to Product struct
+		var product models.Product
+		if err := c.ShouldBind(&product); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		// Generate a new ObjectID for the product
+		product.Product_ID = primitive.NewObjectID()
+
+		// Get the file from the form data
+		file, _, err := c.Request.FormFile("file")
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to get file"})
+			return
+		}
+		defer file.Close()
+
+		// Create Cloudinary instance
+		cld, err := cloudinary.NewFromParams("djwh3jl5j", "547786729594556", "hEZvcmeQ3nFN6IKtPsqpHoFlSK0")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to initialize Cloudinary"})
+			return
+		}
+
+		// Upload file to Cloudinary
+		uploadResult, err := cld.Upload.Upload(ctx, file, uploader.UploadParams{Folder: "product_images"})
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload image to Cloudinary"})
+			return
+		}
+
+		// Set the image URL to the product
+		product.Image = uploadResult.SecureURL
+
+		// Update the shop document in the MongoDB collection using $push to append the new product
+		update := bson.M{"$push": bson.M{"shop_products": product}}
+		_, err = ShopCollection.UpdateOne(ctx, bson.M{"shop_id": shopID}, update)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update shop"})
+			return
+		}
+
+		// Respond with success message
+		c.JSON(http.StatusOK, gin.H{"message": "Product added to shop successfully"})
+	}
+}
+
+/* func uploadImageToImgBB(c *gin.Context, formField string) (string, error) {
+
+	type ImgBBResponse struct {
+		Data struct {
+			URL string `json:"url"`
+		} `json:"data"`
+	}
+	// Parse form
+	if err := c.Request.ParseMultipartForm(10 << 20); err != nil {
+		return "", err
+	}
+
+	// Get the file from the form data
+	file, _, err := c.Request.FormFile(formField)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+
+	// Create multipart form
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+
+	// Add file field
+	part, err := writer.CreateFormFile("image", "image.png")
+	if err != nil {
+		return "", err
+	}
+
+	// Copy file content to part
+	if _, err := io.Copy(part, file); err != nil {
+		return "", err
+	}
+
+	// Close multipart writer
+	if err := writer.Close(); err != nil {
+		return "", err
+	}
+
+	// Create HTTP request
+	req, err := http.NewRequest("POST", "https://api.imgbb.com/1/upload", body)
+	if err != nil {
+		return "", err
+	}
+
+	// Set request headers
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+	req.SetBasicAuth("ec63f76d0d1c91469a942f9c44cad0f1", "")
+
+	// Perform the request
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer res.Body.Close()
+
+	// Decode ImgBB API response
+	var imgBBRes ImgBBResponse
+	if err := json.NewDecoder(res.Body).Decode(&imgBBRes); err != nil {
+		return "", err
+	}
+
+	return imgBBRes.Data.URL, nil
 } */
 
 func SearchProduct() gin.HandlerFunc {

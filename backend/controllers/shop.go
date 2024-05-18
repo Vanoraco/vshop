@@ -16,14 +16,14 @@ import (
 )
 
 type ShopApplication struct {
-	prodCollection  *mongo.Collection
-	ownerCollection *mongo.Collection
+	prodCollection *mongo.Collection
+	shopCollection *mongo.Collection
 }
 
-func ShopNewApplication(prodCollection, ownerCollection *mongo.Collection) *ShopApplication {
+func ShopNewApplication(prodCollection, shopCollection *mongo.Collection) *ShopApplication {
 	return &ShopApplication{
-		prodCollection:  prodCollection,
-		ownerCollection: ownerCollection,
+		prodCollection: prodCollection,
+		shopCollection: shopCollection,
 	}
 }
 
@@ -64,12 +64,12 @@ func (shopApp *ShopApplication) AddToShop() gin.HandlerFunc {
 		// Define the update operation to push the product details into the owner_product array field
 		update := bson.D{
 			{Key: "$push", Value: bson.D{
-				{Key: "owner_products", Value: product},
+				{Key: "shop_products", Value: product},
 			}},
 		}
 
 		// Execute the update operation
-		_, err = shopApp.ownerCollection.UpdateOne(ctx, filter, update)
+		_, err = shopApp.shopCollection.UpdateOne(ctx, filter, update)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
