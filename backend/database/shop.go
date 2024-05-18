@@ -21,14 +21,14 @@ import (
 	ErrCantBuyCartItem    = errors.New("cannot update the purchase")
 ) */
 
-func AddProductToShop(ctx context.Context, prodCollection, ownerCollection *mongo.Collection, productID primitive.ObjectID, ownerID string) error {
+func AddProductToShop(ctx context.Context, prodCollection, shopCollection *mongo.Collection, productID primitive.ObjectID, ownerID string) error {
 	searchfromdb, err := prodCollection.Find(ctx, bson.M{"_id": productID})
 	if err != nil {
 		log.Println(err)
 		return ErrCantFindProduct
 	}
-	var productcart []models.Product
-	err = searchfromdb.All(ctx, &productcart)
+	var productList []models.Product
+	err = searchfromdb.All(ctx, &productList)
 	if err != nil {
 		log.Println(err)
 		return ErrCantDecodeProducts
@@ -41,8 +41,8 @@ func AddProductToShop(ctx context.Context, prodCollection, ownerCollection *mong
 	}
 
 	filter := bson.D{primitive.E{Key: "_id", Value: id}}
-	update := bson.D{{Key: "$push", Value: bson.D{primitive.E{Key: "usercart", Value: bson.D{{Key: "$each", Value: productcart}}}}}}
-	_, err = ownerCollection.UpdateOne(ctx, filter, update)
+	update := bson.D{{Key: "$push", Value: bson.D{primitive.E{Key: "shop_products", Value: bson.D{{Key: "$each", Value: productList}}}}}}
+	_, err = shopCollection.UpdateOne(ctx, filter, update)
 	if err != nil {
 		return ErrCantUpdateUser
 	}
