@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup >
 defineProps({
   title: {
     type: String,
@@ -30,7 +30,8 @@ defineProps({
       />
     </div>
     <div class="buttons flex justify-end">
-      <button
+      <router-link to="/owner/add-product">
+        <button
         class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full shadow-md flex items-center mt-2 mr-2"
       >
         <svg
@@ -39,9 +40,12 @@ defineProps({
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
+          to="/owner/add-product"
         ></svg>
         Add Product
       </button>
+      </router-link>
+      
 
       <button
         class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full shadow-md flex items-center mt-2"

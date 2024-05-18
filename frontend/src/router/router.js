@@ -15,13 +15,14 @@ import AdminMedias from "../views/Admin/pages/admin/medias.vue"
 import AdminBin from "../views/Admin/pages/admin/recycle-bin.vue"
 import AdminApp from "../views/Admin/AdminApp.vue"
 import Profile from "../components/Profile.vue"
+import AddProduct from "../views/owner/AddItem.vue"
 
 const routes = [
   { path: "/sign-up", component: SignUp },
   { path: "/", component: HomePage },
   { path: "/shops", component: Shops },
   { path: "/sign-in", component: SignIn },
-  { path: "/manage-space", component: ManageSpace },
+  { path: "/owner/manage-space", component: ManageSpace },
   { path: "/product-detail-page", component: productDetail },
   { path: "/DetailForm", component: DetailForm },
   { path: "/login", component: Login },
@@ -31,7 +32,8 @@ const routes = [
   { path: "/admin", component: AdminApp },
   { path: "/admin/medias", component: AdminMedias },
   { path: "/admin/recycle-bin", component: AdminBin },
-  { path: '/user/profile', component: Profile }
+  { path: '/user/profile', component: Profile },
+  {path:'/owner/add-product', component:AddProduct}
 ]
 
 const router = createRouter({

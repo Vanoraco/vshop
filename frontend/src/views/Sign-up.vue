@@ -401,8 +401,8 @@ export default {
         // Optionally, you can display an error message to the user
       }
       setTimeout(() => {
-        this.reg_alert_message = 'Redirecting you to shops...';
-        this.$router.push('/shops');
+        this.reg_alert_message = 'Redirecting you to your space...';
+        this.$router.push('/owner/manage-space');
       }, 2000);
 
       this.reg_alert_variant = 'bg-green-500';
