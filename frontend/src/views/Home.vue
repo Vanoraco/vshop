@@ -10,7 +10,7 @@
     
     <shop/>
     <div class="flex justify-center mt-9 ">
-      <p class="bg-[#DB4444] text-white px-5 py-1 shop-header">View All Shops</p>
+      <router-link to="/shops"><p class="bg-[#DB4444] text-white px-5 py-1 shop-header">View All Shops</p></router-link> 
     </div>
 
     <div class="ml-3 shop-header mt-12">
@@ -89,6 +89,13 @@
   // import ShopCard from '../components/ShopCard.vue'
   import shop from '../components/Shops.vue'
   export default {
+    
+   
+    data() {
+      return {
+       pageReloaded: false
+      }
+    },
     name: 'home',
     components: {
         Carousels,

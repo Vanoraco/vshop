@@ -24,37 +24,36 @@ type User struct {
 }
 
 type Product struct {
-	Product_ID   primitive.ObjectID `bson:"_id"`
-	Product_Name *string            `json:"product_name"`
-	Price        *uint64            `json:"price"`
-	Rating       *uint8             `json:"rating"`
-	Image        *string            `json:"image"`
+	Product_ID   primitive.ObjectID `bson:"_id,omitempty"`
+	Product_Name *string            `json:"product_name" form:"product_name"`
+	Price        *uint64            `json:"price" form:"price"`
+	Rating       *uint8             `json:"rating,omitempty" form:"rating,omitempty"`
+	Image        string             `json:"image,omitempty"`
 }
 
 type Shop struct {
-	ID            primitive.ObjectID `json:"_id"`
-	Shop_Name     *string            `json:"shop_name"`
-	Shop_Owner    Owner              `json:"shop_owner"`
-	Shop_Category *string            `json:"shop_category"`
-	Image         *string            `json:"image"`
-	Rating        *uint8             `json:"rating"`
+	ID            primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	Shop_Name     *string            `json:"shop_name" form:"shop_name"`
+	Shop_Owner    *string            `json:"shop_owner" form:"shop_owner"`
+	Shop_Category *string            `json:"shop_category" form:"shop_category"`
+	Image         string             `json:"image"`
+	Rating        *uint8             `json:"rating" form:"rating"`
 	Shop_ID       *string            `json:"shop_id"`
+	ShopProducts  []Product          `json:"shop_products,omitempty" bson:"shop_products,omitempty"`
 }
-
 type Owner struct {
 	ID              primitive.ObjectID `json:"_id" bson:"_id"`
-	Owner_FirstName *string            `json:"owner_firstname"`
-	Owner_LastName  *string            `json:"owner_lastname"`
-	Owner_Img       *string            `json:"owner_img"`
-	Owner_Email     *string            `json:"owner_email"`
-	Owner_Password  *string            `json:"owner_password"`
-	Owner_Phone     *string            `json:"owner_phone"`
-	Owner_Products  []Product          `json:"owner_products" bson:"owner_products"`
-	Token           *string            `json:"token"`
-	Refresh_Token   *string            `json:"refresh_token"`
-	Created_At      time.Time          `json:"created_at"`
-	Updated_At      time.Time          `json:"updated_at"`
-	Owner_ID        string             `json:"owner_id"`
+	Owner_FirstName *string            `json:"owner_firstname" bson:"owner_firstname" form:"owner_firstname"`
+	Owner_LastName  *string            `json:"owner_lastname" bson:"owner_lastname" form:"owner_lastname"`
+	Owner_Img       string             `json:"owner_img" bson:"owner_img" form:"owner_img"`
+	Owner_Email     *string            `json:"owner_email" bson:"owner_email" form:"owner_email"`
+	Owner_Password  *string            `json:"owner_password" bson:"owner_password" form:"owner_password"`
+	Owner_Phone     *string            `json:"owner_phone" bson:"owner_phone" form:"owner_phone"`
+	Token           *string            `json:"token" bson:"token"`
+	Refresh_Token   *string            `json:"refresh_token" bson:"refresh_token"`
+	Created_At      time.Time          `json:"created_at" bson:"created_at"`
+	Updated_At      time.Time          `json:"updated_at" bson:"updated_at" `
+	Owner_ID        string             `json:"owner_id" bson:"owner_id" `
 }
 
 type ProductUser struct {

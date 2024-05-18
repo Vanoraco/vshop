@@ -51,7 +51,7 @@
        
         
         
-        <vee-form :validation-schema="userschema" @submit="registerUser" :initial-values="userData" v-if="selectedForm == 'buyer'" class="shadow-2xl py-9 px-9">
+        <vee-form :validation-schema="userschema" @submit="registerUser"  v-if="selectedForm == 'buyer'" class="shadow-2xl py-9 px-9">
           <p class="text-5xl">Sign up to buy products</p>
           <br>
           
@@ -154,47 +154,54 @@
          </vee-form>
       </div>
       <div class="flex justify-center font-style text-xl">
-         <vee-form :validation-schema="ownerschema" @submit="registerOwner" :initial-values="userData" v-if="selectedForm == 'seller'" class="shadow-2xl py-9 px-9">
+         <vee-form :validation-schema="ownerschema" @submit="registerOwner"  v-if="selectedForm == 'seller'" class="shadow-2xl py-9 px-9">
           <p class="text-5xl">Sign up to sell products</p>
           <br>
+          <div
+    class="text-white  font-bold p-4 rounded mb-4"
+    v-if="reg_show_alert"
+    :class="reg_alert_variant"
+  >
+    {{ reg_alert_message }}
+  </div>
     <!-- Name -->
     <div class="mb-3">
       <label class="inline-block mb-2">First Name</label>
       <vee-field
         type="text"
-        name="first_name"
+        name="owner_firstname"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         placeholder="Enter First Name"
       />
-      <ErrorMessage class="text-red-600" name="name" />
+      <ErrorMessage class="text-red-600" name="owner_firstname" />
     </div>
 
     <div class="mb-3">
       <label class="inline-block mb-2">Last Name</label>
       <vee-field
         type="text"
-        name="last_name"
+        name="owner_lastname"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         placeholder="Enter Last Name"
       />
-      <ErrorMessage class="text-red-600" name="lname" />
+      <ErrorMessage class="text-red-600" name="owner_lastname" />
     </div>
     <!-- Email -->
     <div class="mb-3">
       <label class="inline-block mb-2">Email</label>
       <vee-field
         type="email"
-        name="email"
+        name="owner_email"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         placeholder="Enter Email"
       />
-      <ErrorMessage class="text-red-600" name="email" />
+      <ErrorMessage class="text-red-600" name="owner_email" />
     </div>
     
     <!-- Password -->
     <div class="mb-3">
       <label class="inline-block mb-2">Password</label>
-      <vee-field name="password" :bails="false" v-slot="{ field, errors }">
+      <vee-field name="owner_password" :bails="false" v-slot="{ field, errors }">
         <input
           type="password"
           class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
@@ -221,8 +228,8 @@
     <div class="mb-3">
       <label class="inline-block mb-2">Phone No.</label>
       <vee-field
-        type="number"
-        name="phone"
+        type="text"
+        name="owner_phone"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         placeholder="Enter Phone Number"
       />
@@ -231,8 +238,12 @@
 
     <div class="mb-3">
       <label class="inline-block mb-2">Profile.</label>
-      <input v-validate="'image'" data-vv-as="image" name="image_field" type="file">
+      
+      <vee-field
+        name="file"
+        type="file">
 
+      </vee-field>
     </div>
 
     <div class="mb-3 pl-6">
@@ -280,11 +291,17 @@ export default {
       reg_alert_message: 'Please Wait! Your Account is being created',
       reg_alert_variant: 'bg-blue-500',
       reg_show_alert: false,
+
+      selectedFile: null,
+
+     
+
       name: "",
       email: "",
       phone: "",
       role: "",
       country: "",
+      selectedImage: "",
 
       selectedRole: '',
       selectedForm: '',
@@ -298,12 +315,12 @@ export default {
         tos: 'tos'
       },
       ownerschema: {
-        name: 'required|min:3|max:100|alpha_spaces',
-        lname: 'required|min:3|max:100|alpha_spaces',
-        email: 'required|min:3|max:100|email',
-        password: 'required|min:9|max:100|excluded:password',
-        phone: 'required|max:12',
-        confirm_password: 'passwords_mismatched:@password',
+        owner_firstname: 'required|min:3|max:100|alpha_spaces',
+        owner_lastname: 'required|min:3|max:100|alpha_spaces',
+        owner_email: 'required|min:3|max:100|email',
+        owner_password: 'required|min:9|max:100|excluded:password',
+        owner_phone: 'required|max:12',
+        confirm_password: 'passwords_mismatched:@owner_password',
         tos: 'tos'
       },
     };
@@ -355,16 +372,77 @@ export default {
       this.reg_alert_variant = 'bg-green-500'
       this.reg_alert_message = 'Success! Your Account is created'
       window.location.reload()
-    }
+    },
+
+    async registerOwner(formData) {
+      console.log(formData);
+      try {
+        this.reg_show_alert = true;
+        this.reg_alert_variant = 'bg-blue-500';
+        this.reg_alert_message = 'Please wait! Your account is being created...';
+
+        // Make a POST request to your Golang backend API endpoint
+        const response = await axios.post('http://localhost:8000/owner/signupowner', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        this.reg_in_submission = true;
+        this.$router.push('/login');
+        console.log('User registered successfully:', response.data);
+        // Optionally, you can redirect the user to another page or display a success message
+      } catch (error) {
+        this.reg_in_submission = false;
+        this.reg_alert_variant = 'bg-red-500';
+        this.reg_alert_message = 'An unexpected error occurred. Please try again later.';
+
+        console.error('Error registering user:', error.response ? error.response.data : error.message);
+        // Optionally, you can display an error message to the user
+      }
+      setTimeout(() => {
+        this.reg_alert_message = 'Redirecting you to shops...';
+        this.$router.push('/shops');
+      }, 2000);
+
+      this.reg_alert_variant = 'bg-green-500';
+      this.reg_alert_message = 'Success! Your account is created.';
+      // Optionally, you can reload the window after registration
+      // window.location.reload();
+    },
+  /*   handleFormSubmit(event) {
+      
+      const formData = new FormData();
+     
+      formData.append('file', this.selectedFile); 
+      // Append the file here
+
+      this.registerOwner(formData);
+    }, */
+
+   
+async onFileSelected(Event) {
+  if (!Event.target) {
+    return
   }
-,
+    
+  const target = Event.target
+  if (!target.files) {
+    // toastError('No image selected')
+    return
+  }
+  console.log(target.files)
+  this.selectedFile = target.files
+},
+  
+  },
 
   computed: {
     buttonText() {
       return this.selectedRole == '' ? 'Create Account' : (this.selectedRole == 'buyer' ? 'Buy Products' : 'Own a Shop')
     }
   }
-};
+}
 </script>
 
 <style scoped>
