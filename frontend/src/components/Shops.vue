@@ -1,6 +1,7 @@
 <template>
   <ul class="grid grid-cols-4 gap-5">
-    <router-link v-for="shop in shop" :key="shop.name" :to="'/shop/' + shop.shop_id" class="rounded-lg shadow-2xl mt-9 ml-20 shop-list">
+    <router-link v-for="shop in shop" :key="shop.name" :to="{ name: 'shop', params: { id: shop.shop_id } }"
+           class="rounded-lg shadow-2xl mt-9 ml-20 shop-list">
       <li>
         <img :src="shop.image" alt="" class="rounded lg w-[100%] h-[250px]" />
         <p class="flex justify-center font-bold">{{ shop.shop_name }} </p>
