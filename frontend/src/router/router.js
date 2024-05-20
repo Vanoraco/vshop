@@ -28,7 +28,9 @@ const routes = [
   { path: "/login", component: Login },
   { path: "/Cart", component: Cart },
   { path: "/ShopCard", component: ShopCard },
-  { path: '/shop/:id', component: ShopDetail, props: true },
+
+  { path: '/shop/:id', name: 'shop', component: ShopDetail, props: true },
+
   { path: "/admin", component: AdminApp },
   { path: "/admin/medias", component: AdminMedias },
   { path: "/admin/recycle-bin", component: AdminBin },
