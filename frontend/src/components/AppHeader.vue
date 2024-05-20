@@ -14,6 +14,12 @@
         <router-link to="/sign-up" v-if="!isLoggedIn">
           <li :class="{ 'text-xl': $route.path === '/sign-up' }">Sign Up</li>
         </router-link>
+        <div class="ml-auto">
+      <router-link to="/cart">
+        <i class="fas fa-shopping-cart text-gray-800"></i>
+      </router-link>
+    </div>
+     
       </ul>
     </div>
 
