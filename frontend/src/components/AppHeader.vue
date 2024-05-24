@@ -1,36 +1,47 @@
 <template>
-  <div class="flex flex-row items-center mt-6 text-6xl">
+  <div class="flex flex-row items-center mt-6 text-6xl h-14 align-middle">
     <div class="ml-4">
       <img src="../assets/images/logo.png" alt="Logo" class="h-12" />
     </div>
     <div class="font-serif ml-8">
-      <ul class="flex flex-row gap-8 text-lg">
+      <ul class="flex flex-row gap-8 text-2xl">
         <router-link to="/">
-          <li :class="{ 'text-xl': $route.path === '/' }">Home</li>
+          <li :class="{ 'border-b-4 border-black text-3xl shadow-xl': $route.path === '/' }">Home</li>
         </router-link>
         <router-link to="/shops">
-          <li :class="{ 'text-xl': $route.path === '/shops' }">Shops</li>
+          <li :class="{ 'border-b-4 border-black text-3xl shadow-xl': $route.path === '/shops' }">Shops</li>
         </router-link>
-        <router-link to="/sign-up" v-if="!isLoggedIn">
-          <li :class="{ 'text-xl': $route.path === '/sign-up' }">Sign Up</li>
+        <router-link to="/sign-up" v-if="!userLoggedIn && !localToken">
+          <li :class="{ 'border-b-4 border-black text-3xl shadow-xl': $route.path === '/sign-up' }">Sign Up</li>
         </router-link>
         <div class="ml-auto">
-      <router-link to="/cart">
-        <i class="fas fa-shopping-cart text-gray-800"></i>
-      </router-link>
     </div>
      
       </ul>
     </div>
 
     <div class="flex-grow"></div>
-    <div class="flex rounded-md border-2 border-blue-500 overflow-hidden max-w-md mx-auto font-[sans-serif] mr-9">
+    <div class="content font-style"  v-if="!userLoggedIn && !localToken">
+  <div class="content__container">
+    <p class="content__container__text">
+      Own
+    </p>
+    
+    <ul class="content__container__list">
+      <li class="content__container__list__item">Shops !</li>
+      <li class="content__container__list__item">Products !</li>
+      <li class="content__container__list__item">Money !</li>
+      <li class="content__container__list__item">Everything !</li>
+    </ul>
+  </div>
+</div>
+    <div class="flex rounded-md border-2 border-blue-500 overflow-hidden max-w-md mx-auto font-[sans-serif] mr-7">
       <input
         type="text"
         placeholder="Search..."
         class="w-full outline-none bg-white text-gray-600 text-sm px-4 py-3"
       />
-      <button type="button" class="flex items-center justify-center bg-[#007bff] px-5">
+      <button type="button" class="flex items-center justify-center bg-[#121314] px-5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 192.904 192.904"
@@ -43,15 +54,19 @@
         </svg>
       </button>
     </div>
-    <ul class="flex flex-row gap-9 mb-6 mr-4">
-      <li v-if="!isLoggedIn">
+    
+    <router-link to="/cart" class="">
+        <i class="fas fa-shopping-cart text-gray-800 text-3xl mb-4"></i>
+      </router-link>
+      <ul class="flex flex-row gap-9 mb-6 mr-6 mt-2">
+      <li v-if="!userLoggedIn && !localToken">
         <router-link to="/login">
-          <i class="pi pi-user text-2xl font-style hover:bg-black hover:text-white hover:rouned hover:px-3 hover:py-1">
+          <i class="pi pi-user text-2xl font-style hover:bg-black hover:text-white hover:px-1 hover:py-1 mr-3 hover:rounded-lg ml-2">
             Login
           </i>
         </router-link>
       </li>
-      <li v-if="isLoggedIn">
+      <!-- <li v-if="isLoggedIn">
         <router-link to="/user/profile">
           <i class="pi pi-user-edit text-xl">Update Profile</i>
         </router-link>
@@ -60,31 +75,66 @@
         <router-link @click="logout">
           <i class="pi pi-sign-out text-xl">Sign out</i>
         </router-link>
-      </li>
+      </li> -->
     </ul>
+    <div class="w-[200px]" v-if="userLoggedIn || localToken">
+              <div class="flex items-center justify-start space-x-4" @click="toggleDrop">
+                
+                <div class="font-semibold dark:text-white text-left cursor-pointer">
+                  <div class="text-xs text-gray-500 dark:text-gray-400"><img :src="profImage" alt="" class="h-10 rounded-full"></div>
+                </div>
+              </div>
+              <!-- Drop down -->
+              <div v-show="showDropDown" class="absolute right-[75px] z-10 mt-2 w-44 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                <div class="py-1 text-left" role="none">
+                  <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                  <router-link to="/user/profile" class="hover:text-white"><p class="text-sm px-4 py-2 hover:bg-slate-900">Update Profile</p></router-link>
+                  <p class="text-sm px-4 py-2 hover:bg-slate-900 hover:text-white cursor-pointer" @click="logout">Logout</p>
+                    
+                </div>
+              </div>
+            </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapStores } from 'pinia';
+import useUserStore from '../stores/user'
+import { mapActions } from 'pinia';
 export default {
   name: "AppHeader",
   data() {
     return {
-      isLoggedIn: localStorage.getItem("email") !== null,
-    };
+      showDropDown: false,
+      localToken: localStorage.getItem("token") !== null,
+    }
+  },
+
+  mounted() {
+    console.log(this.localToken)
+    console.log(this.userLoggedIn)
+  },
+  computed: {
+    ...mapState(useUserStore, ['userLoggedIn']),
+    profImage() {
+      return localStorage.getItem("profile_img")
+    }
   },
   methods: {
+    ...mapActions(useUserStore, ['signOut']),
     logout() {
       try {
-        localStorage.removeItem("email");
-        localStorage.removeItem("token");
-        localStorage.removeItem("firstname");
-        this.isLoggedIn = false;
+        this.signOut();
+       window.location.reload();
         this.$router.push("/");
       } catch (error) {
         console.error("Error logging out:", error);
       }
     },
+    toggleDrop() {
+        this.showDropDown = !this.showDropDown
+  
+      },
   },
 };
 </script>
@@ -95,4 +145,136 @@ export default {
 .font-style {
   font-family: "Marcellus", sans-serif;
 }
+
+
+.content {
+  position: absolute;
+  bottom: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 160px;
+  overflow: hidden;
+  font-family: 'Marcellus', sans-serif;
+  font-size: 35px;
+  line-height: 40px;
+  color: #000000;
+}
+
+.content__container {
+  position: relative;
+  font-weight: 600;
+  overflow: hidden;
+  height: 40px;
+  padding: 0 40px;
+}
+
+.content__container:before,
+.content__container:after {
+  position: absolute;
+  top: 0;
+  color: #16a085;
+  font-size: 42px;
+  line-height: 40px;
+  -webkit-animation-name: opacity;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  animation-name: opacity;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.content__container:before {
+  content: '[';
+  left: 0;
+}
+
+.content__container:after {
+  content: ']';
+  right: 0;
+}
+
+.content__container__text {
+  display: inline;
+  float: left;
+  margin: 0;
+}
+
+.content__container__list {
+  margin-top: 0;
+  padding-left: 110px;
+  text-align: left;
+  list-style: none;
+  -webkit-animation-name: change;
+  -webkit-animation-duration: 10s;
+  -webkit-animation-iteration-count: infinite;
+  animation-name: change;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+}
+
+.content__container__list__item {
+  line-height: 40px;
+  margin: 0;
+}
+
+@-webkit-keyframes opacity {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes change {
+  0%, 12.66%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  16.66%, 29.32% {
+    transform: translate3d(0, -25%, 0);
+  }
+  33.32%, 45.98% {
+    transform: translate3d(0, -50%, 0);
+  }
+  49.98%, 62.64% {
+    transform: translate3d(0, -75%, 0);
+  }
+  66.64%, 79.3% {
+    transform: translate3d(0, -50%, 0);
+  }
+  83.3%, 95.96% {
+    transform: translate3d(0, -25%, 0);
+  }
+}
+
+@keyframes opacity {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes change {
+  0%, 12.66%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  16.66%, 29.32% {
+    transform: translate3d(0, -25%, 0);
+  }
+  33.32%, 45.98% {
+    transform: translate3d(0, -50%, 0);
+  }
+  49.98%, 62.64% {
+    transform: translate3d(0, -75%, 0);
+  }
+  66.64%, 79.3% {
+    transform: translate3d(0, -50%, 0);
+  }
+  83.3%, 95.96% {
+    transform: translate3d(0, -25%, 0);
+  }
+}
+
 </style>

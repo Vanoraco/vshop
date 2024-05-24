@@ -17,6 +17,8 @@ import AdminApp from "../views/Admin/AdminApp.vue"
 import Profile from "../components/Profile.vue"
 import AddProduct from "../views/owner/AddItem.vue"
 
+import Dashboard from "../views/owner/Dashboard.vue"
+
 const routes = [
   { path: "/sign-up", component: SignUp },
   { path: "/", component: HomePage },
@@ -35,7 +37,8 @@ const routes = [
   { path: "/admin/medias", component: AdminMedias },
   { path: "/admin/recycle-bin", component: AdminBin },
   { path: '/user/profile', component: Profile },
-  {path:'/owner/add-product', component:AddProduct}
+  { path:'/owner/add-product', component:AddProduct},
+  { path: '/dashboard', component:Dashboard}
 ]
 
 const router = createRouter({
