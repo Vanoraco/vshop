@@ -35,7 +35,7 @@
     </ul>
   </div>
 </div>
-    <div class="flex rounded-md border-2 border-blue-500 overflow-hidden max-w-md mx-auto font-[sans-serif] mr-7">
+    <div class="flex rounded-full border-2 border-blue-500 overflow-hidden max-w-md mx-auto font-[sans-serif] mr-7 mt-2">
       <input
         type="text"
         placeholder="Search..."
@@ -56,13 +56,13 @@
     </div>
     
     <router-link to="/cart" class="">
-        <i class="fas fa-shopping-cart text-gray-800 text-3xl mb-4"></i>
+        <i class="fas fa-shopping-cart text-gray-800 text-2xl mb-4 mr-2"></i>
       </router-link>
       <ul class="flex flex-row gap-9 mb-6 mr-6 mt-2">
       <li v-if="!userLoggedIn && !localToken">
         <router-link to="/login">
-          <i class="pi pi-user text-2xl font-style hover:bg-black hover:text-white hover:px-1 hover:py-1 mr-3 hover:rounded-lg ml-2">
-            Login
+          <i class="pi pi-user text-2xl font-style rounded-md py-2 px-2 mr-3 bg-[#3cda5e] text-white hover:text-white  hover:text-2xl hover:rounded-lg ml-2">
+            Shop Now
           </i>
         </router-link>
       </li>
@@ -216,6 +216,8 @@ export default {
   line-height: 40px;
   margin: 0;
 }
+
+
 
 @-webkit-keyframes opacity {
   0%, 100% {

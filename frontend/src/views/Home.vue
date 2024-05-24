@@ -4,8 +4,9 @@
     <br>
     <br>
 
-    <div class="ml-3 shop-header">
-      <p class="text-3xl font-extrabold">Top Shops</p>
+    <hero-section />
+    <div class="ml-3 shop-header -mt-20 flex justify-center text-4xl mb-20">
+      <p class="text-5xl font-extrabold">Top Shops</p>
     </div>
     
     <shop/>
@@ -88,6 +89,9 @@
   import Carousels from '../components/Carousels.vue';
   // import ShopCard from '../components/ShopCard.vue'
   import shop from '../components/Shops.vue'
+
+import HeroSection from './HeroSection.vue'
+
   export default {
     
    
@@ -99,7 +103,8 @@
     name: 'home',
     components: {
         Carousels,
-        shop
+        shop,
+        HeroSection
     }
   }
 </script>
