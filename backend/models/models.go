@@ -8,18 +8,19 @@ import (
 
 type User struct {
 	ID              primitive.ObjectID `json:"_id" bson:"_id"`
-	First_Name      *string            `json:"first_name"`
-	Last_Name       *string            `json:"last_name"`
-	Password        *string            `json:"password"`
-	Email           *string            `json:"email"`
-	Phone           *int               `json:"phone"`
-	Token           *string            `json:"token"`
-	Refresh_Token   *string            `json:"refresh_token"`
-	Created_At      time.Time          `json:"created_at"`
-	Updated_At      time.Time          `json:"updated_at"`
-	User_ID         string             `json:"user_id"`
+	First_Name      *string            `json:"first_name" bson:"first_name" form:"first_name"`
+	Last_Name       *string            `json:"last_name" bson:"last_name" form:"last_name"`
+	Password        *string            `json:"password" bson:"password" form:"password"`
+	Email           *string            `json:"email" bson:"email" form:"email"`
+	Phone           *string            `json:"phone" bson:"phone" form:"phone"`
+	ProfilePicture  string             `json:"profile_picture" bson:"profile_picture" form:"profile_picture"`
+	Token           *string            `json:"token" bson:"token"`
+	Refresh_Token   *string            `json:"refresh_token" bson:"refresh_token"`
+	Created_At      time.Time          `json:"created_at" bson:"created_at"`
+	Updated_At      time.Time          `json:"updated_at" bson:"updated_at"`
+	User_ID         string             `json:"user_id" bson:"user_id"`
 	UserCart        []ProductUser      `json:"user_cart" bson:"user_cart"`
-	Address_Details []Address          `json:"address" bson:"address"`
+	Address_Details []Address          `json:"address" bson:"address" form:"address"`
 	Order_Status    []Order            `json:"orders" bson:"orders"`
 }
 
