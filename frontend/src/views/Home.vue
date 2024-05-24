@@ -1,8 +1,7 @@
 <template>
    
   <Carousels />
-  <Carousels />
-
+ 
   
   <br>
   <br>
@@ -91,8 +90,6 @@
 
 <script>
 import Carousels from '../components/Carousels.vue';
-// import Carousel  from '../components/Carousal.vue';
-// import ShopCard from '../components/ShopCard.vue'
 import shop from '../components/Shops.vue'
 export default {
   
