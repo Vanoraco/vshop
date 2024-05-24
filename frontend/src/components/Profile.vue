@@ -115,9 +115,9 @@ You have no purchase history</textarea
 import axios from "axios";
 
 export default {
-  mounted() {
-    this.getUserInfo();
-  },
+  // mounted() {
+  //   this.getUserInfo();
+  // },
   data() {
     return {
       profile: {
@@ -158,11 +158,11 @@ export default {
     updateProfile() {
       alert("Profile updated successfully!");
     },
-    async getUserInfo() {
-      const response = await axios.get("http://localhost:8000/users/user");
-      this.user = response.data;
-      console.log(this.user);
-    },
+    // async getUserInfo() {
+    //   const response = await axios.get("http://localhost:8000/users/user");
+    //   this.user = response.data;
+    //   console.log(this.user);
+    // },
   },
 };
 </script>
