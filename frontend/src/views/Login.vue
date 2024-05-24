@@ -69,6 +69,8 @@ export default {
       reg_alert_variant: "",
       reg_alert_message: "",
       reg_in_submission: false,
+      isLoggedIn: localStorage.getItem("email") !== null && localStorage.getItem("token") !== null,
+
     };
   },
   methods: {
@@ -83,6 +85,7 @@ export default {
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("firstname", response.data.first_name);
         this.$router.push("/");
+        this.isLoggedIn=false;
       } catch (error) {
         this.reg_in_submission = false;
         this.reg_alert_variant = "bg-red-500";

@@ -15,22 +15,26 @@
           <li :class="{ 'text-xl': $route.path === '/sign-up' }">Sign Up</li>
         </router-link>
         <div class="ml-auto">
-      <router-link to="/cart">
-        <i class="fas fa-shopping-cart text-gray-800"></i>
-      </router-link>
-    </div>
-     
+          <router-link to="/cart">
+            <i class="fas fa-shopping-cart text-gray-800"></i>
+          </router-link>
+        </div>
       </ul>
     </div>
 
     <div class="flex-grow"></div>
-    <div class="flex rounded-md border-2 border-blue-500 overflow-hidden max-w-md mx-auto font-[sans-serif] mr-9">
+    <div
+      class="flex rounded-md border-2 border-blue-500 overflow-hidden max-w-md mx-auto font-[sans-serif] mr-9"
+    >
       <input
         type="text"
         placeholder="Search..."
         class="w-full outline-none bg-white text-gray-600 text-sm px-4 py-3"
       />
-      <button type="button" class="flex items-center justify-center bg-[#007bff] px-5">
+      <button
+        type="button"
+        class="flex items-center justify-center bg-[#007bff] px-5"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 192.904 192.904"
@@ -46,7 +50,9 @@
     <ul class="flex flex-row gap-9 mb-6 mr-4">
       <li v-if="!isLoggedIn">
         <router-link to="/login">
-          <i class="pi pi-user text-2xl font-style hover:bg-black hover:text-white hover:rouned hover:px-3 hover:py-1">
+          <i
+            class="pi pi-user text-2xl font-style hover:bg-black hover:text-white hover:rouned hover:px-3 hover:py-1"
+          >
             Login
           </i>
         </router-link>
@@ -57,9 +63,9 @@
         </router-link>
       </li>
       <li v-if="isLoggedIn">
-        <router-link @click="logout">
-          <i class="pi pi-sign-out text-xl">Sign out</i>
-        </router-link>
+        <a href="#" @click.prevent="logout">
+          <i class="pi pi-sign-out text-xl">Log out</i>
+        </a>
       </li>
     </ul>
   </div>
@@ -69,22 +75,22 @@
 export default {
   name: "AppHeader",
   data() {
-    return {
-      isLoggedIn: localStorage.getItem("email") !== null,
-    };
-  },
+  return {
+    isLoggedIn: localStorage.getItem("email") !== null && localStorage.getItem("token") !== null,
+  };
+},
   methods: {
     logout() {
-      try {
-        localStorage.removeItem("email");
-        localStorage.removeItem("token");
-        localStorage.removeItem("firstname");
-        this.isLoggedIn = false;
-        this.$router.push("/");
-      } catch (error) {
-        console.error("Error logging out:", error);
-      }
-    },
+    try {
+      localStorage.removeItem("email");
+      localStorage.removeItem("token");
+      localStorage.removeItem("firstname");
+      this.isLoggedIn = false;
+      this.$router.push("/");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  },
   },
 };
 </script>
