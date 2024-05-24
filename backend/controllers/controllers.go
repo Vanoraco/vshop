@@ -52,7 +52,7 @@ func SignUpUsers() gin.HandlerFunc {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		defer cancel()
 		var user models.User
-		if err := c.BindJSON(&user); err != nil {
+		if err := c.ShouldBind(&user); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
@@ -90,6 +90,30 @@ func SignUpUsers() gin.HandlerFunc {
 		user.UserCart = make([]models.ProductUser, 0)
 		user.Address_Details = make([]models.Address, 0)
 		user.Order_Status = make([]models.Order, 0)
+
+		file, _, err := c.Request.FormFile("file_use")
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to get file"})
+			return
+		}
+		defer file.Close()
+
+		// Create Cloudinary instance
+		cld, err := cloudinary.NewFromParams("djwh3jl5j", "547786729594556", "hEZvcmeQ3nFN6IKtPsqpHoFlSK0")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to initialize Cloudinary"})
+			return
+		}
+
+		// Upload file to Cloudinary
+		uploadResult, err := cld.Upload.Upload(ctx, file, uploader.UploadParams{Folder: "user_images"})
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload image to Cloudinary"})
+			return
+		}
+
+		// Set the image URL to the owner
+		user.ProfilePicture = uploadResult.SecureURL
 		_, inserterr := UserCollection.InsertOne(ctx, user)
 		if inserterr != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "not created"})

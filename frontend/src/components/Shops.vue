@@ -1,4 +1,10 @@
 <template>
+  <div>
+    <div class="flex justify-center text-7xl font-bold shop-list">
+      <p :class="{ 'hidden': $route.path !== '/shops' }">All Shops</p>
+     
+    </div>
+    <hr :class="{ 'hidden': $route.path !== '/shops' }">
   <ul class="grid grid-cols-4 gap-5">
     <router-link v-for="shop in shop" :key="shop.name" :to="{ name: 'shop', params: { id: shop.shop_id } }"
            class="rounded-lg shadow-2xl mt-9 ml-20 shop-list">
@@ -12,6 +18,7 @@
     </router-link>
     
   </ul>
+</div>
 </template>
   
   <script>
@@ -23,45 +30,6 @@
       },
       data() {
           return {
-              shops: [
-                {
-                  name: 'Siqala',
-                  Rating: 5,
-                  Categories: 'Electronics',
-                  phone_number:"0983315117",
-                  ShopImg: 'https://www.suninternational.com/content/dam/suninternational/sun-city-resort/shopping/SCR5r0250-sun-city-sun-central-retail-billabong-XS_5072-1.jpg.sunimage.800.400.jpg'
-                },
-                {
-                  name: 'Siqala',
-                  Rating: 5,
-                  Categories: 'Electronics',
-                  ShopImg: 'https://images.squarespace-cdn.com/content/v1/62b85870cef97862d6324f88/51e920da-a832-4290-960e-f5b051ef0cae/Labour+and+Wait+london+interior.jpg?format=2500w'
-                },
-                {
-                  name: 'Siqala',
-                  Rating: 5,
-                  Categories: 'Electronics',
-                  ShopImg: 'https://www.suninternational.com/content/dam/suninternational/sun-city-resort/shopping/SCR5r0250-sun-city-sun-central-retail-billabong-XS_5072-1.jpg.sunimage.800.400.jpg'
-                },
-                {
-                  name: 'Siqala',
-                  Rating: 5,
-                  Categories: 'Electronics',
-                  ShopImg: 'https://images.squarespace-cdn.com/content/v1/62b85870cef97862d6324f88/51e920da-a832-4290-960e-f5b051ef0cae/Labour+and+Wait+london+interior.jpg?format=2500w'
-                },
-                {
-                  name: 'Siqala',
-                  Rating: 5,
-                  Categories: 'Electronics',
-                  ShopImg: 'https://www.suninternational.com/content/dam/suninternational/sun-city-resort/shopping/SCR5r0250-sun-city-sun-central-retail-billabong-XS_5072-1.jpg.sunimage.800.400.jpg'
-                },
-                {
-                  name: 'Siqala',
-                  Rating: 5,
-                  Categories: 'Electronics',
-                  ShopImg: 'https://images.squarespace-cdn.com/content/v1/62b85870cef97862d6324f88/51e920da-a832-4290-960e-f5b051ef0cae/Labour+and+Wait+london+interior.jpg?format=2500w'
-                }
-            ],
             shop: []
           }
       },

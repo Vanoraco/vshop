@@ -51,7 +51,7 @@
        
         
         
-        <vee-form :validation-schema="userschema" @submit="registerUser"  v-if="selectedForm == 'buyer'" class="shadow-2xl py-9 px-9">
+        <vee-form :validation-schema="userschema" @submit="SignUpUser"  v-if="selectedForm == 'buyer'" class="shadow-2xl py-9 px-9">
           <p class="text-5xl">Sign up to buy products</p>
           <br>
           
@@ -126,12 +126,22 @@
     <div class="mb-3">
       <label class="inline-block mb-2">Phone Number</label>
       <vee-field
-        type="number"
+        type="text"
         name="phone"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         placeholder="Enter Phone Number"
       />
       <ErrorMessage class="text-red-600" name="phone" />
+    </div>
+
+    <div class="mb-3">
+      <label class="inline-block mb-2">Profile.</label>
+      
+      <vee-field
+        name="file_use"
+        type="file">
+
+      </vee-field>
     </div>
 
     <div class="mb-3 pl-6">
@@ -154,7 +164,7 @@
          </vee-form>
       </div>
       <div class="flex justify-center font-style text-xl">
-         <vee-form :validation-schema="ownerschema" @submit="registerOwner"  v-if="selectedForm == 'seller'" class="shadow-2xl py-9 px-9">
+         <vee-form :validation-schema="ownerschema" @submit="SignUpOwner"  v-if="selectedForm == 'seller'" class="shadow-2xl py-9 px-9">
           <p class="text-5xl">Sign up to sell products</p>
           <br>
           <div
@@ -280,6 +290,7 @@ import 'vue-toast-notification/dist/theme-bootstrap.css'
 import { useToast } from 'vue-toastification'
 
 
+import useUserStore from '../stores/user'
 export default {
  
   data() {
@@ -327,77 +338,62 @@ export default {
   },
   methods: {
 
-    // submitForm() {
-    //   console.log(this.v$);
-    //   if (this.role === "buyer") {
-    //     this.$router.push("/");
-    //   } else if (this.role === "shopowner") {
-    //     this.$router.push("/manage-space");
-    //   }
-    // },
+    ...mapActions(useUserStore, ['registerUser']),
+    ...mapActions(useUserStore, ['registerOwner']),
+
     selectForm(role) {
       this.selectedForm = role;
     },
 
-    async registerUser(formdata) {
+    async SignUpUser(formdata) {
       console.log(formdata)
      
       try {
         this.reg_show_alert = true
         this.reg_alert_variant = 'bg-blue-500'
         this.reg_alert_message = 'Please Wait! Your Account is being created'
-        // Make a POST request to your Golang backend API endpoint
-        const response = await axios.post('http://localhost:8000/users/signup', formdata);
+        
+        await  this.registerUser(formdata)
         this.reg_in_submission = true
-      
-        this.$router.push('login' );
-        console.log('User registered successfully:', response.data);
         // Optionally, you can redirect the user to another page or display a success message
       } catch (error) {
         this.reg_in_submission = false 
         this.reg_alert_variant = 'bg-red-500'
         this.reg_alert_message = 'An unexpected error occurred. Please try again Later'
         //this.$toast.error('An unexpected error occurred. Please try again Later');
-        this.reg_alert_message = 'Redirecting you to shops...'
+       
         
-        setTimeout(() =>  {
-         
-          this.$router.push( '/shops' )
-        }, 2000
-      )
         console.error('Error registering user:', error.response ? error.response.data : error.message);
         return
         // Optionally, you can display an error message to the user
       }
       this.reg_alert_variant = 'bg-green-500'
       this.reg_alert_message = 'Success! Your Account is created'
-      window.location.reload()
+      
+      this.$router.push('/login');
+     
     },
 
-    async registerOwner(formData) {
+    async SignUpOwner(formData) {
       console.log(formData);
       try {
         this.reg_show_alert = true;
         this.reg_alert_variant = 'bg-blue-500';
         this.reg_alert_message = 'Please wait! Your account is being created...';
 
-        // Make a POST request to your Golang backend API endpoint
-        const response = await axios.post('http://localhost:8000/owner/signupowner', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        
+        await this.registerOwner(formData)
 
         this.reg_in_submission = true;
         this.$router.push('/login');
-        console.log('User registered successfully:', response.data);
+        console.log('User registered successfully:');
         // Optionally, you can redirect the user to another page or display a success message
       } catch (error) {
         this.reg_in_submission = false;
         this.reg_alert_variant = 'bg-red-500';
         this.reg_alert_message = 'An unexpected error occurred. Please try again later.';
 
-        console.error('Error registering user:', error.response ? error.response.data : error.message);
+        console.error('Error registering user:', error ? error : error);
         // Optionally, you can display an error message to the user
       }
       setTimeout(() => {
