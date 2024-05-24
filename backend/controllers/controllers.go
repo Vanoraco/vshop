@@ -846,3 +846,30 @@ func SearchProductByQuery() gin.HandlerFunc {
 		c.IndentedJSON(200, searchproducts)
 	}
 }
+
+func GetUserData() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		UserID := c.Query("user_id")
+
+		if UserID == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing user_id parameter"})
+			return
+		}
+
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		var user models.User
+		err := UserCollection.FindOne(ctx, bson.M{"user_id": UserID}).Decode(&user)
+		if err != nil {
+			if err == mongo.ErrNoDocuments {
+				c.JSON(http.StatusNotFound, gin.H{"error": "user not found"})
+				return
+			}
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to find a user"})
+			return
+		}
+
+		c.JSON(http.StatusOK, user)
+	}
+}

@@ -154,6 +154,7 @@ export default {
       try {
          await this.login(formdata)
         this.$router.push("/");
+        this.isLoggedIn=false;
       } catch (error) {
         this.reg_in_submission = false;
         this.reg_alert_variant = "bg-red-500";

@@ -38,7 +38,6 @@
             const response = await axios.get('http://localhost:8000/users/viewshops');
             this.shop = response.data;
             console.log(this.shop);
-
         }
       }
     }

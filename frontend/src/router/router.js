@@ -5,7 +5,6 @@ import HomePage from "../views/Home.vue"
 import Shops from "../components/Shops.vue"
 import ShopCard from '../components/ShopCard.vue'
 import ManageSpace from "../views/owner/ManageSpace.vue"
-import productDetail from "../views/product_detail.vue"
 import DetailForm from "../views/owner/DetailForm.vue"
 import Login from "../views/Login.vue"
 import Cart from "../components/Cart.vue"
@@ -16,8 +15,8 @@ import AdminBin from "../views/Admin/pages/admin/recycle-bin.vue"
 import AdminApp from "../views/Admin/AdminApp.vue"
 import Profile from "../components/Profile.vue"
 import AddProduct from "../views/owner/AddItem.vue"
-
 import Dashboard from "../views/owner/Dashboard.vue"
+import ProductDetail from '../components/ProductDetail.vue'
 
 const routes = [
   { path: "/sign-up", component: SignUp },
@@ -25,7 +24,7 @@ const routes = [
   { path: "/shops", component: Shops },
   { path: "/sign-in", component: SignIn },
   { path: "/owner/manage-space", component: ManageSpace },
-  { path: "/product-detail-page", component: productDetail },
+  // { path: "/product-detail-page", component: productDetail },
   { path: "/DetailForm", component: DetailForm },
   { path: "/login", component: Login },
   { path: "/Cart", component: Cart },
@@ -38,7 +37,8 @@ const routes = [
   { path: "/admin/recycle-bin", component: AdminBin },
   { path: '/user/profile', component: Profile },
   { path:'/owner/add-product', component:AddProduct},
-  { path: '/dashboard', component:Dashboard}
+  { path: '/dashboard', component:Dashboard},
+  {path:'/shops/shop/:id/product:id', component:ProductDetail}
 ]
 
 const router = createRouter({
