@@ -5,7 +5,8 @@ import axios from 'axios';
 export default defineStore('user', {
   state: () => {
     return {
-    userLoggedIn: false
+    userLoggedIn: false,
+    ownerLoggedIn: false
     }
   },
 
@@ -39,6 +40,15 @@ export default defineStore('user', {
         localStorage.setItem("profile_img", response.data.profile_picture)
       this.userLoggedIn = true
     },
+    async loginOwner(formdata) {
+      const response = await axios.post("http://localhost:8000/owners/login", formdata);
+      
+      localStorage.setItem("owner_token", response.data.token);
+        localStorage.setItem("owner_email", response.data.owner_email);
+        localStorage.setItem("owner_firstname", response.data.owner_firstname);
+        localStorage.setItem("owner_img", response.data.owner_img)
+      this.ownerLoggedIn = true
+    },
      signOut() {
       this.userLoggedIn = false
 
@@ -46,6 +56,14 @@ export default defineStore('user', {
         localStorage.removeItem("email");
         localStorage.removeItem("first_name");
         localStorage.removeItem("profile_img");
+    },
+    signOutOwner() {
+      this.ownerLoggedIn = false
+      localStorage.removeItem("owner_token");
+      localStorage.removeItem("owner_email");
+      localStorage.removeItem("owner_firstname");
+      localStorage.removeItem("owner_img")
+
     }
   }
 })

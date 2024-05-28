@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center gap-9 font-style text-2xl font-style" v-if="!signOwner">
+  <div class="flex justify-center gap-9 font-style text-xl font-style">
     <vee-form @submit="loginUser" class="shadow-2xl py-9 px-9">
       <p class="text-5xl">Sign in to buy products</p>
       <br />
@@ -49,7 +49,7 @@
 
 
       <div class="flex justify-center mt-12">
-        Are you a shop owner? <p class="ml-2 cursor-pointer text-blue-500"> Login as owner</p>
+        <router-link to="owner-login" class="ml-2 cursor-pointer text-green-500 shadow-xl rounded hover:text-3xl hover:bg-gradient-to-b from-lime-600 to-lime-800 hover:text-white">I am a shop owner</router-link>
       </div>
       <div class="flex justify-center mt-24">
         ---- Don't have an account ? ----
@@ -153,10 +153,12 @@ export default {
 
       try {
          await this.login(formdata)
+         this.$toast.success('Successfully Logged in.')
         this.$router.push("/");
-        this.isLoggedIn=false;
+        
       } catch (error) {
         this.reg_in_submission = false;
+        this.$toast.error('Please try again.')
         this.reg_alert_variant = "bg-red-500";
         this.reg_alert_message = "An unexpected error occurred. Please try again later";
         console.error("Error logging in:", error);

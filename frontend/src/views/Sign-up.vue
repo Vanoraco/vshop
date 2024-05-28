@@ -47,11 +47,11 @@
         </div>
       </div>
 
-      <div class=" flex justify-center gap-9 font-style text-2xl">
+      <div class=" flex justify-center gap-9 font-style text-xl">
        
         
         
-        <vee-form :validation-schema="userschema" @submit="SignUpUser"  v-if="selectedForm == 'buyer'" class="shadow-2xl py-9 px-9">
+        <vee-form :validation-schema="userschema" @submit="SignUpUser"  v-if="selectedForm == 'buyer'" class="shadow-2xl py-9 px-3">
           <p class="text-5xl">Sign up to buy products</p>
           <br>
           

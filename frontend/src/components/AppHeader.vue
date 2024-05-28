@@ -1,5 +1,5 @@
-<template>
-  <div class="flex flex-row items-center mt-6 text-6xl h-14 align-middle">
+<template >
+  <div class="flex flex-row items-center mt-6 text-6xl h-14 align-middle" v-if="!ownerLoggedIn && !localOwnerToken">
     <div class="ml-4">
       <img src="../assets/images/logo.png" alt="Logo" class="h-12" />
     </div>
@@ -81,7 +81,7 @@
               <div class="flex items-center justify-start space-x-4" @click="toggleDrop">
                 
                 <div class="font-semibold dark:text-white text-left cursor-pointer">
-                  <div class="text-xs text-gray-500 dark:text-gray-400"><img :src="profImage" alt="" class="h-10 rounded-full"></div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400"><img :src="profImage" alt="" class="rounded-full w-9 h-9"></div>
                 </div>
               </div>
               <!-- Drop down -->
@@ -107,15 +107,18 @@ export default {
     return {
       showDropDown: false,
       localToken: localStorage.getItem("token") !== null,
+      localOwnerToken: localStorage.getItem("owner_token") !== null,
     }
   },
 
   mounted() {
     console.log(this.localToken)
     console.log(this.userLoggedIn)
+    console.log(this.ownerLoggedIn)
   },
   computed: {
     ...mapState(useUserStore, ['userLoggedIn']),
+    ...mapState(useUserStore, ['ownerLoggedIn']),
     profImage() {
       return localStorage.getItem("profile_img")
     }

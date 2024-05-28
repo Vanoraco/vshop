@@ -218,11 +218,16 @@ func Login() gin.HandlerFunc {
 		defer cancel()
 		var user models.User
 		var founduser models.User
+
+		//	var owner models.Owner
+		//	var foundOwner models.Owner
+
 		if err := c.BindJSON(&user); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return
 		}
 		err := UserCollection.FindOne(ctx, bson.M{"email": user.Email}).Decode(&founduser)
+		//err = OwnerCollection.FindOne(ctx, bson.M{"owner_email": owner.Owner_Email}).Decode(&foundOwner)
 		defer cancel()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "login or password incorrect"})
@@ -239,6 +244,40 @@ func Login() gin.HandlerFunc {
 		defer cancel()
 		generate.UpdateAllTokens(token, refreshToken, founduser.User_ID)
 		c.JSON(http.StatusOK, founduser)
+
+	}
+}
+
+func LoginOwner() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		var owner models.Owner
+		var foundOwner models.Owner
+
+		if err := c.BindJSON(&owner); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err})
+			return
+		}
+		err := OwnerCollection.FindOne(ctx, bson.M{"owner_email": owner.Owner_Email}).Decode(&foundOwner)
+		//err = OwnerCollection.FindOne(ctx, bson.M{"owner_email": owner.Owner_Email}).Decode(&foundOwner)
+		defer cancel()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "login or password incorrect"})
+			return
+		}
+		PasswordIsValid, msg := VerifyPassword(*owner.Owner_Password, *foundOwner.Owner_Password)
+		defer cancel()
+		if !PasswordIsValid {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			fmt.Println(msg)
+			return
+		}
+		token, refreshToken, _ := generate.TokenGenerator(*foundOwner.Owner_Email, *foundOwner.Owner_FirstName, *foundOwner.Owner_LastName, foundOwner.Owner_ID)
+		defer cancel()
+		generate.UpdateAllTokens(token, refreshToken, foundOwner.Owner_ID)
+		c.JSON(http.StatusOK, foundOwner)
 
 	}
 }

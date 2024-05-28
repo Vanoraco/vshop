@@ -4,18 +4,29 @@
   <AppHeader />
   <br />
   <br />
-  <router-view class="block"/>
+  
+  <component :is="layout">
+    <router-view />
+  </component>
+ 
 </template>
 
-<script>
+<script setup>
 import AppHeader from "./components/AppHeader.vue";
+import Layout from "./views/Admin/dashboard/Layout.vue";
 import Home from "./views/Home.vue";
-export default {
-  components: {
-    AppHeader,
-    Home,
-  },
-};
+
+import DashboardLayout from "./components/Dashboard/DashboardLayout.vue";
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+
+const defaultLayout = 'default'
+
+const { currentRoute } = useRouter()
+
+const layout = computed(
+  () => `${currentRoute.value.meta.layout || defaultLayout}-layout`,
+)
 </script>
 
 <style scoped>
