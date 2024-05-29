@@ -132,6 +132,7 @@ const routes = [
   {
     path: '/owner',
     component:DashboardLayout,
+    redirect: '/dash',
     meta: { layout: 'empty' }
   },
 
