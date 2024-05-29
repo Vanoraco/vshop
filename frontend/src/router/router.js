@@ -4,13 +4,13 @@ import SignIn from "../views/Sign-in.vue"
 import HomePage from "../views/Home.vue"
 import Shops from "../components/Shops.vue"
 import ShopCard from '../components/ShopCard.vue'
-import ManageSpace from "../views/Owner/ManageSpace.vue"
+import ManageSpace from "../views/"
 import DetailForm from "../views/Owner/DetailForm.vue"
 import Login from "../views/Login.vue"
 import OwnerLogin from "../views/Owner/Login.vue"
 import Cart from "../components/Cart.vue"
 import ShopDetail from "../components/ShopDetail.vue"
-// import Admin from "../views/Admin/dashboard/Layout.vue"
+import Admin from "../views/Admin/dashboard/Layout.vue"
 import AdminMedias from "../views/Admin/pages/admin/medias.vue"
 import AdminBin from "../views/Admin/pages/admin/recycle-bin.vue"
 import AdminApp from "../views/Admin/AdminApp.vue"
@@ -51,17 +51,17 @@ const routes = [
     component: SignIn,
     meta: { layout: 'empty' },
   },
-  { 
-    path: "/owner/manage-space", 
-    component: ManageSpace,
-    meta: { layout: 'empty' },
-  },
+  // { 
+  //   path: "/owner/manage-space", 
+  //   component: ManageSpace,
+  //   meta: { layout: 'empty' },
+  // },
   // { path: "/product-detail-page", component: productDetail },
-  { 
-    path: "/DetailForm", 
-    component: DetailForm,
-    meta: { layout: 'empty' },
-  },
+  // { 
+  //   path: "/DetailForm", 
+  //   component: DetailForm,
+  //   meta: { layout: 'empty' },
+  // },
   { 
     path: "/login", 
     component: Login,
@@ -72,11 +72,11 @@ const routes = [
      component: Cart,
      meta: { layout: 'empty' },
     },
-  { 
-    path: "/ShopCard", 
-   component: ShopCard,
-   meta: { layout: 'empty' },
-  },
+  // { 
+  //   path: "/ShopCard", 
+  //  component: ShopCard,
+  //  meta: { layout: 'empty' },
+  // },
 
   { 
     path: '/shop/:id', 
@@ -171,12 +171,12 @@ const routes = [
     component: Blank,
   },
   
-  {
-    path: '/',
-    name: 'Login',
-    component: AdLogin,
-    meta: { layout: 'empty' },
-  },
+  // {
+  //   path: '/',
+  //   name: 'Login',
+  //   component: AdLogin,
+  //   meta: { layout: 'empty' },
+  // },
  
   
 ]
