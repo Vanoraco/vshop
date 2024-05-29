@@ -19,7 +19,7 @@ const signOut = userStore.signOutOwner;
 const logout = async () => {
   try {
     signOut();
-    router.push("/login");
+    router.push("/owner-login");
   } catch (error) {
     console.error("Error logging out:", error);
   }
