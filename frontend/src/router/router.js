@@ -6,7 +6,7 @@ import Shops from "../components/Shops.vue"
 
 
 
-// import DetailForm from "../views/Owner/DetailForm.vue"
+import DetailForm from "../views/Owner/DetailForm.vue"
 
 import ShopCard from '../components/ShopCard.vue'
 import ManageSpace from "../views/owner/ManageSpace.vue"
