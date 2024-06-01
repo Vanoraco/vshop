@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <!-- <router-link to="/shops/shop/:id/product:proid"> -->
+    <div>
     <h1 class="text-4xl font-bold mb-6">{{ productList.shop_name }}</h1>
     <p class="text-lg mb-6">{{ productList.shop_category }}</p>
 
