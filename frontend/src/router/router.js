@@ -12,7 +12,7 @@ import Shops from "../components/Shops.vue"
 
 
 import Login from "../views/Login.vue"
-
+import OwnerLogin from "../views/Owner/Login.vue"
 import Cart from "../components/Cart.vue"
 import ShopDetail from "../components/ShopDetail.vue"
 import Admin from "../views/Admin/dashboard/Layout.vue"
@@ -110,14 +110,14 @@ const routes = [
      meta: { layout: 'empty' }
     },
   //{ 
-    //path:'/owner/add-product',
-    // component:AddProduct ,
-    // meta: { layout: 'empty' }
-    //},
-  //{ path: '/dashboard',
+   // path:'/owner/add-product',
+   //  component:AddProduct ,
+   //  meta: { layout: 'empty' }
+   // },
+ // { path: '/dashboard',
   // component:Dashboard ,
-  // meta: { layout: 'empty' }
-  //},
+   //meta: { layout: 'empty' }
+ // },
   {
     path:'/shops/shop/:id/product:proid', 
     component:ProductDetail,
@@ -128,11 +128,11 @@ const routes = [
     component:Main,
     meta: { layout: 'empty' }},
 
-   // {
-   //   path: '/owner-login',
-  //    component:OwnerLogin,
-  //    meta: { layout: 'empty' }
-    //},
+    {
+      path: '/owner-login',
+      component:OwnerLogin,
+      meta: { layout: 'empty' }
+    },
   {
     path: '/owner',
     component:DashboardLayout,
