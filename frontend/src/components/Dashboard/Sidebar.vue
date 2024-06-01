@@ -105,7 +105,7 @@ const inactiveClass = ref(
             />
           </svg>
 
-          <span class="mx-4">UI Elements</span>
+          <span class="mx-4">Create Shop</span>
         </router-link>
 
         <router-link

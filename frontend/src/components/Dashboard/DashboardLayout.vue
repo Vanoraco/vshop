@@ -9,6 +9,7 @@ console.log(Sidebar)
   <div class="flex h-screen bg-gray-200 font-roboto -mt-12">
     <Sidebar />
     
+    
     <div class="flex-1 flex flex-col overflow-hidden">
       <Header />
 
