@@ -3,8 +3,8 @@ import SignUp from "../views/Sign-up.vue"
 import SignIn from "../views/Sign-in.vue"
 import HomePage from "../views/Home.vue"
 import Shops from "../components/Shops.vue"
-import ShopCard from '../components/ShopCard.vue'
-import ManageSpace from "../views/"
+
+
 import DetailForm from "../views/Owner/DetailForm.vue"
 import Login from "../views/Login.vue"
 import OwnerLogin from "../views/Owner/Login.vue"
@@ -115,7 +115,7 @@ const routes = [
    meta: { layout: 'empty' }
   },
   {
-    path:'/shops/shop/:id/product:id', 
+    path:'/shops/shop/:id/product:proid', 
     component:ProductDetail,
     meta: { layout: 'empty' }
   },

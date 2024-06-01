@@ -11,7 +11,7 @@
         type="text"
         name="shop_name"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-        placeholder="Enter First Name"
+        placeholder="Enter Shop Name"
       />
       <ErrorMessage class="text-red-600" name="shop_name" />
     </div>
@@ -23,7 +23,7 @@
         <option value="electronics">Electronics</option>
         <option value="shoe">Shoes/Clothes</option>
       </vee-field>
-      <ErrorMessage class="text-red-600" name="shop_category" />
+      
     </div>
     <!-- Email -->
    
@@ -51,9 +51,7 @@
   </div>
 </template>
 <script>
-
-import axios from 'axios'
-
+import axios from 'axios';
 
 export default {
   data() {
@@ -70,22 +68,20 @@ export default {
     
       shopschema: {
         shop_name: 'required|min:3|max:100|alpha_spaces',
-        owner_lastname: 'required|min:3|max:100|alpha_spaces',
-        owner_email: 'required|min:3|max:100|email',
-        owner_password: 'required|min:9|max:100|excluded:password',
-        owner_phone: 'required|max:12',
-        confirm_password: 'passwords_mismatched:@owner_password',
-        tos: 'tos'
+        
       },
     };
   },
 
   methods: {
-    async addShop(formData) {
-      console.log(formData)
+    add() {
+     console.log("Hi")
+    },
+    async addShop(formdata) {
+      console.log(formdata)
       const ownerID = this.owner_id
       try {
-       const response = await axios.post(`http://localhost:8000/owners/addshop?owner_id=${ownerID}`, formData, {
+       const response = await axios.post(`http://localhost:8000/owners/addshop?owner_id=${ownerID}`, formdata, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -94,7 +90,7 @@ export default {
         this.$toast.success('Successfully Created.')
       } catch(error) {
         console.log(error)
-        this.$toast.Error('Creating Shop failed, please try again in minute')
+        this.$toast.error('Creating Shop failed, please try again in minute')
       }
 
     }
