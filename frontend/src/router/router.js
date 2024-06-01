@@ -8,12 +8,11 @@ import Shops from "../components/Shops.vue"
 
 // import DetailForm from "../views/Owner/DetailForm.vue"
 
-import ShopCard from '../components/ShopCard.vue'
-import ManageSpace from "../views/owner/ManageSpace.vue"
-import DetailForm from "../views/owner/DetailForm.vue"
+
+
 
 import Login from "../views/Login.vue"
-import OwnerLogin from "../views/owner/Login.vue"
+
 import Cart from "../components/Cart.vue"
 import ShopDetail from "../components/ShopDetail.vue"
 import Admin from "../views/Admin/dashboard/Layout.vue"
@@ -21,8 +20,7 @@ import AdminMedias from "../views/Admin/pages/admin/medias.vue"
 import AdminBin from "../views/Admin/pages/admin/recycle-bin.vue"
 import AdminApp from "../views/Admin/AdminApp.vue"
 import Profile from "../components/Profile.vue"
-import AddProduct from "../views/owner/AddItem.vue"
-import Dashboard from "../views/owner/Dashboard.vue"
+
 import ProductDetail from '../components/ProductDetail.vue'
 
 import DashboardLayout from '../components/Dashboard/DashboardLayout.vue'
@@ -111,15 +109,15 @@ const routes = [
      component: Profile,
      meta: { layout: 'empty' }
     },
-  { 
-    path:'/owner/add-product',
-     component:AddProduct ,
-     meta: { layout: 'empty' }
-    },
-  { path: '/dashboard',
-   component:Dashboard ,
-   meta: { layout: 'empty' }
-  },
+  //{ 
+    //path:'/owner/add-product',
+    // component:AddProduct ,
+    // meta: { layout: 'empty' }
+    //},
+  //{ path: '/dashboard',
+  // component:Dashboard ,
+  // meta: { layout: 'empty' }
+  //},
   {
     path:'/shops/shop/:id/product:proid', 
     component:ProductDetail,
@@ -130,11 +128,11 @@ const routes = [
     component:Main,
     meta: { layout: 'empty' }},
 
-    {
-      path: '/owner-login',
-      component:OwnerLogin,
-      meta: { layout: 'empty' }
-    },
+   // {
+   //   path: '/owner-login',
+  //    component:OwnerLogin,
+  //    meta: { layout: 'empty' }
+    //},
   {
     path: '/owner',
     component:DashboardLayout,
