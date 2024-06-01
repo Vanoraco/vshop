@@ -5,9 +5,15 @@ import HomePage from "../views/Home.vue"
 import Shops from "../components/Shops.vue"
 
 
+
 import DetailForm from "../views/Owner/DetailForm.vue"
+
+import ShopCard from '../components/ShopCard.vue'
+import ManageSpace from "../views/owner/ManageSpace.vue"
+import DetailForm from "../views/owner/DetailForm.vue"
+
 import Login from "../views/Login.vue"
-import OwnerLogin from "../views/Owner/Login.vue"
+import OwnerLogin from "../views/owner/Login.vue"
 import Cart from "../components/Cart.vue"
 import ShopDetail from "../components/ShopDetail.vue"
 import Admin from "../views/Admin/dashboard/Layout.vue"
@@ -15,8 +21,8 @@ import AdminMedias from "../views/Admin/pages/admin/medias.vue"
 import AdminBin from "../views/Admin/pages/admin/recycle-bin.vue"
 import AdminApp from "../views/Admin/AdminApp.vue"
 import Profile from "../components/Profile.vue"
-import AddProduct from "../views/Owner/AddItem.vue"
-import Dashboard from "../views/Owner/Dashboard.vue"
+import AddProduct from "../views/owner/AddItem.vue"
+import Dashboard from "../views/owner/Dashboard.vue"
 import ProductDetail from '../components/ProductDetail.vue'
 
 import DashboardLayout from '../components/Dashboard/DashboardLayout.vue'
