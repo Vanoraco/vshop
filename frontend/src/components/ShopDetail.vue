@@ -1,6 +1,5 @@
 <template>
-  <router-link to="/shops/shop/:id/product:id">
-    <div>
+  <div>
     <h1 class="text-4xl font-bold mb-6">{{ productList.shop_name }}</h1>
     <p class="text-lg mb-6">{{ productList.shop_category }}</p>
 
@@ -19,22 +18,24 @@
         />
         <h2 class="text-xl font-semibold mb-2">{{ product.product_name }}</h2>
         <p class="text-gray-800 font-semibold mt-2">ETB {{ product.price }}</p>
-        <button
-          class="mr-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
-        >
-          3D
-        </button>
+       
         <button
           @click="addToCart(product)"
           class="mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
         >
           Add to cart
         </button>
+        <router-link to="/shops/shop/:id/product:id">
+          <button
+        
+            class="mr-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
+          >
+            Details
+          </button>
+        </router-link>
       </div>
     </div>
   </div>
-  </router-link>
- 
 </template>
 
 <script>
