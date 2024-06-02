@@ -758,6 +758,273 @@ func ViewShops() gin.HandlerFunc {
 	}
 }
 
+/*
+	 func EditProduct() gin.HandlerFunc {
+		return func(c *gin.Context) {
+			product_id := c.Query("product_id")
+			if product_id == "" {
+				c.Header("Content-Type", "application/json")
+				c.JSON(http.StatusNotFound, gin.H{"Error": "Invalid"})
+				c.Abort()
+				return
+			}
+			prod_id, err := primitive.ObjectIDFromHex(product_id)
+			if err != nil {
+				c.IndentedJSON(500, err)
+			}
+			var editproduct models.Product
+			if err := c.BindJSON(&editproduct); err != nil {
+				c.IndentedJSON(http.StatusBadRequest, err.Error())
+			}
+			var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+			defer cancel()
+			filter := bson.D{primitive.E{Key: "_id", Value: prod_id}}
+			update := bson.D{{Key: "$set", Value: bson.D{primitive.E{Key: "product_name", Value: editproduct.Product_Name}, {Key: "price", Value: editproduct.Price}, {Key: "quantity", Value: editproduct.Quantity}, {Key: "product_description", Value: editproduct.Product_Description}, {Key: "image", Value: editproduct.Image}}}}
+			_, err = ShopCollection.UpdateOne(ctx, filter, update)
+			if err != nil {
+				c.IndentedJSON(500, "Something Went Wrong")
+				return
+			}
+			defer cancel()
+			ctx.Done()
+			c.IndentedJSON(200, "Successfully Updated the Home address")
+		}
+	}
+*/
+/* func EditProduct() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Retrieve query parameters
+		shop_id := c.Query("shop_id")
+		product_id := c.Query("product_id")
+
+		// Validate query parameters
+		if shop_id == "" || product_id == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid shop_id or product_id"})
+			return
+		}
+
+		// Convert shop_id and product_id to ObjectID
+		shopObjectID, err := primitive.ObjectIDFromHex(shop_id)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid shop_id"})
+			return
+		}
+
+		prodObjectID, err := primitive.ObjectIDFromHex(product_id)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid product_id"})
+			return
+		}
+
+		// Bind JSON body to editProduct struct
+		var editProduct models.Product
+		if err := c.BindJSON(&editProduct); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		// Set up context with timeout
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		// Define filter to locate the specific product within the specific shop
+		filter := bson.D{
+			{Key: "_id", Value: shopObjectID},
+			{Key: "shop_products._id", Value: prodObjectID},
+		}
+
+		// Define update statement to modify the product fields
+		update := bson.D{
+			{Key: "$set", Value: bson.D{
+				{Key: "shop_products.$[].product_name", Value: editProduct.Product_Name},
+				{Key: "shop_products.$[].price", Value: editProduct.Price},
+				{Key: "shop_products.$[].quantity", Value: editProduct.Quantity},
+				{Key: "shop_products.$[].product_description", Value: editProduct.Product_Description},
+				{Key: "shop_products.$[].image", Value: editProduct.Image},
+			}},
+		}
+
+		// Execute the update query
+		result, err := ShopCollection.UpdateOne(ctx, filter, update)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update product"})
+			return
+		}
+
+		// Check if any document was matched and updated
+		if result.ModifiedCount == 0 {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Product not found or not updated"})
+			return
+		}
+
+		// Respond with success message
+		c.JSON(http.StatusOK, gin.H{"message": "Successfully updated the product"})
+	}
+} */
+
+func EditProduct() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Retrieve query parameters
+		shop_id := c.Query("shop_id")
+		product_id := c.Query("product_id")
+
+		// Validate query parameters
+		if shop_id == "" || product_id == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid shop_id or product_id"})
+			return
+		}
+
+		// Convert shop_id and product_id to ObjectID
+		shopObjectID := shop_id
+		fmt.Println(shopObjectID)
+
+		prodObjectID, err := primitive.ObjectIDFromHex(product_id)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid product_id"})
+			return
+		}
+
+		// Bind JSON body to editProduct struct
+		var editProduct models.Product
+		if err := c.ShouldBind(&editProduct); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		// Set up context with timeout
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		file, _, err := c.Request.FormFile("file")
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to get file"})
+			return
+		}
+		defer file.Close()
+
+		// Create Cloudinary instance
+		cld, err := cloudinary.NewFromParams("djwh3jl5j", "547786729594556", "hEZvcmeQ3nFN6IKtPsqpHoFlSK0")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to initialize Cloudinary"})
+			return
+		}
+
+		// Upload file to Cloudinary
+		uploadResult, err := cld.Upload.Upload(ctx, file, uploader.UploadParams{Folder: "product_images"})
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload image to Cloudinary"})
+			return
+		}
+
+		// Set the image URL to the product
+		editProduct.Image = uploadResult.SecureURL
+
+		// Define filter to locate the specific product within the specific shop
+		filter := bson.D{
+			{Key: "shop_id", Value: shopObjectID},
+			{Key: "shop_products._id", Value: prodObjectID},
+		}
+
+		// Define update statement to modify the product fields
+		update := bson.D{
+			{Key: "$set", Value: bson.D{
+				{Key: "shop_products.$.product_name", Value: editProduct.Product_Name},
+				{Key: "shop_products.$.price", Value: editProduct.Price},
+				{Key: "shop_products.$.quantity", Value: editProduct.Quantity},
+				{Key: "shop_products.$.product_description", Value: editProduct.Product_Description},
+				{Key: "shop_products.$.image", Value: editProduct.Image},
+			}},
+		}
+
+		fmt.Println(prodObjectID)
+		// Execute the update query
+		result, err := ShopCollection.UpdateOne(ctx, filter, update)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update product"})
+			return
+		}
+
+		fmt.Println(update)
+		// Check if any document was matched and updated
+		if result.ModifiedCount == 0 {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Product not found or not updated"})
+			return
+		}
+
+		// Respond with success message
+		c.JSON(http.StatusOK, gin.H{"message": "Successfully updated the product"})
+	}
+}
+
+/* func EditProduct() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Retrieve query parameters
+		shopID := c.Query("shop_id")
+		productID := c.Query("product_id")
+
+		// Validate query parameters
+		if shopID == "" || productID == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid shop_id or product_id"})
+			return
+		}
+
+		// Convert shop_id and product_id to ObjectID
+		shopObjectID := shopID
+		fmt.Println("Shop Object ID:", shopObjectID)
+
+		prodObjectID, err := primitive.ObjectIDFromHex(productID)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid product_id"})
+			return
+		}
+
+		// Set up context with timeout
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		// Find the shop document by shopObjectID
+		var shop models.Shop
+		err = ShopCollection.FindOne(ctx, bson.M{"shop_id": shopObjectID}).Decode(&shop)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to find shop"})
+			return
+		}
+
+		// Find and update the product within the shop_products array
+		for i, product := range shop.ShopProducts {
+			if product.Product_ID == prodObjectID {
+				// Bind JSON body to editProduct struct
+				var editProduct models.Product
+				if err := c.BindJSON(&editProduct); err != nil {
+					c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+					return
+				}
+
+				// Update the product fields
+				shop.ShopProducts[i].Product_Name = editProduct.Product_Name
+				shop.ShopProducts[i].Price = editProduct.Price
+				shop.ShopProducts[i].Quantity = editProduct.Quantity
+				shop.ShopProducts[i].Product_Description = editProduct.Product_Description
+				shop.ShopProducts[i].Image = editProduct.Image
+
+				// Update the shop document in the database
+				_, err := ShopCollection.ReplaceOne(ctx, bson.M{"_id": shopObjectID}, shop)
+				if err != nil {
+					c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update product"})
+					return
+				}
+
+				// Respond with success message
+				c.JSON(http.StatusOK, gin.H{"message": "Successfully updated the product"})
+				return
+			}
+		}
+
+		// If the product was not found within the shop_products array
+		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found in shop"})
+	}
+} */
+
 func GetShopProductsByID() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		shopID := c.Query("shop_id")

@@ -35,6 +35,9 @@ import Modal from '../views/Dashboard/Modal.vue'
 import Card from '../views/Dashboard/Card.vue'
 import Blank from '../views/Dashboard/Blank.vue'
 
+import EditProduct from '../views/Owner/Edit-Product.vue'
+
+
 const routes = [
   { 
     path: "/sign-up", 
@@ -70,6 +73,7 @@ const routes = [
     path: "/login", 
     component: Login,
     meta: { layout: 'empty' },
+    
   },
   {
      path: "/Cart", 
@@ -89,6 +93,13 @@ const routes = [
      props: true ,
      meta: { layout: 'empty' }},
 
+     { 
+      path: '/edit-product/:id', 
+      name: 'editprod', 
+      component: EditProduct,
+       props: true ,
+       },
+  
   { 
     path: "/admin", 
     component: AdminApp,
@@ -144,6 +155,7 @@ const routes = [
     path: '/dash',
     name: 'Dashboard',
     component: Dash,
+    
   },
   {
     path: '/forms',

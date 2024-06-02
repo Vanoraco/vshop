@@ -14,12 +14,17 @@ const profOwnerImage = computed(() => {
   return localStorage.getItem("owner_img");
 });
 
+const profOwnerEmail = computed(() => {
+  return localStorage.getItem("owner_email");
+});
+
 const signOut = userStore.signOutOwner;
 
 const logout = async () => {
   try {
     signOut();
     router.push("/owner-login");
+    window.location.reload();
   } catch (error) {
     console.error("Error logging out:", error);
   }
@@ -90,8 +95,10 @@ const logout = async () => {
           />
         </svg>
       </button>
-
-      <div class="relative">
+      <div class="font-style mr-6">
+        {{ profOwnerEmail }}
+      </div>
+      <div class="relative font-style">
         <button
           class="relative z-10 block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none"
           @click="dropdownOpen = !dropdownOpen"
@@ -119,7 +126,7 @@ const logout = async () => {
         >
           <div
             v-show="dropdownOpen"
-            class="absolute right-0 z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl"
+            class="absolute right-0 z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl font-style cursor-pointer"
           >
             <a
               href="#"
@@ -141,5 +148,12 @@ const logout = async () => {
     </div>
   </header>
 </template>
+<style>
+     @import url("https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9+Charted&family=Marcellus&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+
+.font-style {
+  font-family: "Marcellus", sans-serif;
+}
+</style>
 
 

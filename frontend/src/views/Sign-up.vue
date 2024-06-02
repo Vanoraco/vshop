@@ -354,6 +354,7 @@ export default {
         this.reg_alert_message = 'Please Wait! Your Account is being created'
         
         await  this.registerUser(formdata)
+        this.$toast.success('Successfully Created Account.')
         this.reg_in_submission = true
         // Optionally, you can redirect the user to another page or display a success message
       } catch (error) {
@@ -362,7 +363,7 @@ export default {
         this.reg_alert_message = 'An unexpected error occurred. Please try again Later'
         //this.$toast.error('An unexpected error occurred. Please try again Later');
        
-        
+        this.$toast.error('Please Try Again!.')
         console.error('Error registering user:', error.response ? error.response.data : error.message);
         return
         // Optionally, you can display an error message to the user
@@ -385,6 +386,7 @@ export default {
         await this.registerOwner(formData)
 
         this.reg_in_submission = true;
+        this.$toast.success('Successfully Created Account.')
         this.$router.push('/login');
         console.log('User registered successfully:');
         // Optionally, you can redirect the user to another page or display a success message
@@ -392,7 +394,7 @@ export default {
         this.reg_in_submission = false;
         this.reg_alert_variant = 'bg-red-500';
         this.reg_alert_message = 'An unexpected error occurred. Please try again later.';
-
+        this.$toast.error('Please Try Again!')
         console.error('Error registering user:', error ? error : error);
         // Optionally, you can display an error message to the user
       }

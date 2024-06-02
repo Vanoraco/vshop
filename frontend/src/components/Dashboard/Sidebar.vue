@@ -12,7 +12,7 @@ const inactiveClass = ref(
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex font-style">
     <!-- Backdrop -->
     <div
       :class="isOpen ? 'block' : 'hidden'"
@@ -133,7 +133,7 @@ const inactiveClass = ref(
             />
           </svg>
 
-          <span class="mx-4">Tables</span>
+          <span class="mx-4">Add Product</span>
         </router-link>
 
         <router-link
@@ -199,3 +199,11 @@ const inactiveClass = ref(
     </div>
   </div>
 </template>
+
+<style>
+ @import url("https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9+Charted&family=Marcellus&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+
+.font-style {
+  font-family: "Marcellus", sans-serif;
+}
+</style>
