@@ -73,7 +73,7 @@ const inactiveClass = ref(
             />
           </svg>
 
-          <span class="mx-4">Dashboard</span>
+          <span class="mx-4">REQUESTS</span>
         </router-link>
 
         <router-link
@@ -133,7 +133,11 @@ const inactiveClass = ref(
             />
           </svg>
 
+<<<<<<< HEAD
+          <span class="mx-4">Add products</span>
+=======
           <span class="mx-4">Add Product</span>
+>>>>>>> cad65aee50fdeb782aa2c6e5a8e7dd0968f06047
         </router-link>
 
         <router-link

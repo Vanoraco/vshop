@@ -53,16 +53,17 @@
         >
           Add to cart
         </button>
+        <router-link to="/3Dview">
+          <button
+            class="mr-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
+          >
+            3D view
+          </button>
+        </router-link>
       </div>
-      <div class="product-3d-view">
-        <h2 class="text-xl font-bold mb-2">3D View</h2>
-        <img
-          src="../assets//images/ecommerce.jpg"
-          frameborder="0"
-          allowfullscreen
-          class="w-full h-64 rounded-lg"
-        />
-      </div>
+      <!-- <div class="product-3d-view">
+       
+      </div> -->
     </div>
   </div>
 </template>
@@ -71,9 +72,9 @@
 import axios from 'axios';
 
 export default {
-  mounted() {
-    this.ProductList();
-  },
+  // mounted() {
+  //   this.ProductList();
+  // },
 
   data() {
     return {
@@ -101,6 +102,7 @@ export default {
     };
   },
   methods: {
+
     async ProductList() {
       const shopID = this.shopId;
       const products = await axios.get(
@@ -109,6 +111,16 @@ export default {
       console.log(products.data);
       this.productList = products.data;
     },
+
+    // async ProductList() {
+    //   const shopID = this.shopId;
+    //   const products = await axios.get(
+    //     `http://localhost:8000/shops/viewproducts?shop_id=${shopID}`
+    //   );
+    //   console.log(products.data);
+    //   this.productList = products.data;
+    // },
+
   },
 };
 </script>

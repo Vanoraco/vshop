@@ -71,7 +71,7 @@ console.log(products)
 <template>
   <div>
     <h3 class="text-3xl font-medium text-gray-700">
-      Dashboard
+      Request
     </h3>
 
     <div class="mt-4">
@@ -86,10 +86,21 @@ console.log(products)
     <Bar :data="chartData" :options="chartOptions" />
   </div>
 
+<<<<<<< HEAD
+            <div class="mx-5">
+              <h4 class="text-2xl font-semibold text-gray-700">
+                8,282
+              </h4>
+              <div class="text-gray-500">
+                New Orders
+              </div>
+            </div>
+=======
   <div >
     <Line :data="lineData" :options="chartOptions" />
   </div>
 </div>
+>>>>>>> cad65aee50fdeb782aa2c6e5a8e7dd0968f06047
           </div>
         </div>
 
@@ -187,11 +198,20 @@ console.log(products)
                 <th
                   class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                 >
+<<<<<<< HEAD
+                  product
+=======
                   Description
+>>>>>>> cad65aee50fdeb782aa2c6e5a8e7dd0968f06047
                 </th>
                 <th
                   class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                 >
+<<<<<<< HEAD
+                  quantity
+                </th>
+              
+=======
                   Price
                 </th>
                 <th
@@ -200,6 +220,7 @@ console.log(products)
                 Quantity
                 </th>
                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50" />
+>>>>>>> cad65aee50fdeb782aa2c6e5a8e7dd0968f06047
               </tr>
             </thead>
 
@@ -247,19 +268,32 @@ console.log(products)
                   >{{ p.price }}</span>
                 </td>
 
+<<<<<<< HEAD
+              
+=======
                 <td
                   class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
                 >
                   {{ p.quantity }}
                 </td>
+>>>>>>> cad65aee50fdeb782aa2c6e5a8e7dd0968f06047
 
                 <td
                   class="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap"
                 >
+<<<<<<< HEAD
+                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Accept</a>
+                </td>
+                <td
+                  class="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap"
+                >
+                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Decline</a>
+=======
                 <router-link  :to="{ name: 'editprod', params: { id: p._id } }"
            class="h-[350px] w-full">
        Edit 
       </router-link>
+>>>>>>> cad65aee50fdeb782aa2c6e5a8e7dd0968f06047
                 </td>
               </tr>
             </tbody>
