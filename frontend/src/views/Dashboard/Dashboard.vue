@@ -25,7 +25,7 @@ const users = ref<User[]>([...Array(10).keys()].map(() => testUser))
 <template>
   <div>
     <h3 class="text-3xl font-medium text-gray-700">
-      Dashboard
+      Request
     </h3>
 
     <div class="mt-4">
@@ -73,7 +73,7 @@ const users = ref<User[]>([...Array(10).keys()].map(() => testUser))
                 8,282
               </h4>
               <div class="text-gray-500">
-                New Users
+                New Orders
               </div>
             </div>
           </div>
@@ -173,19 +173,14 @@ const users = ref<User[]>([...Array(10).keys()].map(() => testUser))
                 <th
                   class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                 >
-                  Title
+                  product
                 </th>
                 <th
                   class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                 >
-                  Status
+                  quantity
                 </th>
-                <th
-                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
-                >
-                  Role
-                </th>
-                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50" />
+              
               </tr>
             </thead>
 
@@ -233,16 +228,17 @@ const users = ref<User[]>([...Array(10).keys()].map(() => testUser))
                   >{{ u.status }}</span>
                 </td>
 
-                <td
-                  class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
-                >
-                  {{ u.role }}
-                </td>
+              
 
                 <td
                   class="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap"
                 >
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Accept</a>
+                </td>
+                <td
+                  class="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap"
+                >
+                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Decline</a>
                 </td>
               </tr>
             </tbody>

@@ -1,11 +1,13 @@
 <template>
   <div class="shopping-cart-container">
     <h1 class="shopping-cart-title">Shopping Cart</h1>
-    <div v-if="cart.length === 0" class="empty-cart-message">Your cart is empty.</div>
+    <div v-if="cart.length === 0" class="empty-cart-message">
+      Your cart is empty.
+    </div>
     <div v-else class="cart-items-container">
       <div v-for="(item, index) in cart" :key="index" class="cart-item-wrapper">
         <div class="cart-item-details">
-          <img :src="item.image" alt="Product Image" class="product-image"/>
+          <img :src="item.image" alt="Product Image" class="product-image" />
           <div class="details">
             <div class="product-name">{{ item.product_name }}</div>
             <div class="product-price-quantity">
@@ -15,7 +17,9 @@
           </div>
         </div>
         <div class="cart-item-actions">
-          <button class="remove-item-btn" @click="removeItem(index)">Remove</button>
+          <button class="remove-item-btn" @click="removeItem(index)">
+            Remove
+          </button>
         </div>
       </div>
       <div class="cart-total">
@@ -23,14 +27,16 @@
         <span class="total-amount">ETB {{ total }}</span>
       </div>
       <div class="cart-actions">
-        <button class="checkout-btn" @click="checkout">Checkout</button>
+        <router-link to="/checkout">
+          <button class="checkout-btn">Checkout</button>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { useCartStore } from '../stores/CartStore'; // Adjust the path to your store
+import { useCartStore } from "../stores/CartStore"; // Adjust the path to your store
 
 export default {
   computed: {
@@ -164,7 +170,7 @@ export default {
 }
 
 .checkout-btn {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: #fff;
   border: none;
   padding: 10px 20px;

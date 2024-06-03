@@ -3,10 +3,9 @@ import SignUp from "../views/Sign-up.vue"
 import SignIn from "../views/Sign-in.vue"
 import HomePage from "../views/Home.vue"
 import Shops from "../components/Shops.vue"
+import Checkout from "../components/Checkout.vue"
 
 
-
-import DetailForm from "../views/Owner/DetailForm.vue"
 
 
 
@@ -34,24 +33,26 @@ import AdLogin from '../views/Dashboard/Login.vue'
 import Modal from '../views/Dashboard/Modal.vue'
 import Card from '../views/Dashboard/Card.vue'
 import Blank from '../views/Dashboard/Blank.vue'
+import ThreeD from '../components/3DView.vue'
 
 const routes = [
-  { 
-    path: "/sign-up", 
+  {
+    path: "/sign-up",
     component: SignUp,
     meta: { layout: 'empty' }
-   },
-  { 
-    path: "/", 
-    component: HomePage,  
-    meta: { layout: 'empty' } },
-  { 
-    path: "/shops", 
+  },
+  {
+    path: "/",
+    component: HomePage,
+    meta: { layout: 'empty' }
+  },
+  {
+    path: "/shops",
     component: Shops,
     meta: { layout: 'empty' },
   },
-  { 
-    path: "/sign-in", 
+  {
+    path: "/sign-in",
     component: SignIn,
     meta: { layout: 'empty' },
   },
@@ -66,107 +67,109 @@ const routes = [
   //   component: DetailForm,
   //   meta: { layout: 'empty' },
   // },
-  { 
-    path: "/login", 
+  {
+    path: "/login",
     component: Login,
     meta: { layout: 'empty' },
   },
   {
-     path: "/Cart", 
-     component: Cart,
-     meta: { layout: 'empty' },
-    },
+    path: "/Cart",
+    component: Cart,
+    meta: { layout: 'empty' },
+  },
   // { 
   //   path: "/ShopCard", 
   //  component: ShopCard,
   //  meta: { layout: 'empty' },
   // },
 
-  { 
-    path: '/shop/:id', 
-    name: 'shop', 
+  {
+    path: '/shop/:id',
+    name: 'shop',
     component: ShopDetail,
-     props: true ,
-     meta: { layout: 'empty' }},
+    props: true,
+    meta: { layout: 'empty' }
+  },
 
-  { 
-    path: "/admin", 
+  {
+    path: "/admin",
     component: AdminApp,
     meta: { layout: 'empty' },
- },
-  { 
-    path: "/admin/medias", 
-    component: AdminMedias,
-    meta: { layout: 'empty' }
-   },
-  { 
-    path: "/admin/recycle-bin",
-     component: AdminBin,
-     meta: { layout: 'empty' }
-     },
-  { 
-    path: '/user/profile',
-     component: Profile,
-     meta: { layout: 'empty' }
-    },
-  //{ 
-   // path:'/owner/add-product',
-   //  component:AddProduct ,
-   //  meta: { layout: 'empty' }
-   // },
- // { path: '/dashboard',
-  // component:Dashboard ,
-   //meta: { layout: 'empty' }
- // },
+  },
   {
-    path:'/shops/shop/:id/product:proid', 
-    component:ProductDetail,
+    path: "/admin/medias",
+    component: AdminMedias,
     meta: { layout: 'empty' }
   },
   {
-    path:'/main', 
-    component:Main,
-    meta: { layout: 'empty' }},
+    path: "/admin/recycle-bin",
+    component: AdminBin,
+    meta: { layout: 'empty' }
+  },
+  {
+    path: '/user/profile',
+    component: Profile,
+    meta: { layout: 'empty' }
+  },
+  //{ 
+  // path:'/owner/add-product',
+  //  component:AddProduct ,
+  //  meta: { layout: 'empty' }
+  // },
+  // { path: '/dashboard',
+  // component:Dashboard ,
+  //meta: { layout: 'empty' }
+  // },
+  {
+    path: '/shops/shop/:id/product:proid',
+    component: ProductDetail,
+    meta: { layout: 'empty' }
+  },
+  {
+    path: '/main',
+    component: Main,
+    meta: { layout: 'empty' }
+  },
 
-    {
-      path: '/owner-login',
-      component:OwnerLogin,
-      meta: { layout: 'empty' }
-    },
+  {
+    path: '/owner-login',
+    component: OwnerLogin,
+    meta: { layout: 'empty' }
+  },
   {
     path: '/owner',
-    component:DashboardLayout,
+    component: DashboardLayout,
     redirect: '/dash',
     meta: { layout: 'empty' }
   },
 
   {
-    path: '/dash',
+    path: '/owner/dash',
     name: 'Dashboard',
     component: Dash,
   },
   {
-    path: '/forms',
+    path: '/owner/forms',
     name: 'Forms',
     component: Forms,
   },
   {
-    path: '/cards',
+    path: '/owner/cards',
     name: 'Cards',
     component: Card,
   },
   {
-    path: '/tables',
+    path: '/owner/tables',
     name: 'Tables',
     component: Tables,
   },
   {
-    path: '/ui-elements',
+    path: '/owner/ui-elements',
     name: 'UIElements',
     component: UIElements,
   },
   {
-    path: '/modal',
+    path: '/owner/modal',
     name: 'Modal',
     component: Modal,
   },
@@ -175,15 +178,30 @@ const routes = [
     name: 'Blank',
     component: Blank,
   },
-  
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: Checkout,
+    meta: { layout: 'empty' }
+
+  },
+  {
+    path:'/3Dview',
+    name:"3D view",
+    component:ThreeD,
+    meta: { layout: 'empty' }
+
+  }
+
+
   // {
   //   path: '/',
   //   name: 'Login',
   //   component: AdLogin,
   //   meta: { layout: 'empty' },
   // },
- 
-  
+
+
 ]
 
 const router = createRouter({
@@ -192,22 +210,22 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-   const isAuthenticated =  localStorage.getItem('token')/* Logic to check if user is authenticated */;
- 
-   if (to.matched.some(record => record.meta.requiresAuth)) {
-     // Route requires authentication
-     if (isAuthenticated) {
-       // User is authenticated, allow access
-       next('/');
-     } else {
-       // User is not authenticated, redirect to login page
-       next('/login');
-     }
-   } else {
-     // Route does not require authentication, allow access
-     next();
-   }
- });
- 
+  const isAuthenticated = localStorage.getItem('token')/* Logic to check if user is authenticated */;
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // Route requires authentication
+    if (isAuthenticated) {
+      // User is authenticated, allow access
+      next('/');
+    } else {
+      // User is not authenticated, redirect to login page
+      next('/login');
+    }
+  } else {
+    // Route does not require authentication, allow access
+    next();
+  }
+});
+
 
 export default router;
