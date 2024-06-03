@@ -16,6 +16,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/cloudinary/cloudinary-go/v2"
@@ -953,6 +954,151 @@ func EditProduct() gin.HandlerFunc {
 
 		// Respond with success message
 		c.JSON(http.StatusOK, gin.H{"message": "Successfully updated the product"})
+	}
+}
+
+/* func RetrieveProductById() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Retrieve query parameters
+		shopID := c.Query("shop_id")
+
+		if shopID == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing shop_id parameter"})
+			return
+		}
+
+		// Create context with timeout
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		var shop models.Shop
+		err := ShopCollection.FindOne(ctx, bson.M{"shop_id": shopID}).Decode(&shop)
+		if err != nil {
+			if err == mongo.ErrNoDocuments {
+				c.JSON(http.StatusNotFound, gin.H{"error": "Shop not found"})
+				return
+			}
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to find shop"})
+			return
+		}
+
+		c.JSON(http.StatusOK, shop)
+
+		// Define filter to locate the specific product within the specific shop
+		/* filter := bson.D{
+			{Key: "shop_id", Value: shopObjectID},
+			{Key: "shop_products._id", Value: prodObjectID},
+		}
+
+	}
+}
+*/
+
+func RetrieveProductById() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Retrieve query parameters
+		shopID := c.Query("shop_id")
+		productID := c.Query("product_id")
+
+		if shopID == "" || productID == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing shop_id or product_id parameter"})
+			return
+		}
+
+		// Create context with timeout
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		prodObjectID, err := primitive.ObjectIDFromHex(productID)
+
+		// Define the filter to locate the specific product within the specific shop
+		filter := bson.M{
+			"shop_id": shopID,
+			"shop_products": bson.M{
+				"$elemMatch": bson.M{"_id": prodObjectID},
+			},
+		}
+
+		// Define the projection to include only the matched product
+		projection := bson.M{
+			"shop_products.$": 1,
+		}
+
+		var result struct {
+			ShopProducts []models.Product `bson:"shop_products"`
+		}
+
+		// Perform the query with the filter and projection
+		err = ShopCollection.FindOne(ctx, filter, options.FindOne().SetProjection(projection)).Decode(&result)
+		if err != nil {
+			if err == mongo.ErrNoDocuments {
+				c.JSON(http.StatusNotFound, gin.H{"error": "Product not foundp"})
+				return
+			}
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to find product"})
+			return
+		}
+
+		if len(result.ShopProducts) == 0 {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+			return
+		}
+
+		c.JSON(http.StatusOK, result.ShopProducts[0])
+	}
+}
+func DeleteProduct() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Retrieve query parameters
+		shop_id := c.Query("shop_id")
+		product_id := c.Query("product_id")
+
+		// Validate query parameters
+		if shop_id == "" || product_id == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid shop_id or product_id"})
+			return
+		}
+
+		// Convert shop_id and product_id to ObjectID
+		shopObjectID, err := primitive.ObjectIDFromHex(shop_id)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid shop_id"})
+			return
+		}
+
+		prodObjectID, err := primitive.ObjectIDFromHex(product_id)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid product_id"})
+			return
+		}
+
+		// Set up context with timeout
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		// Define filter to locate the specific shop
+		filter := bson.D{{Key: "_id", Value: shopObjectID}}
+
+		// Define update statement to remove the specific product from the shop_products array
+		update := bson.D{{Key: "$pull", Value: bson.D{
+			{Key: "shop_products", Value: bson.D{{Key: "_id", Value: prodObjectID}}},
+		}}}
+
+		// Execute the update query
+		result, err := ShopCollection.UpdateOne(ctx, filter, update)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete product"})
+			return
+		}
+
+		// Check if any document was matched and updated
+		if result.ModifiedCount == 0 {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Product not found or not deleted"})
+			return
+		}
+
+		// Respond with success message
+		c.JSON(http.StatusOK, gin.H{"message": "Successfully deleted the product"})
 	}
 }
 

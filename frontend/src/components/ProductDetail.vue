@@ -1,15 +1,15 @@
-<template>
-  <div class="flex flex-col md:flex-row justify-between items-start mt-8">
+<template >
+  <div class="flex flex-col md:flex-row justify-between items-start max-w-[96vw] mt-8">
     <div class="w-full md:w-1/2 mr-8">
       <div class="product-gallery">
-        <div class="main-image">
+        <div class="main-image h-[590px] w-full p-10 overflow-hidden">
           <img
-            :src="product.image"
-            :alt="product.name"
-            class="w-full rounded-lg"
+            :src="productList.image"
+            :alt="productList.name"
+            class="w-full rounded-lg object-fill h-[500px]  "
           />
         </div>
-        <div class="thumbnails flex justify-between mt-4">
+        <div class="thumbnails flex justify-between px-8 mt-4">
           <div
             v-for="image in product.images"
             :key="image"
@@ -27,7 +27,7 @@
 
     <div class="w-full md:w-1/2">
       <h1 class="text-4xl font-bold mb-6">{{ productList.shop_name }}</h1>
-      <h1 class="text-3xl font-bold mb-2">{{ product.name }}</h1>
+      <h1 class="text-3xl font-bold mb-2">{{ productList.product_name }}</h1>
       <div class="flex items-center mb-4">
         <div class="rating text-yellow-400 mr-2">
           <i class="fas fa-star"></i>
@@ -40,8 +40,8 @@
           >({{ product.reviews.length }} reviews)</span
         >
       </div>
-      <p class="text-2xl font-bold mb-4">ETB {{ product.price }}</p>
-      <p class="mb-4">{{ product.description }}</p>
+      <p class="text-2xl font-bold mb-4">ETB {{ productList.price }}</p>
+      <p class="mb-4">{{ productList.product_description }}</p>
       <div class="flex items-center mb-4">
         <button
           class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-4"
@@ -68,6 +68,8 @@
 </template>
   
   <script>
+import axios from 'axios';
+
 export default {
   mounted() {
     this.ProductList();
@@ -76,6 +78,7 @@ export default {
   data() {
     return {
       shopId: this.$route.params.id,
+      prodId: this.$route.params.proid,
       productList: [],
       product: {
         name: "Product Name",
@@ -101,7 +104,7 @@ export default {
     async ProductList() {
       const shopID = this.shopId;
       const products = await axios.get(
-        `http://localhost:8000/shops/viewproducts?shop_id=${shopID}`
+        `http://localhost:8000/shop/product?shop_id=${shopID}&product_id=${this.prodId}`
       );
       console.log(products.data);
       this.productList = products.data;

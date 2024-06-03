@@ -417,7 +417,7 @@ const {
       class="block w-full bg-black text-white py-1.5 px-3 rounded-full transition hover:bg-purple-700 cursor-pointer"
       :disabled="reg_in_submission"
     >
-      Create my Shop
+      Add Product
     </button>
          </vee-form>
   </div>

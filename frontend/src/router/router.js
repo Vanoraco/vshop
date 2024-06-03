@@ -130,7 +130,8 @@ const routes = [
    //meta: { layout: 'empty' }
  // },
   {
-    path:'/shops/shop/:id/product:proid', 
+    path:'/shop/:id/product/:proid', 
+    name: 'product',
     component:ProductDetail,
     meta: { layout: 'empty' }
   },
