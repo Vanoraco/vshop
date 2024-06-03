@@ -57,7 +57,7 @@ export default defineStore('user', {
         localStorage.removeItem("email");
         localStorage.removeItem("first_name");
         localStorage.removeItem("profile_img");
-        
+        window.location.reload()
     },
     signOutOwner() {
       this.ownerLoggedIn = false

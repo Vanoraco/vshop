@@ -25,6 +25,7 @@
       };
     },
     methods: {
+      
       addToCart() {
         // Add product to cart logic
         console.log("Product added to cart!");

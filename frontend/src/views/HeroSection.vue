@@ -1,8 +1,8 @@
 <template>
-  <div class="main-container w-[1265px] h-[937px] relative mx-auto my-0">
-    <div class="w-[513px] h-[431px] absolute top-0 left-0 z-10">
+  <div class="main-container w-[1265px] h-[937px] relative mx-auto my-0 font-style">
+    <div class="w-[513px] h-[431px] absolute top-0 left-0 z-10 font-style">
       <div
-        class="flex w-[405px] h-[35px] pt-[10px] pr-[20px] pb-[10px] pl-[20px] gap-[10px] items-center flex-nowrap bg-[rgba(60,218,94,0.05)] rounded-[30px] relative z-10 mt-0 mr-0 mb-0 ml-0"
+        class="flex w-[405px] h-[35px] pt-[10px] pr-[20px] pb-[10px] pl-[20px] gap-[10px] items-center flex-nowrap bg-[rgba(60,218,94,0.05)] rounded-[30px] relative z-10 mt-0 mr-0 mb-0 ml-0 font-style"
       >
         <span
           class="h-[19px] shrink-0 basis-auto font-['Outfit'] text-[15px] font-normal leading-[18.9px] text-[#0a2640] relative text-left whitespace-nowrap z-[11]"
@@ -60,32 +60,16 @@
 
 <script>
 export default {
-
+  
 }
 </script>
 
 <style>
-  
+  @import url("https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9+Charted&family=Marcellus&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
 
-  .elipse {
-  /* Ellipse 7 */
-position: absolute;
-width: 586px;
-height: 413px;
-left: 1330px;
-top: 227px;
-
-background: url(.png), linear-gradient(121.72deg, #2AD427 19.3%, #39D955 59.03%, #3CDA5F 95.76%);
-transform: matrix(-1, 0, 0, 1, 0, 0);
-/* smiling-young-caucasian-girl-with-pixie-haircut-standing-profile-view-holding-shopping-bags-shoulder-isolated-olive-green-background-with-copy-space-removebg-preview 1 */
-
+.font-style {
+  font-family: "Marcellus", sans-serif;
 }
 
-.elipse-img {
-  
-width: 654.94px;
-height: 491.26px;
 
-transform: rotate(0.21deg);
-}
 </style>
