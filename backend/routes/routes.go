@@ -20,4 +20,5 @@ func UserRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.GET("/shops/viewproducts", controllers.GetShopProductsByID())
 	incomingRoutes.GET("/users/user", controllers.GetUserData())
 	incomingRoutes.PUT("/products/edit", controllers.EditProduct())
+	incomingRoutes.GET("/shop/product", controllers.RetrieveProductById())
 }

@@ -152,7 +152,7 @@ export default {
 
 .content {
   position: absolute;
-  bottom: 65%;
+  bottom:70%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 160px;

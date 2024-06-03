@@ -15,7 +15,7 @@
         <img
           :src="product.image"
           :alt="product.product_name"
-          class="w-full h-48 object-cover rounded-md mb-4"
+          class="w-full h-56  rounded-md mb-4"
         />
         <h2 class="text-xl font-semibold mb-2">{{ product.product_name }}</h2>
         <p class="text-gray-800 font-semibold mt-2">ETB {{ product.price }}</p>
@@ -26,7 +26,7 @@
         >
           Add to cart
         </button>
-        <router-link to="/shops/shop/:id/product:id">
+        <router-link  :to="{ name: 'product', params: { proid: product._id }}" >
           <button
         
             class="mr-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"

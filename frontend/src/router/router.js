@@ -95,6 +95,13 @@ const routes = [
     meta: { layout: 'empty' }
   },
 
+<<<<<<< HEAD
+=======
+
+  {
+    path: "/admin",
+
+>>>>>>> 6509f051a0490625a39608da40abfee4d9d6dd65
      { 
       path: '/edit-product/:id', 
       name: 'editprod', 
@@ -104,6 +111,10 @@ const routes = [
   
   { 
     path: "/admin", 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6509f051a0490625a39608da40abfee4d9d6dd65
     component: AdminApp,
     meta: { layout: 'empty' },
   },
@@ -132,8 +143,14 @@ const routes = [
   //meta: { layout: 'empty' }
   // },
   {
+
+    path:'/shop/:id/product/:proid', 
+    name: 'product',
+    component:ProductDetail,
+
     path: '/shops/shop/:id/product:proid',
     component: ProductDetail,
+
     meta: { layout: 'empty' }
   },
   {
