@@ -1,16 +1,16 @@
 <template>
   <!-- <router-link to="/shops/shop/:id/product:proid"> -->
-    <div>
-    <h1 class="text-4xl font-bold mb-6">{{ productList.shop_name }}</h1>
-    <p class="text-lg mb-6">{{ productList.shop_category }}</p>
+    <div class="font-style">
+    <h1 class="text-8xl font-bold mb-6 flex justify-center">{{ productList.shop_name }}</h1>
+    <p class="text-lg mb-6 flex justify-center">{{ productList.shop_category }}</p>
 
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 ml-9 "
     >
       <div
         v-for="product in productList.shop_products"
         :key="product.Product_ID"
-        class="bg-white rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300"
+        class="bg-white rounded-lg shadow-xl  hover:shadow-xl transition duration-300 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-rose-600 via-sky-100 to-cyan-500"
       >
         <img
           :src="product.image"
@@ -75,4 +75,9 @@ export default {
 
 <style scoped>
 /* Add your styles here */
+@import url("https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9+Charted&family=Marcellus&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+
+.font-style {
+  font-family: "Marcellus", sans-serif;
+}
 </style>

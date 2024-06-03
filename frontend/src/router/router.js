@@ -35,6 +35,9 @@ import Card from '../views/Dashboard/Card.vue'
 import Blank from '../views/Dashboard/Blank.vue'
 import ThreeD from '../components/3DView.vue'
 
+import EditProduct from '../views/Owner/Edit-Product.vue'
+
+
 const routes = [
   {
     path: "/sign-up",
@@ -71,6 +74,7 @@ const routes = [
     path: "/login",
     component: Login,
     meta: { layout: 'empty' },
+    
   },
   {
     path: "/Cart",
@@ -91,8 +95,20 @@ const routes = [
     meta: { layout: 'empty' }
   },
 
+<<<<<<< HEAD
   {
     path: "/admin",
+=======
+     { 
+      path: '/edit-product/:id', 
+      name: 'editprod', 
+      component: EditProduct,
+       props: true ,
+       },
+  
+  { 
+    path: "/admin", 
+>>>>>>> cad65aee50fdeb782aa2c6e5a8e7dd0968f06047
     component: AdminApp,
     meta: { layout: 'empty' },
   },
@@ -147,6 +163,7 @@ const routes = [
     path: '/owner/dash',
     name: 'Dashboard',
     component: Dash,
+    
   },
   {
     path: '/owner/forms',
