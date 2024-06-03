@@ -95,10 +95,6 @@ const routes = [
     meta: { layout: 'empty' }
   },
 
-<<<<<<< HEAD
-  {
-    path: "/admin",
-=======
      { 
       path: '/edit-product/:id', 
       name: 'editprod', 
@@ -108,7 +104,6 @@ const routes = [
   
   { 
     path: "/admin", 
->>>>>>> cad65aee50fdeb782aa2c6e5a8e7dd0968f06047
     component: AdminApp,
     meta: { layout: 'empty' },
   },
