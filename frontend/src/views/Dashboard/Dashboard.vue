@@ -47,7 +47,7 @@ const products = ref([]);
 let totalProducts
 
 const shopID = localStorage.getItem("owner_id")
-const error = ref(null);
+
 
 
 async function listProducts() {
@@ -82,13 +82,7 @@ console.log(products)
           >
             
         <div class="flex flex-col gap-9">
-            <div>
-    <Bar :data="chartData" :options="chartOptions" />
-  </div>
-
-  <div >
-    <Line :data="lineData" :options="chartOptions" />
-  </div>
+            
 </div>
           </div>
         </div>

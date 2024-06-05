@@ -8,13 +8,13 @@
       <div class="font-serif ml-8">
         <ul class="flex flex-row gap-8 text-2xl">
           <router-link to="/">
-            <li :class="{ 'border-b-4 border-black text-3xl shadow-xl': $route.path === '/' }">Home</li>
+            <li :class="{ 'border-b-4 px-2 py-1 rounded-lg text-3xl shadow-xl bg-gradient-to-tr from-teal-600 via-cyan-700 to-blue-800 text-white': $route.path === '/' }">Home</li>
           </router-link>
           <router-link to="/shops">
-            <li :class="{ 'border-b-4 border-black text-3xl shadow-xl': $route.path === '/shops' }">Shops</li>
+            <li :class="{ 'border-b-4 px-2 py-1 rounded-lg text-3xl shadow-xl bg-gradient-to-tr from-teal-600 via-cyan-700 to-blue-800 text-white': $route.path === '/shops' }">Shops</li>
           </router-link>
           <router-link to="/sign-up" v-if="!userLoggedIn && !localToken">
-            <li :class="{ 'border-b-4 border-black text-3xl shadow-xl': $route.path === '/sign-up' }">Sign Up</li>
+            <li :class="{ 'border-b-4 px-2 py-1 rounded-lg text-3xl shadow-xl bg-gradient-to-tr from-teal-600 via-cyan-700 to-blue-800 text-white': $route.path === '/sign-up' }">Sign Up</li>
           </router-link>
         </ul>
       </div>
@@ -156,7 +156,7 @@ export default {
 
 .content {
   position: absolute;
-  bottom:65%;
+  bottom: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 160px;

@@ -67,6 +67,30 @@ type ProductUser struct {
 	Image        *string            `json:"image" bson:"image"`
 }
 
+type PaymentRequest struct {
+	Amount      string `json:"amount"`
+	Currency    string `json:"currency"`
+	Email       string `json:"email"`
+	FirstName   string `json:"first_name"`
+	LastName    string `json:"last_name"`
+	PhoneNumber string `json:"phone_number"`
+	TxRef       string `json:"tx_ref"`
+	CallbackURL string `json:"callback_url"`
+	ReturnURL   string `json:"return_url"`
+	Title       string `json:"customization[title]"`
+	Description string `json:"customization[description]"`
+}
+
+type ChapaResponse struct {
+	Response string `json:"response"`
+}
+
+type ChapaNestedResponse struct {
+	Message string                 `json:"message"`
+	Status  string                 `json:"status"`
+	Data    map[string]interface{} `json:"data"`
+}
+
 type Address struct {
 	Address_ID primitive.ObjectID `json:"_id" bson:"_id"`
 	House      *string            `json:"house" bson:"name"`

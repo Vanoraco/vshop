@@ -16,6 +16,7 @@ func UserRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.POST("/owners/addshop", controllers.AddShop())
 	incomingRoutes.POST("/owners/addproducttoshop", controllers.AddProductsToShop())
 	incomingRoutes.POST("/intialize", controllers.InitializeTransaction())
+	incomingRoutes.POST("/intialize-chapa", controllers.InitializeChapaTransactionMain())
 	incomingRoutes.GET("/users/viewshops", controllers.ViewShops())
 	incomingRoutes.GET("/shops/viewproducts", controllers.GetShopProductsByID())
 	incomingRoutes.GET("/users/user", controllers.GetUserData())
