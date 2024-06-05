@@ -6,8 +6,9 @@
       <div
         v-for="product in productList.shop_products"
         :key="product.Product_ID"
-        class="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-rose-600 via-sky-100 to-cyan-500 p-4"
+        class="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 bg-gradient-to-bl from-green-300 via-yellow-300 to-pink-300 p-4"
       >
+      
         <img
           :src="product.image"
           :alt="product.product_name"
@@ -16,15 +17,15 @@
         <h2 class="text-xl font-semibold mb-2">{{ product.product_name }}</h2>
         <p class="text-gray-800 font-semibold mt-2">ETB {{ product.price }}</p>
         <div class="flex justify-between mt-4">
-          <button
+          <!-- <button
             @click="addToCart(product)"
             class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
           >
             Add to cart
-          </button>
+          </button> -->
           <router-link :to="{ name: 'product', params: { proid: product._id } }">
             <button
-              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
+              class="bg-gradient-to-r  from-teal-500 via-cyan-600 to-blue-700 ml-3 text-white font-bold py-2 px-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
             >
               Details
             </button>
