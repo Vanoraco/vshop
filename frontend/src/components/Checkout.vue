@@ -8,29 +8,51 @@
       <input type="email" id="email" v-model="formData.email" required />
       
       <label for="phone_number">Phone number:</label>
-      <input type="phone" id="phone_number" v-model="formData.phone_number" required />
+      <input type="text" id="phone_number" v-model="formData.phone_number" required />
       
       <label for="address">Address:</label>
       <input type="text" id="address" v-model="formData.address" required />
 
-      <label for="country">select city:</label>
+      <label for="country">Select City:</label>
       <select id="country" v-model="formData.country" required>
-        <option value="">Select a country</option>
-        <option value="Hawasa">Addis Abeba</option>
+        <option value="">Select a city</option>
+        <option value="Addis Abeba">Addis Abeba</option>
         <option value="Hawasa">Hawasa</option>
-        <option value="Hawasa">shashemene</option>
-        <option value="Hawasa">mekele</option>
-        <option value="Addis ababa">bale robe</option>
-        <option value="Arbaminch">arbaminch</option>
-        <!-- Add more country options here -->
+        <option value="Shashemene">Shashemene</option>
+        <option value="Mekele">Mekele</option>
+        <option value="Bale Robe">Bale Robe</option>
+        <option value="Arbaminch">Arbaminch</option>
       </select>
+
+      <div class="product-table mt-6">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ product.product_name }}</td>
+              <td>{{ product.price }}</td>
+              <td>
+                <button @click="decrementQuantity">-</button>
+                {{ quantity }}
+                <button @click="incrementQuantity">+</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <input type="submit" value="Place Order" />
     </form>
   </div>
 </template>
-  
-  <script>
+
+<script>
 export default {
   data() {
     return {
@@ -40,22 +62,43 @@ export default {
         address: "",
         city: "",
         country: "",
-        phone_number:""
+        phone_number: ""
       },
+      product: this.$route.params.product || {},
+      quantity: 1
     };
   },
   methods: {
-    submitForm() {
-      // Handle form submission here
-      console.log("Form submitted!");
-      // You can perform further actions like sending the data to a server for processing
+    incrementQuantity() {
+      this.quantity += 1;
     },
-  },
+    decrementQuantity() {
+      if (this.quantity > 1) {
+        this.quantity -= 1;
+      }
+    },
+    async submitForm() {
+      // Handle form submission here
+      const orderData = {
+        ...this.formData,
+        product: this.product,
+        quantity: this.quantity
+      };
+      console.log("Order Data:", orderData);
+
+      try {
+        const response = await axios.post('http://localhost:8000/orders', orderData);
+        console.log("Order submitted successfully!", response.data);
+        this.$router.push({ name: 'shopOwnerDashboard' });
+      } catch (error) {
+        console.error("There was an error submitting the order:", error);
+      }
+    }
+  }
 };
 </script>
-  
-  <style scoped>
-/* Add your component-specific CSS styling here */
+
+<style scoped>
 .checkout-form {
   background-color: #f7f7f7;
   border: 1px solid #ddd;
@@ -84,5 +127,29 @@ export default {
   border: none;
   padding: 10px 20px;
   cursor: pointer;
+}
+
+.product-table {
+  margin-top: 20px;
+}
+
+.product-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.product-table th,
+.product-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.product-table th {
+  background-color: #f2f2f2;
+}
+
+.product-table button {
+  padding: 5px 10px;
 }
 </style>
