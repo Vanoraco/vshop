@@ -1,0 +1,8 @@
+Model Information:
+* title:	iPhone 15 Pro Lowpoly
+* source:	https://sketchfab.com/3d-models/iphone-15-pro-lowpoly-5a549e3d0f164a6b9c133bc894d4d49f
+* author:	utqau (https://sketchfab.com/utqau)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

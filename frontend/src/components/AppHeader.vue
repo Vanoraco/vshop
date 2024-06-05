@@ -40,7 +40,7 @@
         </button>
       </div>
       <router-link to="/cart" class="">
-        <i class="fas fa-shopping-cart text-gray-800 text-2xl mb-4 mr-2"></i>
+        <i class="fas fa-heart text-gray-800 text-2xl mb-4 mr-2"></i>
       </router-link>
       <ul class="flex flex-row gap-9 mb-6 mr-6 mt-2">
         <li v-if="!userLoggedIn && !localToken">
@@ -93,7 +93,7 @@
           </router-link>
         </ul>
         <router-link to="/cart" class="mt-4" @click="toggleMobileMenu">
-          <i class="fas fa-shopping-cart text-gray-800 text-2xl"></i>
+          <i class="fas fa-heart text-gray-800 text-2xl"></i>
         </router-link>
       </div>
     </div>
@@ -105,7 +105,6 @@
 import { mapState, mapStores } from 'pinia';
 import useUserStore from '../stores/user'
 import { mapActions } from 'pinia';
-
 export default {
   name: "AppHeader",
   data() {
@@ -113,9 +112,9 @@ export default {
       showDropDown: false,
       localToken: localStorage.getItem("token") !== null,
       localOwnerToken: localStorage.getItem("owner_token") !== null,
-      isMobileMenuOpen: false, // added for mobile menu toggle
     }
   },
+
   mounted() {
     console.log(this.localToken)
     console.log(this.userLoggedIn)
@@ -133,18 +132,16 @@ export default {
     logout() {
       try {
         this.signOut();
-        window.location.reload();
+       window.location.reload();
         this.$router.push("/");
       } catch (error) {
         console.error("Error logging out:", error);
       }
     },
     toggleDrop() {
-      this.showDropDown = !this.showDropDown;
-    },
-    toggleMobileMenu() { // added for mobile menu toggle
-      this.isMobileMenuOpen = !this.isMobileMenuOpen;
-    }
+        this.showDropDown = !this.showDropDown
+  
+      },
   },
 };
 </script>
@@ -156,9 +153,10 @@ export default {
   font-family: "Marcellus", sans-serif;
 }
 
+
 .content {
   position: absolute;
-  bottom: 65%;
+  bottom:65%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 160px;
@@ -226,6 +224,8 @@ export default {
   margin: 0;
 }
 
+
+
 @-webkit-keyframes opacity {
   0%, 100% {
     opacity: 0;
@@ -285,4 +285,5 @@ export default {
     transform: translate3d(0, -25%, 0);
   }
 }
+
 </style>
