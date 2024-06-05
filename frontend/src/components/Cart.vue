@@ -1,21 +1,29 @@
 <template>
   <div class="shopping-cart-container">
     <h1 class="shopping-cart-title">Shopping Cart</h1>
-    <div v-if="cart.length === 0" class="empty-cart-message">Your cart is empty.</div>
+    <div v-if="cart.length === 0" class="empty-cart-message">
+      Your cart is empty.
+    </div>
     <div v-else class="cart-items-container">
-      <div v-for="(item, index) in cart" :key="index" class="cart-item-wrapper">
+      <div v-for="(item, index) in cart" :key="item.Product_ID" class="cart-item-wrapper">
         <div class="cart-item-details">
-          <img :src="item.image" alt="Product Image" class="product-image"/>
+          <img :src="item.image" alt="Product Image" class="product-image" />
           <div class="details">
             <div class="product-name">{{ item.product_name }}</div>
             <div class="product-price-quantity">
               <span class="product-price">ETB {{ item.price }}</span>
-              <span class="product-quantity">x {{ item.quantity }}</span>
+              <div class="quantity-controls">
+                <button @click="decrementItem(item.Product_ID)">-</button>
+                <span class="product-quantity">{{ item.quantity }}</span>
+                <button @click="incrementItem(item.Product_ID)">+</button>
+              </div>
             </div>
           </div>
         </div>
         <div class="cart-item-actions">
-          <button class="remove-item-btn" @click="removeItem(index)">Remove</button>
+          <button class="remove-item-btn" @click="removeItem(item.Product_ID)">
+            Remove
+          </button>
         </div>
       </div>
       <div class="cart-total">
@@ -23,14 +31,16 @@
         <span class="total-amount">ETB {{ total }}</span>
       </div>
       <div class="cart-actions">
-        <button class="checkout-btn" @click="checkout">Checkout</button>
+        <router-link to="/checkout">
+          <button class="checkout-btn">Checkout</button>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { useCartStore } from '../stores/CartStore'; // Adjust the path to your store
+import { useCartStore } from "../stores/CartStore"; // Adjust the path to your store
 
 export default {
   computed: {
@@ -44,12 +54,17 @@ export default {
     },
   },
   methods: {
-    removeItem(index) {
+    removeItem(itemId) {
       const cartStore = useCartStore();
-      cartStore.removeFromCart(index);
+      cartStore.removeFromCart(itemId);
     },
-    checkout() {
-      // Implement checkout logic
+    incrementItem(itemId) {
+      const cartStore = useCartStore();
+      cartStore.incrementItemQuantity(itemId);
+    },
+    decrementItem(itemId) {
+      const cartStore = useCartStore();
+      cartStore.decrementItemQuantity(itemId);
     },
   },
 };
@@ -122,6 +137,21 @@ export default {
   margin-top: 5px;
   font-size: 14px;
   color: #888;
+  display: flex;
+  align-items: center;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-controls button {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
 }
 
 .cart-item-actions {
@@ -164,7 +194,7 @@ export default {
 }
 
 .checkout-btn {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: #fff;
   border: none;
   padding: 10px 20px;

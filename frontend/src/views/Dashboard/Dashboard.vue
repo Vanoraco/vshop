@@ -71,7 +71,7 @@ console.log(products)
 <template>
   <div>
     <h3 class="text-3xl font-medium text-gray-700">
-      Dashboard
+      Request
     </h3>
 
     <div class="mt-4">

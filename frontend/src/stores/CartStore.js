@@ -22,8 +22,22 @@ export const useCartStore = defineStore('cart', {
       }
       this.saveCart();
     },
-    removeFromCart(index) {
-      this.items.splice(index, 1);
+    incrementItemQuantity(itemId) {
+      const item = this.items.find(i => i.Product_ID === itemId);
+      if (item) {
+        item.quantity += 1;
+        this.saveCart();
+      }
+    },
+    decrementItemQuantity(itemId) {
+      const item = this.items.find(i => i.Product_ID === itemId);
+      if (item && item.quantity > 1) {
+        item.quantity -= 1;
+        this.saveCart();
+      }
+    },
+    removeFromCart(itemId) {
+      this.items = this.items.filter(item => item.Product_ID !== itemId);
       this.saveCart();
     },
     clearCart() {

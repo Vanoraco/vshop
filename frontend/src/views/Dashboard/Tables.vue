@@ -1,4 +1,14 @@
 
+<script setup >
+import { useTableData } from '../../composables/useTableData'
+
+const {
+  simpleTableData,
+  paginatedTableData,
+  wideTableData,
+} = useTableData()
+</script>
+>
 
  <template>
   <div class="text-xl">

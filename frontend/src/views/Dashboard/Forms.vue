@@ -25,12 +25,12 @@ function register() {
 <template>
   <div>
     <h3 class="text-3xl font-semibold text-gray-700">
-      Forms
+      Adding other categories only for premium users
     </h3>
 
     <div class="mt-4">
       <h4 class="text-gray-600">
-        Model Form
+        category form
       </h4>
 
       <div class="mt-4">
