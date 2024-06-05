@@ -6,13 +6,13 @@
     <div class="font-serif ml-8">
       <ul class="flex flex-row gap-8 text-2xl">
         <router-link to="/">
-          <li :class="{ 'border-b-4 border-black text-3xl shadow-xl': $route.path === '/' }">Home</li>
+          <li :class="{ 'border-b-4 px-2 py-1 rounded-lg text-3xl shadow-xl bg-gradient-to-tr from-teal-600 via-cyan-700 to-blue-800 text-white': $route.path === '/' }">Home</li>
         </router-link>
         <router-link to="/shops">
-          <li :class="{ 'border-b-4 border-black text-3xl shadow-xl': $route.path === '/shops' }">Shops</li>
+          <li :class="{ 'border-b-4 px-2 py-1 rounded-lg text-3xl shadow-xl bg-gradient-to-tr from-teal-600 via-cyan-700 to-blue-800 text-white': $route.path === '/shops' }">Shops</li>
         </router-link>
         <router-link to="/sign-up" v-if="!userLoggedIn && !localToken">
-          <li :class="{ 'border-b-4 border-black text-3xl shadow-xl': $route.path === '/sign-up' }">Sign Up</li>
+          <li :class="{ 'border-b-4 px-2 py-1 rounded-lg text-3xl shadow-xl bg-gradient-to-tr from-teal-600 via-cyan-700 to-blue-800 text-white': $route.path === '/sign-up' }">Sign Up</li>
         </router-link>
         <div class="ml-auto">
     </div>
@@ -61,7 +61,7 @@
       <ul class="flex flex-row gap-9 mb-6 mr-6 mt-2">
       <li v-if="!userLoggedIn && !localToken">
         <router-link to="/login">
-          <i class="pi pi-user text-2xl font-style rounded-md py-2 px-2 mr-3 bg-[#3cda5e] text-white hover:text-white  hover:text-2xl hover:rounded-lg ml-2">
+          <i class="pi pi-user text-2xl font-style rounded-md py-2 px-2 mr-3 bg-[#3cda5e] text-white hover:text-white  hover:text-2xl hover:rounded-lg ml-2 hover:bg-gradient-to-tr from-teal-600 via-cyan-700 to-blue-800">
             Shop Now
           </i>
         </router-link>

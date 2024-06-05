@@ -7,9 +7,9 @@
     <hr :class="{ 'hidden': $route.path !== '/shops' }">
   <ul class="grid grid-cols-3 gap-1">
     
-      <li  class="rounded-lg shadow-2xl mt-9 ml-20 shop-list w-96  bg-gradient-to-r from-blue-300 to-yellow-300"  v-for="shop in shop" :key="shop.shop_id">
+      <li class="rounded-lg shadow-xl  mt-9 ml-20 shop-list w-96  bg-gradient-to-r from-blue-300 to-yellow-300"  v-for="shop in shop" :key="shop.shop_id">
         <router-link  :to="{ name: 'shop', params: { id: shop.shop_id } }"
-           class="h-[350px] w-full">
+           class="h-[350px] w-full hover:shadow-2xl hover:text-2xl">
         <img :src="shop.image" alt="" class="rounded lg w-[100%] h-[250px]" />
         <p class="flex justify-center font-bold">{{ shop.shop_name }} </p>
         <p class="flex justify-center font-bold"> Categories - {{ shop.shop_category }} </p>

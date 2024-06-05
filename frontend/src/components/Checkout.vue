@@ -41,9 +41,10 @@
       };
     },
     methods: {
-      submitForm() {
+      submitForm(data) {
         // Handle form submission here
         console.log('Form submitted!');
+        console.log(data)
         // You can perform further actions like sending the data to a server for processing
       }
     }

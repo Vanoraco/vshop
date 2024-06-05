@@ -3,6 +3,7 @@ import SignUp from "../views/Sign-up.vue"
 import SignIn from "../views/Sign-in.vue"
 import HomePage from "../views/Home.vue"
 import Shops from "../components/Shops.vue"
+import Checkout from "../components/Checkout.vue"
 
 
 
@@ -25,6 +26,8 @@ import ProductDetail from '../components/ProductDetail.vue'
 
 import DashboardLayout from '../components/Dashboard/DashboardLayout.vue'
 
+import ChapaPayment from "../views/Chapa-Payment.vue"
+
 import Dash from '../views/Dashboard/Dashboard.vue'
 import Main from '../views/Dashboard/Main.vue'
 import Forms from '../views/Dashboard/Forms.vue'
@@ -36,6 +39,8 @@ import Card from '../views/Dashboard/Card.vue'
 import Blank from '../views/Dashboard/Blank.vue'
 
 import EditProduct from '../views/Owner/Edit-Product.vue'
+
+import  useUserStore  from '../stores/user'
 
 
 const routes = [
@@ -100,6 +105,18 @@ const routes = [
        props: true ,
        },
   
+       {
+        path: '/checkout',
+        name: 'checkout',
+        component: Checkout,
+        meta: { layout: 'empty', requiresAuth: true },
+       
+       },
+       { 
+        path: '/chapa', 
+        component: ChapaPayment,
+        meta: { layout: 'empty' },
+      },
   { 
     path: "/admin", 
     component: AdminApp,
@@ -204,8 +221,8 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-   const isAuthenticated =  localStorage.getItem('token')/* Logic to check if user is authenticated */;
+/* router.beforeEach((to, from, next) => {
+   const isAuthenticated =  localStorage.getItem('token')// Logic to check if user is authenticated ;
  
    if (to.matched.some(record => record.meta.requiresAuth)) {
      // Route requires authentication
@@ -220,7 +237,20 @@ router.beforeEach((to, from, next) => {
      // Route does not require authentication, allow access
      next();
    }
- });
+ })
+ */
  
+ router.beforeEach((to, from, next) => {
+  const isAuthenticated = useUserStore()// logic to check if user is authenticated
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (!isAuthenticated.userLoggedIn) {
+      next('/login');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;

@@ -1,19 +1,19 @@
 <template >
-  <div class="flex flex-col md:flex-row justify-between items-start max-w-[96vw] mt-8">
+  <div class="flex flex-col md:flex-row justify-between items-start max-w-[96vw] mt-8 font-style">
     <div class="w-full md:w-1/2 mr-8">
       <div class="product-gallery">
-        <div class="main-image h-[590px] w-full p-10 overflow-hidden">
+        <div class="main-image h-[590px] w-full p- px-3 overflow-hidden shadow-2xl rounded-lg bg-clip-padding backdrop-filter backdrop-blur-md">
           <img
             :src="productList.image"
             :alt="productList.name"
-            class="w-full rounded-lg object-fill h-[500px]  "
+            class="w-full rounded-lg object-fill h-[500px] border-black "
           />
         </div>
         <div class="thumbnails flex justify-between px-8 mt-4">
           <div
             v-for="image in product.images"
             :key="image"
-            class="thumbnail w-1/4 mr-2"
+            class="thumbnail w-1/4 mr-2 shadow-xl"
           >
             <img
               :src="image"
@@ -43,12 +43,14 @@
       <p class="text-2xl font-bold mb-4">ETB {{ productList.price }}</p>
       <p class="mb-4">{{ productList.product_description }}</p>
       <div class="flex items-center mb-4">
-        <button
-          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-4"
+        
+        <button @click="initializeTransaction"
+          class="bg-gradient-to-tr from-teal-600 via-cyan-700 to-blue-800 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-4 hover:text-xl hover:shadow-xl "
         >
-          Buy Now
+          Buy Now 
         </button>
-        <button
+      
+        <button  @click="addToCart(productList)" v-if="userLoggedIn"
           class="mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
         >
           Add to cart
@@ -69,6 +71,9 @@
   
   <script>
 import axios from 'axios';
+import { useCartStore } from "../stores/CartStore";
+import  useUserStore  from "../stores/user"
+import { mapState } from 'pinia';
 
 export default {
   mounted() {
@@ -79,6 +84,19 @@ export default {
     return {
       shopId: this.$route.params.id,
       prodId: this.$route.params.proid,
+      paymentRequest: {
+  "amount": "",
+  "currency": "",
+  "email": "",
+  "first_name": "",
+  "last_name": "",
+  "phone_number": "",
+  "tx_ref": new Date().getMinutes,
+  "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
+  "return_url": "https://www.google.com/",
+  "customization[title]": "Payment for my favourite merchant",
+  "customization[description]": "I love online payments"
+},
       productList: [],
       product: {
         name: "Product Name",
@@ -100,6 +118,10 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState(useUserStore, ['userLoggedIn']),
+    
+    },
   methods: {
     async ProductList() {
       const shopID = this.shopId;
@@ -108,12 +130,52 @@ export default {
       );
       console.log(products.data);
       this.productList = products.data;
+      this.paymentRequest.amount = String( products.data.price); // Assign price to amount
+        this.paymentRequest.currency = "ETB"; // Set currency
+        this.paymentRequest.email = localStorage.getItem("email"); // Set email (replace with actual logic to get user's email)
+        this.paymentRequest.first_name = localStorage.getItem('firstname'); // Set first name (replace with actual logic to get user's first name)
+        this.paymentRequest.last_name = localStorage.getItem('firstname'); // Set last name (replace with actual logic to get user's last name)
+        this.paymentRequest.phone_number = localStorage.getItem('phone'); // Set phone number (replace with actual logic to get user's phone number)
+        this.paymentRequest.tx_ref = `tx-${Date.now()}`;
+    },
+    async initializeTransaction() {
+        try {
+            console.log(this.paymentRequest)
+          const response = await axios.post("http://localhost:8000/intialize-chapa", this.paymentRequest, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          const data = response.data; 
+          const responseData = JSON.parse(response.data.response);
+          console.log(responseData.data)
+          // Correctly access the data field of the response
+          if (data && responseData.data.checkout_url) {
+            this.checkoutUrl = data.checkout_url;
+            window.location.href = responseData.data.checkout_url
+          } else {
+            console.error("Checkout URL not found in the response:", data);
+          }
+        } catch (error) {
+          console.error("Error initializing transaction:", error);
+        }
+      },
+    addToCart(product) {
+      const cartStore = useCartStore();
+      cartStore.addToCart(product);
     },
   },
 };
 </script>
   
   <style>
+  @import url("https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9+Charted&family=Marcellus&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+
+.font-style {
+  font-family: "Marcellus", sans-serif;
+}
+
 .product-gallery {
   display: flex;
   flex-direction: column;
