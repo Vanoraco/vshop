@@ -1,4 +1,5 @@
 <template>
+
   <div class="font-style container mx-auto py-8">
     <h1 class="text-4xl md:text-6xl lg:text-8xl font-bold mb-6 text-center">{{ productList.shop_name }}</h1>
     <p class="text-base md:text-lg lg:text-xl mb-6 text-center">{{ productList.shop_category }}</p>
@@ -7,18 +8,22 @@
         v-for="product in productList.shop_products"
         :key="product.Product_ID"
         class="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-rose-600 via-sky-100 to-cyan-500 p-4"
+
       >
         <img
           :src="product.image"
           :alt="product.product_name"
           class="w-full h-56 rounded-md mb-4 object-cover"
         />
+
         <h2 class="text-xl font-semibold mb-2">{{ product.product_name }}</h2>
         <p class="text-gray-800 font-semibold mt-2">ETB {{ product.price }}</p>
         <div class="flex justify-between mt-4">
           <button
-            @click="addToCart(product)"
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
+            @click="addToCart(product) v-if="userLoggedIn""
+            class="bg-gradient-to-b from-cyan-500 via-blue-600 to-indigo-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
+"
+
           >
             Add to cart
           </button>
@@ -38,6 +43,8 @@
 <script>
 import axios from "axios";
 import { useRoute } from "vue-router";
+import  useUserStore  from "../stores/user"
+import { mapState } from 'pinia';
 import { useCartStore } from "../stores/CartStore";
 
 export default {
@@ -50,6 +57,12 @@ export default {
       productList: [],
     };
   },
+
+  computed: {
+    ...mapState(useUserStore, ['userLoggedIn']),
+    
+    },
+
   methods: {
     async ProductList() {
       const shopID = this.shopId;

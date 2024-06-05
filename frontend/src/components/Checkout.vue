@@ -77,6 +77,14 @@ export default {
         this.quantity -= 1;
       }
     },
+
+    methods: {
+      submitForm(data) {
+        // Handle form submission here
+        console.log('Form submitted!');
+        console.log(data)
+        // You can perform further actions like sending the data to a server for processing
+
     async submitForm() {
       // Handle form submission here
       const orderData = {
@@ -92,6 +100,7 @@ export default {
         this.$router.push({ name: 'shopOwnerDashboard' });
       } catch (error) {
         console.error("There was an error submitting the order:", error);
+
       }
     }
   }

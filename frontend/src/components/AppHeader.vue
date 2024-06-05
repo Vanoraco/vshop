@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <!-- Header for desktop -->
@@ -8,13 +9,13 @@
       <div class="font-serif ml-8">
         <ul class="flex flex-row gap-8 text-2xl">
           <router-link to="/">
-            <li :class="{ 'border-b-4 border-black text-3xl shadow-xl': $route.path === '/' }">Home</li>
+            <li :class="{ 'border-b-4 px-2 py-1 rounded-lg text-3xl shadow-xl bg-gradient-to-tr from-teal-600 via-cyan-700 to-blue-800 text-white': $route.path === '/' }">Home</li>
           </router-link>
           <router-link to="/shops">
-            <li :class="{ 'border-b-4 border-black text-3xl shadow-xl': $route.path === '/shops' }">Shops</li>
+            <li :class="{ 'border-b-4 px-2 py-1 rounded-lg text-3xl shadow-xl bg-gradient-to-tr from-teal-600 via-cyan-700 to-blue-800 text-white': $route.path === '/shops' }">Shops</li>
           </router-link>
           <router-link to="/sign-up" v-if="!userLoggedIn && !localToken">
-            <li :class="{ 'border-b-4 border-black text-3xl shadow-xl': $route.path === '/sign-up' }">Sign Up</li>
+            <li :class="{ ''border-b-4 px-2 py-1 rounded-lg text-3xl shadow-xl bg-gradient-to-tr from-teal-600 via-cyan-700 to-blue-800 text-white': $route.path === '/sign-up' }">Sign Up</li>
           </router-link>
         </ul>
       </div>
@@ -50,6 +51,7 @@
             </i>
           </router-link>
         </li>
+
       </ul>
       <div class="w-[200px]" v-if="userLoggedIn || localToken">
         <div class="flex items-center justify-start space-x-4" @click="toggleDrop">
@@ -77,6 +79,24 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
         </svg>
       </button>
+
+    </div>
+    
+    <router-link to="/cart" class="">
+        <i class="fas fa-shopping-cart text-gray-800 text-2xl mb-4 mr-2"></i>
+      </router-link>
+      <ul class="flex flex-row gap-9 mb-6 mr-6 mt-2">
+      <li v-if="!userLoggedIn && !localToken">
+        <router-link to="/login">
+          <i class="pi pi-user text-2xl font-style rounded-md py-2 px-2 mr-3 bg-[#3cda5e] text-white hover:text-white  hover:text-2xl hover:rounded-lg ml-2 hover:bg-gradient-to-tr from-teal-600 via-cyan-700 to-blue-800">
+            Shop Now
+          </i>
+        </router-link>
+      </li>
+      <!-- <li v-if="isLoggedIn">
+        <router-link to="/user/profile">
+          <i class="pi pi-user-edit text-xl">Update Profile</i>
+
       <div v-if="isMobileMenuOpen" class="absolute top-0 left-0 w-full h-full bg-white z-50 flex flex-col items-center justify-center">
         <ul class="flex flex-col gap-8 text-2xl">
           <router-link to="/" @click="toggleMobileMenu">
@@ -94,6 +114,7 @@
         </ul>
         <router-link to="/cart" class="mt-4" @click="toggleMobileMenu">
           <i class="fas fa-shopping-cart text-gray-800 text-2xl"></i>
+
         </router-link>
       </div>
     </div>

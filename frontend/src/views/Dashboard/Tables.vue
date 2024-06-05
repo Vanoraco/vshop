@@ -1,3 +1,4 @@
+
 <script setup >
 import { useTableData } from '../../composables/useTableData'
 
@@ -7,6 +8,7 @@ const {
   wideTableData,
 } = useTableData()
 </script>
+>
 
  <template>
   <div class="text-xl">
