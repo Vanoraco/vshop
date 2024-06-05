@@ -38,7 +38,6 @@ export default defineStore('user', {
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("firstname", response.data.first_name);
         localStorage.setItem("profile_img", response.data.profile_picture)
-        localStorage.setItem("phone",response.data.phone)
       this.userLoggedIn = true
     },
     async loginOwner(formdata) {
