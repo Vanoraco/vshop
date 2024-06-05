@@ -3,7 +3,6 @@
     <div class="flex justify-center text-5xl font-bold mt-8 mb-4">
       <p :class="{ 'hidden': $route.path !== '/shops' }">All Shops</p>
     </div>
-
     <hr :class="{ 'hidden': $route.path !== '/shops' }" class="mb-8">
     <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <li
@@ -18,7 +17,6 @@
             <p class="text-gray-700">Categories - {{ shop.shop_category }}</p>
           </div>
         </router-link>
-
       </li>
     </ul>
   </div>
