@@ -42,9 +42,9 @@
       <router-link to="/favourites" class="">
         <i class="fas fa-heart text-gray-800 text-2xl mb-4 mr-2"></i>
       </router-link>
-      <router-link to="/cart" class="">
+      <!-- <router-link to="/cart" class="">
         <i class="fas fa-cart-arrow-down text-gray-800 text-2xl mb-4 mr-2"></i>
-      </router-link>
+      </router-link> -->
       <ul class="flex flex-row gap-9 mb-6 mr-6 mt-2">
         <li v-if="!userLoggedIn && !localToken">
           <router-link to="/login">
