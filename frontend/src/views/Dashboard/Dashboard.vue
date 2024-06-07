@@ -1,78 +1,85 @@
 <script setup>
-import axios from 'axios';
-import { onMounted, ref } from 'vue'
-import { Bar, Line } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
+import axios from "axios";
+import { onMounted, ref } from "vue";
+import { Bar, Line } from "vue-chartjs";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+} from "chart.js";
 
-import EditProduct from '../Owner/Edit-Product.vue'
+import EditProduct from "../Owner/Edit-Product.vue";
 
 onMounted(() => {
-  listProducts()
-  
-}) 
+  listProducts();
+});
 
-
-ChartJS.register(Title, Tooltip, Legend, PointElement, LineElement, BarElement, CategoryScale, LinearScale);
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement,
+  BarElement,
+  CategoryScale,
+  LinearScale
+);
 
 const chartData = ref({
-  labels: ['January', 'February', 'March'],
+  labels: ["January", "February", "March"],
   datasets: [
     {
-      label: 'Sell',
+      label: "Sell",
       data: [40, 20, 12],
-      backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe']
-    }
-  ]
+      backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe"],
+    },
+  ],
 });
 
 const lineData = ref({
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  labels: ["January", "February", "March", "April", "May", "June", "July"],
   datasets: [
     {
-      label: 'Shoppers',
-      backgroundColor: '#f87979',
-      data: [40, 39, 10, 40, 39, 80, 40]
-    }
-  ]
-})
-
-
-const chartOptions = ref({
-  responsive: true
+      label: "Shoppers",
+      backgroundColor: "#f87979",
+      data: [40, 39, 10, 40, 39, 80, 40],
+    },
+  ],
 });
 
-
+const chartOptions = ref({
+  responsive: true,
+});
 
 const products = ref([]);
-let totalProducts
+let totalProducts;
 
-const shopID = localStorage.getItem("owner_id")
-
-
+const shopID = localStorage.getItem("owner_id");
 
 async function listProducts() {
   try {
-    const response = await axios.get(`http://localhost:8000/shops/viewproducts?shop_id=${shopID}`);
+    const response = await axios.get(
+      `http://localhost:8000/shops/viewproducts?shop_id=${shopID}`
+    );
     products.value = response.data;
     totalProducts = products.value.shop_products.length;
   } catch (err) {
-    error  = err.message || 'An error occurred while fetching products';
+    error = err.message || "An error occurred while fetching products";
   }
-  
 }
 
-
-
-console.log(products)
-
-
+console.log(products);
 </script>
 
 <template>
   <div>
-    <h3 class="text-3xl font-medium text-gray-700">
-      Request
-    </h3>
+    <h3 class="text-3xl font-medium text-gray-700">Request</h3>
 
     <div class="mt-4">
       <div class="flex flex-wrap -mx-6">
@@ -80,10 +87,7 @@ console.log(products)
           <div
             class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm"
           >
-            
-        <div class="flex flex-col gap-9">
-            
-</div>
+            <div class="flex flex-col gap-9"></div>
           </div>
         </div>
 
@@ -114,12 +118,8 @@ console.log(products)
             </div>
 
             <div class="mx-5">
-              <h4 class="text-2xl font-semibold text-gray-700">
-                200
-              </h4>
-              <div class="text-gray-500">
-                Total Orders
-              </div>
+              <h4 class="text-2xl font-semibold text-gray-700">200</h4>
+              <div class="text-gray-500">Total Orders</div>
             </div>
           </div>
         </div>
@@ -154,9 +154,7 @@ console.log(products)
               <h4 class="text-2xl font-semibold text-gray-700">
                 {{ totalProducts }}
               </h4>
-              <div class="text-gray-500">
-                Available Products
-              </div>
+              <div class="text-gray-500">Available Products</div>
             </div>
           </div>
         </div>
@@ -191,7 +189,16 @@ console.log(products)
                 <th
                   class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                 >
-                Quantity
+                  Quantity
+                </th>
+                <th
+                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                >
+                  <button
+                    class="bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-700 ml-3 text-white font-bold py-2 px-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                  >
+                    shipping address
+                  </button>
                 </th>
                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50" />
               </tr>
@@ -211,9 +218,7 @@ console.log(products)
                       <div class="text-sm font-medium leading-5 text-gray-900">
                         ghetto
                       </div>
-                      <div class="text-sm leading-5 text-gray-500">
-                        {{  }}
-                      </div>
+                      <div class="text-sm leading-5 text-gray-500">{{}}</div>
                     </div>
                   </div>
                 </td>
@@ -222,11 +227,9 @@ console.log(products)
                   class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
                 >
                   <div class="text-sm leading-5 text-gray-900">
-                    Original headset 
+                    Original headset
                   </div>
-                  <div class="text-sm leading-5 text-gray-500">
-                    {{  }}
-                  </div>
+                  <div class="text-sm leading-5 text-gray-500"></div>
                 </td>
 
                 <td
@@ -234,23 +237,26 @@ console.log(products)
                 >
                   <span
                     class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full"
-                  >ETB 3000</span>
+                    >ETB 3000</span
+                  >
                 </td>
 
                 <td
                   class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
                 >
-                  
+                  1
                 </td>
-
-                <td
-                  class="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap"
-                >
-                <router-link  to="/edit-product/:id"
-           class="h-[350px] w-full">
-       Edit 
-      </router-link>
-                </td>
+                <router-link to="/shippingAddress">
+                  <td
+                    class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
+                  >
+                    <button
+                      class="bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-700 ml-3 text-white font-bold py-2 px-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                    >
+                      address
+                    </button>
+                  </td>
+                </router-link>
               </tr>
             </tbody>
           </table>
