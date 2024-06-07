@@ -47,6 +47,9 @@ export const useCartStore = defineStore('cart', {
     saveCart() {
       localStorage.setItem('cart', JSON.stringify(this.items));
     },
+    formatDate(date){
+      return format(new Date(date), 'MMMM d, yyyy');
+    }
   },
   getters: {
     cartTotal() {

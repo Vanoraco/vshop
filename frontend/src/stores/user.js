@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 // import { auth, usersCollection } from '@/includes/firebase'
 import axios from 'axios';
 
-export default defineStore('user', {
+export default  defineStore('user', {
   state: () => {
     return {
     userLoggedIn: false,

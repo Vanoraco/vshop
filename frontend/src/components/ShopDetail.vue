@@ -17,12 +17,12 @@
         <h2 class="text-xl font-semibold mb-2">{{ product.product_name }}</h2>
         <p class="text-gray-800 font-semibold mt-2">ETB {{ product.price }}</p>
         <div class="flex justify-between mt-4">
-          <!-- <button
+          <button
             @click="addToCart(product)"
             class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
           >
-            Add to cart
-          </button> -->
+            Add to <i class="fas fa-star  bg-grey"></i>
+          </button>
           <router-link :to="{ name: 'product', params: { proid: product._id } }">
             <button
               class="bg-gradient-to-r  from-teal-500 via-cyan-600 to-blue-700 ml-3 text-white font-bold py-2 px-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
@@ -30,6 +30,7 @@
               Details
             </button>
           </router-link>
+          
         </div>
       </div>
     </div>

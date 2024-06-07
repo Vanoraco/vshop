@@ -39,8 +39,11 @@
           </svg>
         </button>
       </div>
-      <router-link to="/cart" class="">
+      <router-link to="/favourites" class="">
         <i class="fas fa-heart text-gray-800 text-2xl mb-4 mr-2"></i>
+      </router-link>
+      <router-link to="/cart" class="">
+        <i class="fas fa-cart-arrow-down text-gray-800 text-2xl mb-4 mr-2"></i>
       </router-link>
       <ul class="flex flex-row gap-9 mb-6 mr-6 mt-2">
         <li v-if="!userLoggedIn && !localToken">
@@ -92,7 +95,7 @@
             <li class="text-2xl bg-[#3cda5e] text-white rounded-md py-2 px-2">Shop Now</li>
           </router-link>
         </ul>
-        <router-link to="/cart" class="mt-4" @click="toggleMobileMenu">
+        <router-link to="/favourite" class="mt-4" @click="toggleMobileMenu">
           <i class="fas fa-heart text-gray-800 text-2xl"></i>
         </router-link>
       </div>
@@ -156,7 +159,7 @@ export default {
 
 .content {
   position: absolute;
-  bottom: 70%;
+  bottom: 64%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 160px;

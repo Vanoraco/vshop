@@ -198,22 +198,18 @@ console.log(products)
             </thead>
 
             <tbody class="bg-white">
-              <tr v-for="(p, index) in products.shop_products" :key="index">
+              <tr>
                 <td
                   class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
                 >
                   <div class="flex items-center">
                     <div class="flex-shrink-0 w-10 h-10">
-                      <img
-                        class="w-10 h-10 rounded-full"
-                        :src="p.image"
-                        alt=""
-                      >
+                      <span class="fas fa-cart-arrow-down"></span>
                     </div>
 
                     <div class="ml-4">
                       <div class="text-sm font-medium leading-5 text-gray-900">
-                        {{ p.product_name }}
+                        ghetto
                       </div>
                       <div class="text-sm leading-5 text-gray-500">
                         {{  }}
@@ -226,7 +222,7 @@ console.log(products)
                   class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
                 >
                   <div class="text-sm leading-5 text-gray-900">
-                    {{ p.product_description }}
+                    Original headset 
                   </div>
                   <div class="text-sm leading-5 text-gray-500">
                     {{  }}
@@ -238,19 +234,19 @@ console.log(products)
                 >
                   <span
                     class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full"
-                  >{{ p.price }}</span>
+                  >ETB 3000</span>
                 </td>
 
                 <td
                   class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
                 >
-                  {{ p.quantity }}
+                  
                 </td>
 
                 <td
                   class="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap"
                 >
-                <router-link  :to="{ name: 'editprod', params: { id: p._id } }"
+                <router-link  to="/edit-product/:id"
            class="h-[350px] w-full">
        Edit 
       </router-link>

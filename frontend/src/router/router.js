@@ -24,6 +24,7 @@ import Card from '../views/Dashboard/Card.vue'
 import Blank from '../views/Dashboard/Blank.vue'
 import ThreeD from '../components/3DView.vue'
 import EditProduct from '../views/Owner/Edit-Product.vue'
+import FavouritePage from '../components/fav.vue'
 
 const routes = [
   { path: "/sign-up", component: SignUp, meta: { layout: 'empty' } },
@@ -50,7 +51,8 @@ const routes = [
   { path: '/owner/modal', name: 'Modal', component: Modal },
   { path: '/blank', name: 'Blank', component: Blank },
   { path: '/checkout', name: 'Checkout', component: Checkout, meta: { layout: 'empty' } },
-  { path: '/3Dview', name: "3D view", component: ThreeD, meta: { layout: 'empty' } }
+  { path: '/3Dview', name: "3D view", component: ThreeD, meta: { layout: 'empty' } },
+  {path: '/favourites', name:"FavouritePage", component:FavouritePage,  meta: { layout: 'empty' }  }
 ]
 
 const router = createRouter({
